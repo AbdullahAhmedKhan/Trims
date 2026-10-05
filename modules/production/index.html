@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Production - SK Trims ERP</title>
+<title>Production Dashboard - SK Trims ERP</title>
 <link rel="stylesheet" href="../../assets/css/style.css" />
 <link rel="stylesheet" href="../../assets/css/dashboard.css" />
 <link rel="icon" href="../../assets/images/favicons/favicon.ico" sizes="any" />
@@ -16,16 +16,256 @@
 </head>
 <body>
 
-<!-- Module dashboard. The header, the menu bar and the footer are built by
-     the scripts below, so this file only holds its own content in #sk-app. -->
-<div id="sk-app"></div>
+<!-- =====================================================================
+     PRODUCTION DASHBOARD
 
+     This page is written out in full: every card, table and chart canvas
+     below is real HTML. Only the numbers are filled in from JavaScript, so
+     the layout can be changed here and the numbers changed in one data
+     file.
+
+       assets/js/dash-production.js   the numbers     <- edit values here
+       assets/js/production-page.js   says what goes where
+       assets/js/page-binder.js       fills them in
+
+     The data attributes the binder looks for:
+
+       data-rows="..."     fill the rows of the table it sits in
+       data-legend="..."   fill the coloured key under a chart
+       data-chart="..."    draw this chart into this canvas
+       data-hero="..."     fill the overview figure of that stage
+
+     A <th> says how to show its column: data-f="qty" for a plain count,
+     data-f="pct" for a percentage, or nothing to leave the value alone.
+
+     The header, the menu bar and the footer are still built by the scripts
+     at the bottom, so this file holds only its own content in #sk-app.
+     ===================================================================== -->
+<div id="sk-app">
+
+  <div class="skd-page">
+
+    <!-- ============================================== overview cards =====
+         Five stage cards, one per step the work moves through. No title,
+         no sub title, no progress bars: a dot for the stage, its name and
+         the figure underneath, which the data file fills in. -->
+    <div class="skd-row skd-row-5">
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#f59e0b">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Pending</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Pending"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#0ea5e9">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Planning</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Planning"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#0284c7">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Process</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Process"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#0369a1">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Finishing</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Finishing"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#075985">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Finish Goods</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Finish Goods"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ================== ROW 1 : order output + where the jobs are === -->
+    <div class="skd-row">
+
+      <!-- ----------------------------------------- order output chart -->
+      <div class="skd-in" style="grid-column:span 8">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <!-- the heading follows the picker, see data-period-title -->
+              <h2 class="skd-title" data-period-title>Last 3 months</h2>
+            </div>
+            <select class="skd-select" data-period>
+              <option value="6m">Last 6 month</option>
+              <option value="3m" selected>Last 3 month</option>
+              <option value="ytd">This year</option>
+              <option value="lasty">Last year</option>
+            </select>
+          </div>
+          <div class="skd-canvas" style="height:300px">
+            <canvas data-chart="output"></canvas>
+          </div>
+          <!-- the coloured key, filled from the chart data -->
+          <div class="skd-legend skd-legend-inline" data-legend="output"></div>
+          <div class="skd-tfoot">
+            <a class="skd-link" href="index.html?id=production-summary">See more</a>
+          </div>
+        </section>
+      </div>
+
+      <!-- ------------------------------------------- job status doughnut -->
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Production Status</h2>
+            </div>
+          </div>
+          <div class="skd-canvas" style="height:230px">
+            <canvas data-chart="status"></canvas>
+          </div>
+          <div class="skd-legend" data-legend="status"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============================================ ROW 2 : PERFORMANCE == -->
+    <div class="skd-row">
+      <div class="skd-in" style="grid-column:span 12">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Production Performance</h2>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="skd-table">
+              <thead>
+                <tr>
+                  <th class="a-l">Date</th>
+                  <th class="a-l">Day</th>
+                  <th class="a-r" data-f="qty">Jobs</th>
+                  <th class="a-r" data-f="qty">Plan Qty</th>
+                  <th class="a-r" data-f="qty">Board Making</th>
+                  <th class="a-r" data-f="qty">Finishing</th>
+                  <th class="a-r" data-f="qty">Produced</th>
+                  <th class="a-r" data-f="qty">Delivered</th>
+                  <th class="a-r" data-f="qty">Pending</th>
+                  <th class="a-c" data-f="pct">Achievement %</th>
+                </tr>
+              </thead>
+              <tbody data-rows="performance"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ================================================ ROW 3 : JOB POOL == -->
+    <div class="skd-row">
+      <div class="skd-in" style="grid-column:span 12">
+        <section class="skd-card">
+          <div class="skd-tabs" role="tablist">
+            <button type="button" class="skd-tab is-on" role="tab" aria-selected="true"
+              data-skd-tab="p-pool-0">Party</button>
+            <button type="button" class="skd-tab" role="tab" aria-selected="false"
+              data-skd-tab="p-pool-1">Item</button>
+            <button type="button" class="skd-tab" role="tab" aria-selected="false"
+              data-skd-tab="p-pool-2">Team</button>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="p-pool-0">
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Party</th>
+                    <th class="a-r" data-f="qty">Job</th>
+                    <th class="a-r" data-f="qty">Planning</th>
+                    <th class="a-r" data-f="qty">Finishing</th>
+                    <th class="a-r" data-f="qty">Production</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="party"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="p-pool-1" hidden>
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Item</th>
+                    <th class="a-r" data-f="qty">Job</th>
+                    <th class="a-r" data-f="qty">Planning</th>
+                    <th class="a-r" data-f="qty">Finishing</th>
+                    <th class="a-r" data-f="qty">Production</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="item"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="p-pool-2" hidden>
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Team</th>
+                    <th class="a-r" data-f="qty">Job</th>
+                    <th class="a-r" data-f="qty">Planning</th>
+                    <th class="a-r" data-f="qty">Finishing</th>
+                    <th class="a-r" data-f="qty">Production</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="team"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="skd-tfoot"><span>Date: 1 Sep 2026 - 30 Sep 2026</span></div>
+        </section>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- The header, the menu bar and the footer are built by these scripts. -->
 <script src="../../assets/js/menu.js"></script>
 <script src="../../assets/js/header.js"></script>
 <script src="../../assets/js/footer.js"></script>
-<script src="../../assets/js/dashboard-kit.js"></script>
+
+<!-- Chart.js draws the charts, dashboard.js holds the shared formatters
+     (qty, pct, badges) that page-binder.js uses to fill the tables. -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="../../assets/js/dashboard.js"></script>
+
+<!-- the numbers for this page -->
+<script src="../../assets/js/dash-production.js"></script>
+
 <script src="../../assets/js/app.js"></script>
-<script src="../../assets/js/module-page.js"></script>
-<script>App.boot(); ModulePage.render();</script>
+<script src="../../assets/js/page-binder.js"></script>
+<script src="../../assets/js/production-page.js"></script>
+<script>App.boot(); ProductionPage.render();</script>
 </body>
 </html>

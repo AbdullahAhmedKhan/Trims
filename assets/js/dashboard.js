@@ -205,8 +205,19 @@ window.SKDash = (function (w, d) {
         legend: { display: false },
         tooltip: {
           callbacks: {
-            label: function (ctx) {
-              var raw = ctx.parsed.y != null ? ctx.parsed.y : ctx.parsed.x;
+label: function (ctx) {
+              /* where the number sits depends on the chart: a vertical bar
+                 or a line puts it in parsed.y, a horizontal bar leaves the
+                 name there and puts the number in parsed.x, and a doughnut
+                 or a pie reports the slice number straight away, so the
+                 value has to be read from the element instead */
+              var p = ctx.parsed;
+              var raw;
+              if (typeof p === "number") raw = ctx.raw;
+              else if (p && typeof p.y === "number") raw = p.y;
+              else if (p && typeof p.x === "number") raw = p.x;
+              else raw = ctx.raw;
+              if (raw == null || !isFinite(raw)) raw = 0;
               /* a dataset can sit on the second axis and read differently */
               var kind = c.yfmt;
               if (y2 && ctx.dataset.yAxisID === "y2") kind = y2.yfmt || kind;

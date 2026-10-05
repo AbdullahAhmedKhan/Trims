@@ -220,6 +220,57 @@
 }
 
 /* =============================================================== hero === */
+/* The overview written as five separate cards. The stage colour is passed in
+   as --c and used three times: the dot, the soft ring around it, and a tint
+   on the figure, so one line of CSS ties a card to its stage. */
+.skd-row-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.skd-ovc {
+  padding: 15px 17px;
+  gap: 0;
+}
+
+.skd-ovc-top {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.skd-ovc-dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c, #0ea5e9);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, #0ea5e9) 20%, transparent);
+}
+
+.skd-ovc-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.skd-ovc-value {
+  margin-top: 11px;
+  font-size: clamp(20px, 1.7vw, 25px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: color-mix(in srgb, var(--c, #0ea5e9) 72%, #0f172a);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =============================================================== hero === */
 .skd-hero-in {
   display: flex;
   flex-wrap: wrap;
@@ -1132,6 +1183,12 @@
 /* ========================================================= responsive === */
 @media (max-width: 1180px) {
   .skd-row > * { grid-column: span 12 !important; }
+
+  /* the overview keeps its cards: five across is too tight here, so it
+     becomes 3 + 2 instead of one card per row */
+  .skd-row-5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .skd-row-5 > * { grid-column: span 1 !important; }
+
   .skd-mrow > label { font-size: 13px; }
   .skd-mrow > div { font-size: 13px; }
 }
@@ -1148,6 +1205,8 @@
      row travel together in the card's horizontal scroll instead of the
      body clipping the rows at the card width */
   .skd-mbody { min-width: 640px; }
+
+  .skd-row-5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   /* hero: five squeezed cells become a readable 2-column grid */
   .skd-rail {
