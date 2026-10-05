@@ -44,34 +44,38 @@
 
   <div class="skd-page">
 
-    <!-- ============================================== page heading ===== -->
-    <div class="skd-head">
-      <div class="skd-head-txt">
-        <h1>Order Dashboard</h1>
-        <p>Order intake, last six months performance, party and product breakdowns, and the financial metrics overview.</p>
-      </div>
-      <span class="skd-head-tag"><i></i>Order Dashboard</span>
-    </div>
-
-    <!-- ===================== ROW 1 : 7 days / 6 months / top two lists === -->
+    <!-- ===================== ROW 1 : 7 days / months / top two lists === -->
     <div class="skd-row">
 
       <!-- ------------------------------------------ last 7 days chart -->
       <div class="skd-in" style="grid-column:span 4">
         <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Last 7 days order</h2>
+            </div>
+          </div>
           <div class="skd-canvas" style="height:250px">
             <canvas data-chart="last7"></canvas>
           </div>
         </section>
       </div>
 
-      <!-- ------------------------------------- last 6 months doughnut -->
+      <!-- ------------------------------------- months doughnut + picker -->
       <div class="skd-in" style="grid-column:span 4">
         <section class="skd-card">
           <div class="skd-head-row">
             <div>
-              <h2 class="skd-title">Last 6 Months Performance</h2>
+              <!-- the heading follows the picker, see data-period-title -->
+              <h2 class="skd-title" data-period-title>Last 3 months Performance</h2>
             </div>
+            <!-- choosing a period swaps the numbers, the key and the heading -->
+            <select class="skd-select" data-period>
+              <option value="3m">3 months</option>
+              <option value="6m">6 months</option>
+              <option value="ytd">This year</option>
+              <option value="lasty">Last year</option>
+            </select>
           </div>
           <div class="skd-canvas" style="height:230px">
             <canvas data-chart="months"></canvas>
@@ -81,41 +85,29 @@
         </section>
       </div>
 
-      <!-- ------------------------------------------ top sales tabs -->
+      <!-- --------------------------------------- top party / creditors -->
       <div class="skd-in" style="grid-column:span 4">
         <section class="skd-card">
           <div class="skd-tabs" role="tablist">
             <button type="button" class="skd-tab is-on" role="tab" aria-selected="true"
-              data-skd-tab="o-top-0">Top Sales</button>
+              data-skd-tab="o-top-0">Top Party</button>
             <button type="button" class="skd-tab" role="tab" aria-selected="false"
               data-skd-tab="o-top-1">Top Creditors</button>
           </div>
 
+          <!-- no header row on these two: data-cols says what each column
+               is, so money still shows as crore and lakh -->
           <div class="skd-tabpanel" data-skd-panel="o-top-0">
             <div class="skd-scroll">
-              <table class="skd-table">
-                <thead>
-                  <tr>
-                    <th class="a-l">Party Name</th>
-                    <th class="a-r" data-f="money">6 Months</th>
-                    <th class="a-r" data-f="money">Per Month</th>
-                  </tr>
-                </thead>
-                <tbody data-rows="topSales"></tbody>
+              <table class="skd-table" data-cols="text,money,money">
+                <tbody data-rows="topParty"></tbody>
               </table>
             </div>
           </div>
 
           <div class="skd-tabpanel" data-skd-panel="o-top-1" hidden>
             <div class="skd-scroll">
-              <table class="skd-table">
-                <thead>
-                  <tr>
-                    <th class="a-l">Party Name</th>
-                    <th class="a-r" data-f="money">6 Months</th>
-                    <th class="a-r" data-f="money">Per Month</th>
-                  </tr>
-                </thead>
+              <table class="skd-table" data-cols="text,money,money">
                 <tbody data-rows="topCreditors"></tbody>
               </table>
             </div>
@@ -130,6 +122,13 @@
       <!-- --------------------------------------- party and product tabs -->
       <div class="skd-in" style="grid-column:span 4">
         <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Party &amp; Product Breakdown</h2>
+            </div>
+            <span class="skd-tag">This Month</span>
+          </div>
+
           <div class="skd-tabs" role="tablist">
             <button type="button" class="skd-tab is-on" role="tab" aria-selected="true"
               data-skd-tab="o-break-0">Party</button>
@@ -181,7 +180,8 @@
           <div class="skd-canvas" style="height:330px">
             <canvas data-chart="team"></canvas>
           </div>
-          <div class="skd-legend" data-legend="team"></div>
+          <!-- three keys, side by side, same as the item card below -->
+          <div class="skd-legend skd-legend-inline" data-legend="team"></div>
         </section>
       </div>
     </div>
@@ -225,7 +225,9 @@
           <div class="skd-canvas" style="height:330px">
             <canvas data-chart="item"></canvas>
           </div>
-          <div class="skd-legend" data-legend="item"></div>
+          <!-- two keys, side by side: the class stops the default two
+               column grid from pushing them apart -->
+          <div class="skd-legend skd-legend-inline" data-legend="item"></div>
         </section>
       </div>
     </div>
@@ -233,9 +235,10 @@
     <!-- ============================= ROW 4 : financial metrics overview == -->
     <div class="skd-row">
       <div class="skd-in" style="grid-column:span 12">
-        <!-- the heading sits in the HTML, the grid is filled from the data -->
+        <!-- the heading is written here; only the grid below it is filled -->
         <div class="skd-metrics" data-metrics>
           <h2>Financial Metrics Overview</h2>
+          <div data-metrics-grid></div>
         </div>
       </div>
     </div>

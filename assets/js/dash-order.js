@@ -54,38 +54,54 @@ window.ORDER_DATA = {
   },
 
   /* ------------------------------------------------------ chart: 6 months --
-     Where the last six months' orders currently stand. The numbers in the
-     key under the chart are shown as plain amounts, so they are written
-     here already formatted. */
+     Where the orders currently stand. The period picker in index.html swaps
+     the numbers, the key and the card heading, so only the shell of the
+     chart is written here; `periods` below holds one set per choice. */
   months: {
     type: "doughnut",
     height: 230,
     center: "Total",
-    labels: ["Pending Order", "Approved Order", "Production", "Delivered"],
-    datasets: [
-      {
-        data: [6218400, 28432600, 15240000, 41380000],
-        bg: [
-          "rgba(20, 184, 166, 0.55)",
-          "rgba(255, 159, 64, 0.55)",
-          "rgba(114, 199, 255, 0.55)",
-          "rgba(247, 107, 138, 0.55)"
-        ]
-      }
-    ],
-    /* the coloured key under the doughnut: label, amount, colour */
-    legend: [
-      { label: "Pending Order", value: "6,218,400", color: "rgba(20, 184, 166, 0.55)" },
-      { label: "Approved Order", value: "28,432,600", color: "rgba(255, 159, 64, 0.55)" },
-      { label: "Production", value: "15,240,000", color: "rgba(114, 199, 255, 0.55)" },
-      { label: "Delivered", value: "41,380,000", color: "rgba(247, 107, 138, 0.55)" }
+    labels: ["Order", "Approved Order", "Pending Order", "Sample"],
+    bg: [
+      "rgba(14, 165, 233, 0.55)",
+      "rgba(20, 184, 166, 0.55)",
+      "rgba(255, 159, 64, 0.55)",
+      "rgba(139, 92, 246, 0.55)"
     ]
   },
 
+  /* one entry per option in the picker. `title` becomes the card heading,
+     `values` fills the doughnut and `amounts` fills the coloured key.
+     The colours come from months.bg, in the same order as its labels. */
+  periods: {
+    "3m": {
+      title: "Last 3 months Performance",
+      values: [18340000, 9240000, 6410000, 2680000],
+      amounts: ["18,340,000", "9,240,000", "6,410,000", "2,680,000"]
+    },
+    "6m": {
+      title: "Last 6 months Performance",
+      values: [28432600, 15240000, 6218400, 4120000],
+      amounts: ["28,432,600", "15,240,000", "6,218,400", "4,120,000"]
+    },
+    ytd: {
+      title: "This Year Performance",
+      values: [68420000, 39240000, 21360000, 8760000],
+      amounts: ["68,420,000", "39,240,000", "21,360,000", "8,760,000"]
+    },
+    lasty: {
+      title: "Last Year Performance",
+      values: [112800000, 74620000, 38940000, 14260000],
+      amounts: ["1,12,80,000", "74,62,000", "38,94,000", "14,26,000"]
+    }
+  },
+
   /* ------------------------------------------------------ table: top sales --
-     Two tabs sit on one card. Each has its own rows, in the column order
-     written in the thead of its own panel in index.html. */
-  topSales: {
+     Two tabs sit on one card. These two tables have no header row, so the
+     table says what its columns are:
+       <table class="skd-table" data-cols="text,money,money">
+     which works out as party name on the left, money on the right. */
+  topParty: {
     rows: [
       ["Sinha Textile", 52000000, 395000],
       ["DBL Group", 46800000, 372000],

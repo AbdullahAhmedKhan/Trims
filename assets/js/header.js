@@ -272,6 +272,19 @@ window.SKHeader = (function (w, d) {
     return out;
   }
 
+  /* -------------------------------------------------------- module chip ---
+     At the head of the breadcrumb bar, a small button in the colour and the
+     icon of the module you are in, so the bar says where you are without
+     having to read it. It is a link back to that module's dashboard. */
+  function buildModuleChip(mod) {
+    if (!mod) return "";
+
+    return '<a class="sk-mbadge" href="' + SK.href(mod.url) + '"' +
+      ' style="--m:' + mod.color + '" aria-label="' + SK.esc(mod.name) + ' module">' +
+      SK.icon(mod.icon) +
+      "<span>" + SK.esc(mod.name) + "</span></a>";
+  }
+
   /* --------------------------------------------------------- markup ---
      The bar always carries the menu, on one row, right after the logo.
 
@@ -280,7 +293,8 @@ window.SKHeader = (function (w, d) {
      are already in does not need naming again. */
   function markup() {
     var C = SK.config;
-    var home = !SK.activeModule();
+    var mod = SK.activeModule();
+    var home = !mod;
 
     return (
       '<a class="sk-skip" href="#skMain">Skip to content</a>' +
@@ -313,7 +327,9 @@ window.SKHeader = (function (w, d) {
 
       /* no breadcrumb bar on the home page, there is no path to show */
       (home ? "" :
-      '<div class="sk-subbar"><nav class="sk-crumbs" aria-label="Breadcrumb">' +
+      '<div class="sk-subbar">' +
+      buildModuleChip(mod) +
+      '<nav class="sk-crumbs" aria-label="Breadcrumb">' +
       buildCrumb() + "</nav></div>") +
 
       "</header>" +
