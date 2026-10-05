@@ -1,0 +1,1116 @@
+/* ==========================================================================
+   SK Trims ERP - DASHBOARD STYLES
+   --------------------------------------------------------------------------
+   Only the module dashboards use this file. dashboard.js builds the markup
+   out of the specs in assets/js/dash-*.js, every class below is prefixed
+   skd- so it cannot clash with the shell in style.css.
+
+   The layout is a 12 column grid, so a block says how wide it is with c:4
+   for a third, c:8 for two thirds, c:12 for the whole row.
+   ========================================================================== */
+
+.skd-page {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px 8px;
+}
+
+/* ============================================================ page head == */
+.skd-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 4px 2px 18px;
+}
+
+.skd-head-txt h1 {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.skd-head-txt p {
+  margin-top: 6px;
+  font-size: 13.5px;
+  color: #64748b;
+  max-width: 70ch;
+}
+
+.skd-head-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--sk-line);
+  box-shadow: var(--sk-shadow-sm);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--sk-accent-ink);
+}
+
+.skd-head-tag i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--sk-accent);
+  flex: none;
+}
+
+/* ------------------------------------------------------- module switcher */
+.skd-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid var(--sk-line);
+  border-radius: 16px;
+  box-shadow: var(--sk-shadow-sm);
+}
+
+.skd-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 14px 9px 9px;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+}
+
+.skd-switch-btn img {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  object-fit: contain;
+  background: var(--sk-soft);
+  padding: 3px;
+  flex: none;
+}
+
+.skd-switch-btn:hover {
+  background: var(--sk-soft);
+  color: #0f172a;
+}
+
+.skd-switch-btn.is-on {
+  background: var(--m, var(--sk-accent));
+  color: #fff;
+  box-shadow: var(--sk-shadow-md);
+}
+
+.skd-switch-btn.is-on img {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* =============================================================== grid === */
+.skd-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.skd-row > * {
+  grid-column: span 12;
+  min-width: 0;
+}
+
+/* =============================================================== card === */
+.skd-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid var(--sk-line);
+  border-radius: 18px;
+  box-shadow: var(--sk-shadow-sm);
+}
+
+.skd-head-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.skd-title {
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.skd-sub {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+.skd-link {
+  flex: none;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--sk-accent-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+.skd-link:hover {
+  color: var(--sk-accent);
+}
+
+.skd-grow {
+  flex: 1;
+  min-height: 0;
+}
+
+/* =============================================================== hero === */
+.skd-hero-in {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+}
+
+.skd-rail {
+  display: flex;
+  flex: 1 1 520px;
+  min-width: 0;
+}
+
+.skd-hcell {
+  flex: 1;
+  min-width: 0;
+  padding: 2px 18px;
+}
+
+.skd-hcell:first-child {
+  padding-left: 0;
+}
+
+.skd-hcell.div {
+  border-left: 1px solid var(--sk-line);
+}
+
+.skd-hlabel {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.skd-hvalue {
+  margin-top: 9px;
+  font-size: clamp(19px, 2vw, 27px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.skd-hbar {
+  margin-top: 11px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--sk-soft);
+  overflow: hidden;
+}
+
+.skd-hbar > i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--c, var(--sk-accent));
+  transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.skd-inline {
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  padding-left: 18px;
+  margin-left: 8px;
+  border-left: 1px solid var(--sk-line);
+}
+
+.skd-inline div {
+  min-width: 92px;
+}
+
+.skd-inline b {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.skd-inline span {
+  display: block;
+  margin-top: 3px;
+  font-size: 11.5px;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+/* ============================================================== charts === */
+.skd-canvas {
+  position: relative;
+  width: 100%;
+}
+
+.skd-legend {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 20px;
+  margin-top: 18px;
+}
+
+.skd-legend.one {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.skd-legend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.skd-legend-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #475569;
+  font-weight: 500;
+  min-width: 0;
+}
+
+.skd-legend-row i {
+  width: 13px;
+  height: 13px;
+  border-radius: 4px;
+  background: var(--c);
+  flex: none;
+}
+
+.skd-legend-row b {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.skd-notes {
+  margin-top: 16px;
+  display: grid;
+  gap: 7px;
+}
+
+.skd-note-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  color: #475569;
+}
+
+.skd-note-row b {
+  color: #0f172a;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =============================================================== table == */
+.skd-scroll {
+  overflow: auto;
+  margin: 0 -4px;
+  padding: 0 4px;
+}
+
+.skd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.skd-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #fff;
+  padding: 0 10px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sk-accent-ink);
+  white-space: nowrap;
+}
+
+.skd-table td {
+  padding: 11px 10px;
+  border-top: 1px solid var(--sk-line);
+  color: #334155;
+  vertical-align: middle;
+}
+
+.skd-table tbody tr:hover td {
+  background: #f8fafc;
+}
+
+.skd-table .a-r {
+  text-align: right;
+}
+
+.skd-table .a-c {
+  text-align: center;
+}
+
+.skd-table td.num {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.skd-table tr.total td {
+  border-top: 2px solid #cbd5e1;
+  font-weight: 700;
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+.skd-cap {
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+.skd-tfoot {
+  margin-top: 14px;
+  padding-top: 13px;
+  border-top: 1px solid var(--sk-line);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  color: #475569;
+}
+
+.skd-tfoot b {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* ================================================================ tabs === */
+.skd-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sk-line);
+  margin-bottom: 14px;
+}
+
+.skd-tab {
+  padding: 8px 15px;
+  border-radius: 9px 9px 0 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #64748b;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.skd-tab:hover {
+  background: var(--sk-soft);
+  color: #0f172a;
+}
+
+.skd-tab.is-on {
+  background: var(--sk-accent);
+  color: #fff;
+}
+
+.skd-tabpanel[hidden] {
+  display: none;
+}
+
+/* ================================================================ bars == */
+/* a floor list or an aging list can run to fifteen rows; the card is capped
+   so the row it sits in (and the box beside it) keeps a usable height, and
+   the extra rows scroll inside the card */
+.skd-bars {
+  display: grid;
+  gap: 15px;
+  max-height: 420px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 3px;
+}
+
+.skd-bars::-webkit-scrollbar {
+  width: 8px;
+}
+
+.skd-bars::-webkit-scrollbar-track {
+  background: var(--sk-soft);
+  border-radius: 99px;
+}
+
+.skd-bars::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 99px;
+}
+
+.skd-bars::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.skd-barrow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 14px;
+}
+
+.skd-barname {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #1e293b;
+  min-width: 0;
+}
+
+.skd-barname span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.skd-barval {
+  font-size: 13.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.skd-track {
+  grid-column: 1 / -1;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--sk-soft);
+  overflow: hidden;
+}
+
+.skd-track > i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--c, var(--sk-accent));
+  transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.skd-barfoot {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* ============================================================== badges == */
+.skd-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.skd-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+
+.skd-badge.emerald { background: #ecfdf5; color: #047857; }
+.skd-badge.sky     { background: #e0f2fe; color: #0369a1; }
+.skd-badge.violet  { background: #ede9fe; color: #6d28d9; }
+.skd-badge.indigo  { background: #e0e7ff; color: #4338ca; }
+.skd-badge.teal    { background: #ccfbf1; color: #0f766e; }
+.skd-badge.amber   { background: #fef3c7; color: #b45309; }
+.skd-badge.rose    { background: #ffe4e6; color: #be123c; }
+.skd-badge.slate   { background: #f1f5f9; color: #475569; }
+
+/* =============================================================== stats == */
+.skd-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+
+.skd-stat {
+  padding: 16px 18px;
+  background: white;
+  border-left: 4px solid var(--c, var(--sk-accent));
+}
+
+.skd-stat span {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.skd-stat b {
+  display: block;
+  margin-top: 8px;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  word-break: break-word;
+}
+
+.skd-stat small {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.skd-stat.big b {
+  font-size: clamp(22px, 2.6vw, 34px);
+}
+
+/* ============================================================ metrics === */
+.skd-metrics {
+  padding: 22px;
+  background: #fff;
+  border: 1px solid var(--sk-line);
+  border-radius: 18px;
+  box-shadow: var(--sk-shadow-sm);
+}
+
+.skd-metrics > h2 {
+  text-align: center;
+  font-size: clamp(20px, 2.4vw, 27px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  padding: 8px 0 20px;
+}
+
+.skd-mhead,
+.skd-mrow {
+  display: grid;
+  grid-template-columns: var(--ml, 300px) repeat(var(--mc, 5), minmax(0, 1fr));
+}
+
+.skd-mhead > div {
+  padding: 12px 8px;
+  background: #334155;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.skd-mhead > div + div {
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.skd-mbody {
+  border: 1px solid #cbd5e1;
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+}
+
+.skd-mrow > div,
+.skd-mrow > label {
+  padding: 14px 10px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
+  font-variant-numeric: tabular-nums;
+  word-break: break-word;
+}
+
+.skd-mrow:first-child > * {
+  border-top: 0;
+}
+
+.skd-mrow > *:nth-child(even) {
+  background: #f8fafc;
+}
+
+.skd-mrow > label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-right: 20px;
+  text-align: right;
+  background: var(--c, #0ea5e9);
+  color: #f8fafc;
+  font-size: 15px;
+  border-top-color: rgba(255, 255, 255, 0.2);
+}
+
+.skd-mrow > label .sk-svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 1.6;
+  opacity: 0.9;
+  flex: none;
+}
+
+/* ================================================================ list == */
+.skd-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  min-width: 0;
+}
+
+.skd-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 13px;
+  border-radius: 12px;
+  background: var(--sk-soft);
+}
+
+.skd-dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  flex: none;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--c, var(--sk-accent));
+}
+
+.skd-list-txt {
+  min-width: 0;
+  flex: 1;
+}
+
+.skd-list-txt b {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.skd-list-txt span {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.skd-list-v {
+  flex: none;
+  font-size: 13.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================== funnel == */
+.skd-funnel {
+  display: grid;
+  gap: 0;
+}
+
+.skd-fstep {
+  position: relative;
+  padding: 13px 16px;
+  background: color-mix(in srgb, var(--c) 12%, #fff);
+  border-left: 4px solid var(--c);
+}
+
+.skd-fstep + .skd-fstep {
+  margin-top: 9px;
+}
+
+.skd-fstep-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.skd-fstep-top b {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.skd-fstep-top span {
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.skd-fstep small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.skd-fcarry {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 0 7px 20px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.skd-fcarry::before {
+  content: "";
+  width: 1px;
+  height: 16px;
+  background: #cbd5e1;
+  flex: none;
+}
+
+.skd-fcarry b {
+  color: #475569;
+  font-weight: 700;
+}
+
+/* ============================================================== tracks == */
+.skd-tracks {
+  display: grid;
+  gap: 16px;
+}
+
+.skd-trackrow {
+  display: grid;
+  gap: 7px;
+}
+
+.skd-trackrow-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13.5px;
+}
+
+.skd-trackrow-top span {
+  color: #475569;
+  font-weight: 500;
+}
+
+.skd-trackrow-top b {
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.skd-tracks-total {
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid var(--sk-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 30px;
+}
+
+.skd-tracks-total div span {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.skd-tracks-total div b {
+  display: block;
+  margin-top: 5px;
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* =============================================================== panel == */
+.skd-body {
+  font-size: 13.5px;
+  color: #334155;
+}
+
+.skd-body h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+/* ============================================================== empty === */
+.skd-empty {
+  padding: 34px 10px;
+  text-align: center;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* =============================================================== 404 === */
+/* only the module dashboard is a real page; every other address shows this,
+   centered in the middle of the module background */
+.sk-main.skd-main-404 {
+  display: flex;
+  flex-direction: column;
+}
+
+.skd-page-404 {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(26px, 5vh, 44px) 16px;
+  background:
+    radial-gradient(rgba(15, 23, 42, 0.05) 1.2px, transparent 1.3px) 0 0 / 24px 24px,
+    radial-gradient(520px 400px at 8% 14%,
+      color-mix(in srgb, var(--sk-accent, #0ea5e9) 15%, transparent), transparent 65%),
+    radial-gradient(560px 440px at 92% 86%, rgba(99, 102, 241, 0.13), transparent 65%),
+    linear-gradient(180deg, #f8fafc, rgba(255, 255, 255, 0.7));
+}
+
+.skd-page-404::before,
+.skd-page-404::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.skd-page-404::before {
+  width: 74px;
+  height: 74px;
+  top: 15%;
+  right: 13%;
+  background: color-mix(in srgb, var(--sk-accent, #0ea5e9) 28%, transparent);
+  animation: skd-float 6s ease-in-out infinite;
+}
+
+.skd-page-404::after {
+  width: 26px;
+  height: 26px;
+  bottom: 17%;
+  left: 11%;
+  background: rgba(99, 102, 241, 0.32);
+  animation: skd-float 5s ease-in-out 1.2s infinite;
+}
+
+.skd-404 {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 560px;
+  backdrop-filter: blur(8px);
+  animation: skd-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.skd-404-orb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(158px, 34vw, 196px);
+  height: clamp(158px, 34vw, 196px);
+  margin-bottom: 20px;
+  animation: skd-float 5s ease-in-out infinite;
+}
+
+.skd-404-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px dashed color-mix(in srgb, var(--sk-accent, #0ea5e9) 45%, transparent);
+  border-radius: 50%;
+  animation: skd-spin 26s linear infinite;
+}
+
+.skd-404-ring::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  border-radius: 50%;
+  background: var(--sk-accent, #0ea5e9);
+  box-shadow: 0 0 0 4px
+    color-mix(in srgb, var(--sk-accent, #0ea5e9) 22%, transparent);
+}
+
+.skd-404-orb::before {
+  content: "404";
+  grid-area: 1 / 1;
+  font-size: clamp(62px, 15vw, 88px);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  transform: translate(5px, 6px);
+  color: transparent;
+  -webkit-text-stroke: 1.6px
+    color-mix(in srgb, var(--sk-accent, #0ea5e9) 38%, transparent);
+}
+
+.skd-404-code {
+  grid-area: 1 / 1;
+  position: relative;
+  z-index: 1;
+  font-size: clamp(62px, 15vw, 88px);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--sk-accent, #0ea5e9), #6366f1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.skd-404 h2 {
+  margin-top: 15px;
+  font-size: clamp(21px, 3vw, 27px);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+
+.skd-404 p {
+  margin-top: 9px;
+  max-width: 430px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #64748b;
+}
+
+
+@keyframes skd-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes skd-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ============================================================ reveal === */
+.skd-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: skd-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes skd-in {
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skd-in { opacity: 1; transform: none; animation: none; }
+  .skd-404,
+  .skd-404-orb,
+  .skd-404-ring,
+  .skd-page-404::before,
+  .skd-page-404::after { animation: none; }
+  .skd-track > i,
+  .skd-hbar > i { transition: none; }
+}
+
+/* ========================================================= responsive === */
+@media (max-width: 1180px) {
+  .skd-row > * { grid-column: span 12 !important; }
+  .skd-mrow > label { font-size: 13px; }
+  .skd-mrow > div { font-size: 13px; }
+}
+
+@media (max-width: 760px) {
+  .skd-page { padding: 16px 14px 8px; }
+  .skd-page-404 { padding: 24px 12px; }
+  .skd-head-txt h1 { font-size: 24px; }
+  .skd-inline { padding-left: 0; margin-left: 0; border-left: 0; }
+  .skd-metrics { padding: 14px; overflow-x: auto; }
+  .skd-mhead, .skd-mrow { --ml: 150px; min-width: 640px; }
+
+  /* the body carries the same 640px as the head, so the header and every
+     row travel together in the card's horizontal scroll instead of the
+     body clipping the rows at the card width */
+  .skd-mbody { min-width: 640px; }
+
+  /* hero: five squeezed cells become a readable 2-column grid */
+  .skd-rail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    flex: 1 1 100%;
+    row-gap: 4px;
+  }
+
+  .skd-hcell { padding: 6px 12px; }
+
+  .skd-hcell:nth-child(odd) {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .skd-hcell:nth-child(even) { padding-right: 0; }
+}
+
+@media (max-width: 460px) {
+  .skd-stat { padding: 14px; }
+  .skd-stat b { font-size: 20px; }
+}

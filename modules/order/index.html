@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Order Dashboard - SK Trims ERP</title>
+<link rel="stylesheet" href="../../assets/css/style.css" />
+<link rel="stylesheet" href="../../assets/css/dashboard.css" />
+<link rel="icon" href="../../assets/images/favicons/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicons/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicons/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- =====================================================================
+     ORDER DASHBOARD
+
+     This page is written out in full: every card, table and chart canvas
+     below is real HTML. Only the numbers are filled in from JavaScript, so
+     the layout can be changed here and the numbers changed in one data
+     file.
+
+       assets/js/dash-order.js   the numbers        <- edit values here
+       assets/js/order-page.js   fills them in
+
+     The four data attributes the binder looks for:
+
+       data-rows="..."     fill the rows of the table it sits in
+       data-legend="..."    fill the coloured key under a chart
+       data-chart="..."     draw this chart into this canvas
+       data-metrics         fill the financial metrics grid
+
+     A <th> says how to show its column: data-f="money" for crore/lakh,
+     data-f="qty" for a plain count, or nothing to leave the value alone.
+
+     The header, the menu bar and the footer are still built by the scripts
+     at the bottom, so this file holds only its own content in #sk-app.
+     ===================================================================== -->
+<div id="sk-app">
+
+  <div class="skd-page">
+
+    <!-- ============================================== page heading ===== -->
+    <div class="skd-head">
+      <div class="skd-head-txt">
+        <h1>Order Dashboard</h1>
+        <p>Order intake, last six months performance, party and product breakdowns, and the financial metrics overview.</p>
+      </div>
+      <span class="skd-head-tag"><i></i>Order Dashboard</span>
+    </div>
+
+    <!-- ===================== ROW 1 : 7 days / 6 months / top two lists === -->
+    <div class="skd-row">
+
+      <!-- ------------------------------------------ last 7 days chart -->
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-canvas" style="height:250px">
+            <canvas data-chart="last7"></canvas>
+          </div>
+        </section>
+      </div>
+
+      <!-- ------------------------------------- last 6 months doughnut -->
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Last 6 Months Performance</h2>
+            </div>
+          </div>
+          <div class="skd-canvas" style="height:230px">
+            <canvas data-chart="months"></canvas>
+          </div>
+          <!-- the coloured key, filled from the chart data -->
+          <div class="skd-legend" data-legend="months"></div>
+        </section>
+      </div>
+
+      <!-- ------------------------------------------ top sales tabs -->
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-tabs" role="tablist">
+            <button type="button" class="skd-tab is-on" role="tab" aria-selected="true"
+              data-skd-tab="o-top-0">Top Sales</button>
+            <button type="button" class="skd-tab" role="tab" aria-selected="false"
+              data-skd-tab="o-top-1">Top Creditors</button>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="o-top-0">
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Party Name</th>
+                    <th class="a-r" data-f="money">6 Months</th>
+                    <th class="a-r" data-f="money">Per Month</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="topSales"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="o-top-1" hidden>
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Party Name</th>
+                    <th class="a-r" data-f="money">6 Months</th>
+                    <th class="a-r" data-f="money">Per Month</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="topCreditors"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ================================ ROW 2 : breakdowns / team chart === -->
+    <div class="skd-row">
+
+      <!-- --------------------------------------- party and product tabs -->
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-tabs" role="tablist">
+            <button type="button" class="skd-tab is-on" role="tab" aria-selected="true"
+              data-skd-tab="o-break-0">Party</button>
+            <button type="button" class="skd-tab" role="tab" aria-selected="false"
+              data-skd-tab="o-break-1">Product</button>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="o-break-0">
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Party</th>
+                    <th class="a-r" data-f="money">Order Value</th>
+                    <th class="a-r" data-f="qty">Qty</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="party"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="o-break-1" hidden>
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Product</th>
+                    <th class="a-r" data-f="money">Order Value</th>
+                    <th class="a-r" data-f="qty">Qty</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="product"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ------------------------------------------ team performance -->
+      <div class="skd-in" style="grid-column:span 8">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Last 1 Month Team Performance</h2>
+              <p class="skd-sub">Orders, production and sales per marketing man</p>
+            </div>
+          </div>
+          <div class="skd-canvas" style="height:330px">
+            <canvas data-chart="team"></canvas>
+          </div>
+          <div class="skd-legend" data-legend="team"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============================ ROW 3 : recent orders / item chart === -->
+    <div class="skd-row">
+
+      <!-- ---------------------------------------------- recent orders -->
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Recent Orders</h2>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="skd-table">
+              <thead>
+                <tr>
+                  <th class="a-l">Order No</th>
+                  <th class="a-l">Party</th>
+                  <th class="a-r" data-f="money">Value</th>
+                  <th class="a-r">Status</th>
+                </tr>
+              </thead>
+              <tbody data-rows="recent"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- ----------------------------------------- item performance -->
+      <div class="skd-in" style="grid-column:span 8">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Last 1 Month Item Performance</h2>
+              <p class="skd-sub">Item wise order and production value</p>
+            </div>
+          </div>
+          <div class="skd-canvas" style="height:330px">
+            <canvas data-chart="item"></canvas>
+          </div>
+          <div class="skd-legend" data-legend="item"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============================= ROW 4 : financial metrics overview == -->
+    <div class="skd-row">
+      <div class="skd-in" style="grid-column:span 12">
+        <!-- the heading sits in the HTML, the grid is filled from the data -->
+        <div class="skd-metrics" data-metrics>
+          <h2>Financial Metrics Overview</h2>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- The header, the menu bar and the footer are built by these scripts. -->
+<script src="../../assets/js/menu.js"></script>
+<script src="../../assets/js/header.js"></script>
+<script src="../../assets/js/footer.js"></script>
+
+<!-- Chart.js draws the charts, dashboard.js holds the shared formatters
+     (money, qty, badges) that order-page.js uses to fill the tables. -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="../../assets/js/dashboard.js"></script>
+
+<!-- the numbers for this page -->
+<script src="../../assets/js/dash-order.js"></script>
+
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/order-page.js"></script>
+<script>App.boot(); OrderPage.render();</script>
+</body>
+</html>

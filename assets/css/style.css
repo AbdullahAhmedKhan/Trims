@@ -1,0 +1,1933 @@
+/* ==========================================================================
+   SK Trims ERP - GLOBAL STYLESHEET
+   Loaded by every page. The header is built by assets/js/header.js, the
+   footer by assets/js/footer.js, the menu data by assets/js/menu.js.
+
+   The menu bar is plain text module names, in the same spirit as the
+   navbar of the live application: name opens the dashboard, the small
+   arrow opens the sub items.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------- tokens */
+:root {
+  --sk-header-h: 60px;
+  --sk-subbar-h: 32px;
+  --sk-top-h: 92px;
+  --sk-accent: #0ea5e9;
+  /* the same blue, dark enough to be read as text on a light page */
+  --sk-accent-ink: #0369a1;
+
+  --sk-line: #e2e8f0;
+  --sk-soft: #eef2f7;
+  --sk-muted: #94a3b8;
+  --sk-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --sk-shadow-md: 0 8px 20px -8px rgba(15, 23, 42, 0.22);
+  --sk-shadow-lg: 0 24px 52px -18px rgba(15, 23, 42, 0.32);
+}
+
+/* ------------------------------------------------------------------ base */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Space Grotesk is pulled from Google Fonts by each page's <head>, with the
+   usual system faces behind it so a page opened without a connection still
+   lines up. */
+body {
+  font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background: #f1f5f9;
+  color: #0f172a;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+p,
+ul {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.sk-svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sk-svg-sm {
+  width: 16px;
+  height: 16px;
+}
+
+.sk-caret {
+  width: 13px;
+  height: 13px;
+  opacity: 0.5;
+  transition: transform 0.18s ease;
+}
+
+.sk-skip {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  z-index: 1100;
+  background: #0f172a;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sk-skip:focus {
+  left: 12px;
+}
+
+.sk-lock {
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------- layout */
+.sk-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sk-main {
+  flex: 1;
+  min-width: 0;
+  padding-top: var(--sk-top-h);
+}
+
+/* ==========================================================================
+   HEADER BAR
+   ========================================================================== */
+.sk-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1045;
+  height: var(--sk-top-h);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-bottom: 1px solid var(--sk-line);
+}
+
+/* Home page: no breadcrumb bar, so the bar is one row tall and the page
+   starts higher up. */
+.sk-home {
+  --sk-top-h: var(--sk-header-h);
+}
+
+.sk-header.is-home .sk-header-right {
+  margin-left: auto;
+}
+
+/* The header has no fill of its own on the homepage, so the photo behind
+   the page shows through it. The homepage is a light theme, so the header
+   text stays dark. */
+.sk-header.is-home {
+  background: transparent;
+  border-bottom: 0;
+  transition: background 0.22s ease, box-shadow 0.22s ease;
+}
+
+.sk-header.is-home .sk-iconbtn {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(15, 23, 42, 0.08);
+  color: #334155;
+}
+
+.sk-header.is-home .sk-iconbtn:hover {
+  background: #fff;
+  border-color: rgba(15, 23, 42, 0.14);
+  color: #0f172a;
+}
+
+.sk-header.is-home .sk-avatar {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  color: #334155;
+}
+
+/* scrolled: the bar would be sitting on the tiles, so it goes solid */
+.sk-header.is-home.is-stuck {
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid var(--sk-line);
+  box-shadow: 0 8px 20px -14px rgba(15, 23, 42, 0.35);
+}
+
+.sk-header.is-home.is-stuck .sk-avatar {
+  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  border: 0;
+  color: #fff;
+}
+
+.sk-header-in {
+  height: var(--sk-header-h);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  min-width: 0;
+}
+
+.sk-burger {
+  display: none;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--sk-line);
+  border-radius: 10px;
+  background: #fff;
+  color: #475569;
+  place-items: center;
+  flex: none;
+}
+
+.sk-burger.is-on,
+.sk-burger:hover {
+  background: var(--sk-accent);
+  border-color: var(--sk-accent);
+  color: #fff;
+}
+
+/* brand */
+.sk-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: none;
+}
+
+/* the logo sits on a white plate so it reads on the dark bar and on the
+   light photo of the homepage alike */
+.sk-logo {
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.sk-logo img {
+  display: block;
+  height: 26px;
+  width: auto;
+  object-fit: contain;
+}
+
+.sk-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex: none;
+}
+
+.sk-header-right.has-search {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-end;
+}
+
+.sk-header-right.has-search .sk-menu-search {
+  flex: 0 1 300px;
+  max-width: 320px;
+  order: 1;
+}
+
+.sk-header-right.has-search #skGridBtn {
+  order: 2;
+}
+
+.sk-header-right.has-search .sk-usermenu {
+  order: 3;
+}
+
+.sk-iconbtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--sk-line);
+  background: #fff;
+  color: #475569;
+  display: grid;
+  place-items: center;
+  flex: none;
+  transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.sk-iconbtn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.sk-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  flex: none;
+  user-select: none;
+}
+
+/* ==========================================================================
+   ACCOUNT MENU  -  Profile / Settings / Logout
+   ========================================================================== */
+@keyframes sk-pop {
+  from {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.sk-usermenu {
+  position: relative;
+  flex: none;
+}
+
+.sk-usermenu-btn {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.sk-usermenu-btn:focus-visible {
+  outline: 2px solid var(--sk-accent);
+  outline-offset: 2px;
+}
+
+.sk-usermenu-pop {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 208px;
+  padding: 6px;
+  border: 1px solid var(--sk-line);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: var(--sk-shadow-lg);
+  animation: sk-pop 0.14s ease;
+  z-index: 1060;
+}
+
+.sk-usermenu-head {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 10px 10px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--sk-soft);
+}
+
+.sk-usermenu-head strong {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.sk-usermenu-head span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sk-muted);
+}
+
+.sk-usermenu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+
+.sk-usermenu-item .sk-svg {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  color: #94a3b8;
+}
+
+.sk-usermenu-item:hover {
+  background: var(--sk-soft);
+  color: #0f172a;
+}
+
+.sk-usermenu-item:hover .sk-svg {
+  color: var(--sk-accent);
+}
+
+.sk-usermenu-item.is-danger {
+  color: #e11d48;
+}
+
+.sk-usermenu-item.is-danger .sk-svg {
+  color: #f43f5e;
+}
+
+.sk-usermenu-item.is-danger:hover {
+  background: #fff1f2;
+  color: #be123c;
+}
+
+/* ==========================================================================
+   MENU BAR  -  plain text names, arrow opens the sub items
+   ========================================================================== */
+.sk-nav {
+  flex: 0 1 auto;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* The homepage names all eight modules, where a module page names only its
+   own items, so the row is much fuller. The menu takes the space left over
+   between the logo and the account menu and centres itself in it.
+
+   `.sk-mcaret` sits beside the name only on the homepage menu, so it is
+   what tells the two apart here.
+
+   Desktop only: below 900px the menu is the burger drawer and keeps the
+   roomier row styling the phone rules give it. */
+@media (min-width: 900px) {
+  .sk-nav:has(.sk-mcaret) {
+    flex: 1 1 auto;
+  }
+
+  .sk-nav:has(.sk-mcaret) .sk-menu {
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* the names keep their own width and the row never wraps, so the bar
+     stays one row tall at every window size */
+  .sk-nav:has(.sk-mcaret) .sk-mi {
+    flex: none;
+  }
+
+  .sk-nav:has(.sk-mcaret) .sk-mrow {
+    padding: 0 2px;
+  }
+
+  .sk-nav:has(.sk-mcaret) .sk-mlink {
+    padding: 0 2px 0 7px;
+  }
+}
+
+/* Search spans every module and submenu, while the header menu itself only
+   shows the module that owns the current page. */
+.sk-menu-search {
+  position: relative;
+  flex: 1 1 220px;
+  min-width: 120px;
+  max-width: 360px;
+  margin-left: auto;
+  z-index: 1050;
+}
+
+.sk-search-box {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 36px;
+  padding: 0 11px;
+  border: 1px solid var(--sk-line);
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #8491a3;
+  transition: border-color .16s ease, background .16s ease, box-shadow .16s ease;
+}
+
+.sk-search-box:focus-within {
+  border-color: color-mix(in srgb, var(--sk-accent) 55%, #fff);
+  background: #fff;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--sk-accent) 12%, transparent);
+}
+
+.sk-search-box>.sk-svg {
+  width: 17px;
+  height: 17px;
+  flex: none;
+}
+
+.sk-search-box input {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #1e293b;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 550;
+}
+
+.sk-search-box input::placeholder {
+  color: #98a3b2;
+}
+
+.sk-search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: min(390px, calc(100vw - 24px));
+  max-height: min(65vh, 480px);
+  overflow-y: auto;
+  padding: 5px;
+  border: 1px solid var(--sk-line);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: var(--sk-shadow-lg);
+}
+
+.sk-search-results[hidden],
+.sk-search-result[hidden],
+.sk-search-empty[hidden] {
+  display: none;
+}
+
+.sk-search-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 42px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: #263449;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sk-search-result:hover,
+.sk-search-result:focus-visible {
+  outline: 0;
+  background: #f1f5f9;
+  color: var(--sk-accent-ink);
+}
+
+.sk-search-result small {
+  overflow: hidden;
+  color: #8793a4;
+  font-size: 10px;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sk-search-empty {
+  padding: 13px 10px;
+  color: #8793a4;
+  font-size: 12px;
+}
+
+/* No overflow clipping on the nav or the bar: a drop down panel is
+   absolutely positioned and has to be able to hang outside them. The
+   names are kept short by the font and padding steps further down so
+   the bar itself never has to scroll. */
+.sk-menu {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sk-mi {
+  position: relative;
+  flex: none;
+}
+
+.sk-mrow {
+  display: flex;
+  align-items: center;
+  height: 38px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  transition: background 0.16s ease;
+}
+
+.sk-mrow:hover {
+  background: #f1f5f9;
+}
+
+.sk-mrow.is-active {
+  background: color-mix(in srgb, var(--m) 9%, transparent);
+  border-color: color-mix(in srgb, var(--m) 22%, transparent);
+}
+
+/* the name - opens the module dashboard */
+.sk-mlink {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 4px 0 12px;
+  font-size: 13px;
+  font-weight: 650;
+  color: #475569;
+  white-space: nowrap;
+  transition: color 0.16s ease;
+}
+
+.sk-mrow:hover .sk-mlink {
+  color: #0f172a;
+}
+
+.sk-mrow.is-active .sk-mlink {
+  color: var(--m);
+  font-weight: 800;
+}
+
+/* the arrow - opens the drop down */
+.sk-mcaret {
+  height: 100%;
+  width: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 0 9px 9px 0;
+  color: #94a3b8;
+}
+
+.sk-mcaret:hover {
+  color: #0f172a;
+}
+
+.sk-mrow.is-active .sk-mcaret {
+  color: var(--m);
+}
+
+.sk-mi.is-open>.sk-mrow {
+  background: color-mix(in srgb, var(--m) 9%, transparent);
+  border-color: color-mix(in srgb, var(--m) 22%, transparent);
+}
+
+.sk-mi.is-open>.sk-mrow .sk-caret,
+.sk-si.is-open>.sk-sibtn .sk-caret {
+  transform: rotate(180deg);
+}
+
+/* ------------------------------------------------------- sub menus ---- */
+.sk-sm {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  min-width: 230px;
+  padding: 5px;
+  background: #fff;
+  border: 1px solid var(--sk-line);
+  border-radius: 10px;
+  box-shadow: var(--sk-shadow-lg);
+  display: none;
+
+  /* A panel that holds another panel must NOT scroll, or the browser
+     forces overflow-x to auto as well and the panel that slides out to
+     the side gets clipped. Only the deepest panel is allowed to clip,
+     which is why the scroll rule sits in the :not(:has()) below. */
+  max-height: none;
+  overflow: visible;
+}
+
+/* desktop only: the deepest panel scrolls if it is taller than the window.
+   Below 900px the menu is a drawer and the panels are accordions instead,
+   so that rule must not apply there. */
+@media (min-width: 900px) {
+  .sk-sm:not(:has(.sk-sm)) {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+}
+
+/* opens by click on the arrow, and on hover like the live navbar */
+.sk-mi.is-open>.sk-sm,
+.sk-mi:hover>.sk-sm,
+.sk-si.is-open>.sk-sm {
+  display: block;
+}
+
+/* a further level slides out to the side */
+.sk-sm .sk-sm {
+  top: -5px;
+  left: calc(100% + 4px);
+}
+
+/* app.js adds is-flip to a panel that would hang off the right of the
+   window, so it opens to the other side instead */
+.sk-sm.is-flip {
+  left: auto;
+  right: 0;
+}
+
+.sk-sm .sk-sm.is-flip {
+  left: auto;
+  right: calc(100% + 4px);
+}
+
+.sk-si {
+  position: relative;
+}
+
+.sk-slink,
+.sk-sibtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 34px;
+  padding: 6px 9px;
+  border-radius: 7px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #334155;
+  text-align: left;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+
+.sk-slink .sk-caret,
+.sk-sibtn .sk-caret {
+  opacity: 0.28;
+}
+
+.sk-slink:hover,
+.sk-sibtn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.sk-slink:hover .sk-caret,
+.sk-sibtn:hover .sk-caret {
+  opacity: 0.75;
+}
+
+/* the sub item whose page is open right now */
+.sk-si.is-active>.sk-slink,
+.sk-si.is-active>.sk-sibtn {
+  background: color-mix(in srgb, var(--m) 10%, transparent);
+  color: var(--m);
+  font-weight: 800;
+}
+
+.sk-si.is-active>.sk-slink .sk-caret,
+.sk-si.is-active>.sk-sibtn .sk-caret {
+  opacity: 0.6;
+  color: var(--m);
+}
+
+/* a group: Operation / Report / Configuration / Manage Voucher ...
+   it only opens one more level, so it reads as a heading, not a link */
+.sk-si.is-group>.sk-sibtn {
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--sk-muted);
+  min-height: 30px;
+}
+
+.sk-si.is-group>.sk-sibtn:hover {
+  color: #334155;
+}
+
+.sk-menu>.sk-mi>.sk-topmenu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  width: auto;
+  min-height: 38px;
+  padding: 0 9px 0 11px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+  transition: background .16s ease, color .16s ease, border-color .16s ease;
+}
+
+.sk-menu>.sk-mi>.sk-topmenu-btn:hover,
+.sk-menu>.sk-mi.is-open>.sk-topmenu-btn,
+.sk-menu>.sk-mi.is-active>.sk-topmenu-btn {
+  background: color-mix(in srgb, var(--m) 9%, transparent);
+  border-color: color-mix(in srgb, var(--m) 22%, transparent);
+  color: var(--m);
+}
+
+.sk-menu>.sk-mi>.sk-topmenu-btn .sk-caret {
+  width: 13px;
+  height: 13px;
+  opacity: .5;
+}
+
+.sk-menu>.sk-mi.is-open>.sk-topmenu-btn .sk-caret {
+  transform: rotate(180deg);
+}
+
+.sk-si.is-group>.sk-sibtn .sk-caret {
+  opacity: 0.55;
+}
+
+.sk-sm>.sk-si.is-group:not(:first-child) {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid var(--sk-soft);
+}
+
+/* ------------------------------------------------------------- subbar -- */
+.sk-subbar {
+  height: var(--sk-subbar-h);
+  border-top: 1px solid var(--sk-soft);
+  background: #fafbfd;
+  flex: none;
+  display: flex;
+  align-items: center;
+}
+
+.sk-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 14px;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.sk-crumb {
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.sk-crumb:hover {
+  text-decoration: underline;
+}
+
+.sk-crumb.is-here {
+  color: var(--m, #0f172a);
+  font-weight: 800;
+}
+
+.sk-crumb.is-group {
+  color: var(--sk-muted);
+  text-transform: uppercase;
+  font-size: 10.5px;
+  letter-spacing: 0.07em;
+}
+
+.sk-crumb-sep {
+  color: #cbd5e1;
+  flex: none;
+}
+
+/* ==========================================================================
+   MODULES POPUP  -  icon box + module name only
+   ========================================================================== */
+.sk-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1046;
+  background: rgba(15, 23, 42, 0.4);
+  /* starts clear, it only darkens once the popup says it is open */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s ease, visibility 0s linear 0.22s;
+}
+
+.sk-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.22s ease, visibility 0s;
+}
+
+.sk-popup {
+  position: fixed;
+  z-index: 1047;
+  top: calc(var(--sk-top-h) + 8px);
+  right: 16px;
+  width: min(300px, calc(100vw - 32px));
+  padding: 22px;
+  background: #fff;
+  border: 1px solid var(--sk-line);
+  border-radius: 20px;
+  box-shadow: var(--sk-shadow-lg);
+  /* the closed look: folded away against the corner of the button that
+     opened it. visibility keeps it off the page once it has closed, and the
+     delay in the transition holds it visible until then. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) scale(0.9);
+  transform-origin: top right;
+  transition: opacity 0.2s ease,
+    transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0.26s;
+}
+
+.sk-popup.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.2s ease,
+    transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s;
+}
+
+.sk-popup[hidden] {
+  display: none;
+}
+
+.sk-popup-close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #ff2222;
+  display: grid;
+  place-items: center;
+}
+
+.sk-popup-close .sk-svg {
+  width: 17px;
+  height: 17px;
+}
+
+.sk-popup-close:hover {
+  background: #e2e8f0;
+  border-color: #d8e0e9;
+  color: #ff2222;
+}
+
+/* the grid button that opens the box, its four squares give it a spin */
+@keyframes sk-grid-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#skGridBtn .sk-svg {
+  /* the pointer only makes the icon a little bigger, the turn is saved for
+     the click */
+  transition: transform 0.22s ease;
+}
+
+#skGridBtn:hover .sk-svg {
+  transform: scale(1.14);
+}
+
+/* one slow, even turn on the way in, and the same on the way out */
+#skGridBtn.is-on .sk-svg {
+  animation: sk-grid-spin 0.7s cubic-bezier(0.45, 0, 0.35, 1);
+}
+
+.sk-popup .sk-mtiles {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.sk-popup .sk-mtile {
+  /* min-height: 132px; */
+  min-height: 50px;
+  gap: 11px;
+  /* padding: 15px 10px;
+  border-color: #e8edf3;
+  border-radius: 15px; */
+  /* background: linear-gradient(180deg, #fff, #fcfdff); */
+
+  /* the closed look of a tile: small and low, out of sight. On open every
+     tile comes back, one after the other, the pause between them growing
+     with the place it holds in the grid. */
+  opacity: 0;
+  transform: translateY(12px) scale(0.72);
+  transition: opacity 0.2s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.sk-popup.is-open .sk-mtile {
+  opacity: 1;
+  transform: none;
+  /* the pause stops growing after the 13th tile, so a long list of modules
+     still opens in about the same time */
+  transition-delay: calc(min(var(--i, 0), 12) * 35ms + 70ms);
+}
+
+.sk-popup.is-open .sk-mtile:hover {
+  /* the hop must not wait for the turn of its turn in the opening */
+  transition-delay: 0s;
+}
+
+.sk-popup .sk-mtile:hover {
+  /* border-color: color-mix(in srgb, var(--m) 38%, var(--sk-line));
+  background: #fff; */
+  transform: translateY(-2px);
+  /* box-shadow: 0 12px 24px -18px color-mix(in srgb, var(--m) 55%, transparent); */
+}
+
+.sk-popup .sk-mtile-ico {
+  width: 62px;
+  height: 62px;
+  border: 1px solid color-mix(in srgb, var(--m) 13%, transparent);
+  border-radius: 18px;
+}
+
+.sk-popup .sk-mtile-ico .sk-svg {
+  width: 29px;
+  height: 29px;
+}
+
+.sk-popup .sk-mtile-ico .sk-img {
+  width: 43px;
+  height: 43px;
+}
+
+.sk-popup .sk-mtile-name {
+  font-size: 13px;
+}
+
+.sk-popup .sk-mtile:hover .sk-mtile-ico {
+  color: var(--m);
+  background: color-mix(in srgb, var(--m) 2%, transparent);
+}
+
+.sk-mtiles {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.sk-mtile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  /* padding: 16px 8px 13px;
+  border-radius: 12px;
+  border: 1px solid var(--sk-soft);
+  background: #fff; */
+  transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.sk-mtile:hover {
+  /* border-color: color-mix(in srgb, var(--m) 45%, var(--sk-line)); */
+  transform: translateY(-2px);
+  /* box-shadow: var(--sk-shadow-md); */
+}
+
+.sk-mtile-ico {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  color: var(--m);
+  /* background: color-mix(in srgb, var(--m) 12%, transparent); */
+  flex: none;
+}
+
+.sk-mtile-ico .sk-svg {
+  width: 21px;
+  height: 21px;
+}
+
+/* module icons are 512x512 pictures, so they are scaled down to fit */
+.sk-mtile-ico .sk-img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.sk-mtile:hover .sk-mtile-ico {
+  color: #fff;
+  background: var(--m);
+}
+
+.sk-mtile-name {
+  font-size: 12px;
+  font-weight: 750;
+  color: #0f172a;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* ==========================================================================
+   HOMEPAGE  -  photo behind the page, cards for the modules
+   ========================================================================== */
+
+/* Soft blue blurred bubbles form a light backdrop for the homepage. */
+body.sk-home-page {
+  background-color: #eff7ff;
+  background-image:url("../images/background-light.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  isolation: isolate;
+}
+
+/* The homepage is one full screen: the bar and the module cards, nothing
+   else, so there is nothing to scroll. The cards share whatever height is
+   left over, which is why their padding and icon shrink with the window
+   height instead of being fixed sizes. */
+.sk-home-page .sk-shell {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sk-home-page .sk-main {
+  padding-top: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The tiles start under the fixed bar. The gap is worked out from
+   --sk-top-h so it follows the bar instead of being a fixed number. */
+.sk-home-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: calc(var(--sk-top-h) + clamp(8px, 2.4vh, 22px)) 18px
+    clamp(14px, 3vh, 28px);
+}
+
+.sk-home-hero {
+  text-align: center;
+  color: #0f172a;
+  max-width: 640px;
+  margin: 0 auto clamp(12px, 2.6vh, 26px);
+}
+
+.sk-home-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  /* the bright accent blue is too pale to read on a light page */
+  color: var(--sk-accent-ink);
+}
+
+.sk-home-title {
+  font-size: clamp(22px, 4.6vh, 46px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 6px 0 8px;
+  color: #0f172a;
+}
+
+.sk-home-lead {
+  font-size: clamp(12px, 1.7vh, 14.5px);
+  font-weight: 500;
+  color: #475569;
+}
+
+/* 8 modules, laid out as a wrapping flex row. The group itself is capped so
+   the cards stay a comfortable size on a big screen instead of drifting
+   apart, and the rows center themselves in the space below the heading. */
+.sk-home-tiles {
+  --hx: clamp(10px, 1.8vw, 20px);
+  --hy: clamp(15px, 2.5vw, 30px);
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+  justify-content: center;
+  gap: var(--hy) var(--hx);
+}
+
+/* A module is the icon box and nothing else. There is no box around the
+   pair, so the name just sits under the box as plain text, and the whole
+   thing stays as short as its content. */
+.sk-home-tiles .sk-mtile {
+  display: flex;
+  /* a quarter of the row, less this card's share of the gaps, so that
+     exactly four cards land on each row */
+  flex: 0 0 calc(25% - var(--hx) * 0.75);
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 1.5vh, 13px);
+  padding: 0;
+  min-height: 0;
+  text-align: center;
+  border: 0;
+  /* border-radius: 18px; */
+  background: none;
+  box-shadow: none;
+  transition: transform 0.18s ease;
+}
+
+.sk-home-tiles .sk-mtile:hover,
+.sk-home-tiles .sk-mtile:focus-visible {
+  transform: translateY(-3px);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* the icon box is the only box on the card */
+.sk-home-tiles .sk-mtile-ico {
+  width: clamp(48px, 10vh, 88px);
+  height: clamp(48px, 10vh, 88px);
+  /* border-radius: clamp(15px, 2.4vh, 24px); */
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  box-shadow: 0 8px 24px -14px rgba(15, 73, 140, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.sk-home-tiles .sk-mtile-ico .sk-img {
+  width: 72%;
+  height: 72%;
+}
+
+.sk-home-tiles .sk-mtile:hover .sk-mtile-ico {
+  transform: scale(1.06);
+  background: color-mix(in srgb, var(--m) 7%, #fff);
+  border-color: color-mix(in srgb, var(--m) 55%, transparent);
+  box-shadow: 0 14px 26px -14px color-mix(in srgb, var(--m) 70%, transparent);
+}
+
+.sk-home-tiles .sk-mtile-name {
+  font-size: clamp(12px, 1.9vh, 15px);
+  font-weight: 700;
+  color: #0f172a;
+  text-align: center;
+  transition: color 0.18s ease;
+}
+
+.sk-home-tiles .sk-mtile:hover .sk-mtile-name {
+  color: color-mix(in srgb, var(--m) 78%, #0f172a);
+}
+
+/* ==========================================================================
+   PAGE CONTENT
+   ========================================================================== */
+.sk-page {
+  padding: 20px 18px 28px;
+  margin: 0 auto;
+}
+
+.sk-page-head {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: #fff;
+  border: 1px solid var(--sk-soft);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: var(--sk-shadow-sm);
+}
+
+.sk-page-ico {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  color: #fff;
+  background: var(--c);
+  flex: none;
+}
+
+.sk-page-title h1 {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.sk-page-title p {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sk-muted);
+  margin-top: 1px;
+}
+
+.sk-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.sk-stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid var(--sk-soft);
+  border-radius: 12px;
+  padding: 13px;
+  box-shadow: var(--sk-shadow-sm);
+  min-width: 0;
+}
+
+.sk-stat-ico {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 13%, transparent);
+  flex: none;
+}
+
+.sk-stat-txt {
+  min-width: 0;
+}
+
+.sk-stat-txt b {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sk-stat-txt span {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sk-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --------------------------------------------------------------- table */
+.sk-card {
+  background: #fff;
+  border: 1px solid var(--sk-soft);
+  border-radius: 14px;
+  box-shadow: var(--sk-shadow-sm);
+}
+
+/* label / value rows, used by the pages outside the modules */
+.sk-card-body {
+  padding: 4px 0;
+}
+
+.sk-deflist {
+  display: grid;
+  grid-template-columns: minmax(88px, 34%) 1fr;
+  margin: 0;
+}
+
+.sk-deflist dt,
+.sk-deflist dd {
+  margin: 0;
+  padding: 11px 16px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--sk-soft);
+}
+
+.sk-deflist dt {
+  font-weight: 700;
+  color: #475569;
+  background: #f8fafc;
+}
+
+.sk-deflist dd {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.sk-deflist dt:last-of-type,
+.sk-deflist dd:last-of-type {
+  border-bottom: 0;
+}
+
+.sk-table-card {
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.sk-table-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--sk-soft);
+}
+
+.sk-table-head h2 {
+  font-size: 13.5px;
+  font-weight: 800;
+}
+
+.sk-table-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sk-table-tools input {
+  width: 150px;
+  height: 32px;
+  padding: 0 11px;
+  border-radius: 9px;
+  border: 1px solid var(--sk-line);
+  background: #f8fafc;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f172a;
+  outline: none;
+  transition: width 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.sk-table-tools input:focus {
+  width: 200px;
+  background: #fff;
+  border-color: var(--sk-accent);
+}
+
+.sk-table-tools span {
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 4px 9px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+
+.sk-table-wrap {
+  overflow-x: auto;
+}
+
+.sk-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 540px;
+}
+
+.sk-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--sk-muted);
+  background: #fafbfd;
+  border-bottom: 1px solid var(--sk-soft);
+  white-space: nowrap;
+}
+
+.sk-table td {
+  padding: 10px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #64748b;
+  border-bottom: 1px solid #f8fafc;
+  white-space: nowrap;
+}
+
+.sk-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.sk-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.sk-table td b {
+  color: #0f172a;
+}
+
+.is-right {
+  text-align: right;
+}
+
+.sk-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 7px;
+  font-size: 10.5px;
+  font-weight: 800;
+}
+
+.is-plain {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.is-emerald {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.is-amber {
+  background: #fffbeb;
+  color: #d97706;
+}
+
+.is-sky {
+  background: #f0f9ff;
+  color: #0284c7;
+}
+
+.is-violet {
+  background: #f5f3ff;
+  color: #7c3aed;
+}
+
+.is-rose {
+  background: #fff1f2;
+  color: #e11d48;
+}
+
+.sk-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 30px 16px;
+  color: var(--sk-muted);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.sk-empty .sk-svg {
+  width: 28px;
+  height: 28px;
+  opacity: 0.6;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.sk-footer {
+  border-top: 1px solid var(--sk-line);
+  background: #fff;
+  flex: none;
+}
+
+.sk-footer-in {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 14px 18px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.sk-foot-brand {
+  font-weight: 750;
+  color: #0f172a;
+}
+
+.sk-foot-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+}
+
+.sk-foot-nav a {
+  color: #64748b;
+  font-weight: 650;
+  transition: color 0.16s ease;
+}
+
+.sk-foot-nav a:hover {
+  color: var(--m, var(--sk-accent));
+}
+
+.sk-foot-nav a.is-active {
+  color: var(--m);
+  font-weight: 800;
+}
+
+.sk-foot-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sk-muted);
+}
+
+.sk-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: #e11d48;
+}
+
+.sk-logout:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 1199px) {
+  .sk-mtiles {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .sk-mlink {
+    font-size: 12.5px;
+    padding: 0 3px 0 10px;
+  }
+
+  /* the homepage still has all eight names to fit in the same space, so it
+     tightens further before the drawer takes over at 900px */
+  .sk-nav:has(.sk-mcaret) .sk-mlink {
+    padding: 0 1px 0 6px;
+    font-size: 11.5px;
+  }
+
+  .sk-nav:has(.sk-mcaret) .sk-mcaret {
+    width: 19px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .sk-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ------------------------------------------------------------- phone -- */
+@media (max-width: 899px) {
+  .sk-burger {
+    display: grid;
+  }
+
+  /* phones: no search bar in the top bar - the burger drawer carries
+     all navigation (menu links + jump targets) */
+  .sk-menu-search {
+    display: none;
+  }
+
+/* the menu becomes a drawer that slides in under the header */
+  .sk-nav {
+    position: fixed;
+    top: var(--sk-top-h);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    display: block;
+    padding: 6px 0 60px;
+    overflow-y: auto;
+    background: #fff;
+    border-top: 1px solid var(--sk-line);
+    box-shadow: 0 18px 40px -20px rgba(15, 23, 42, 0.4);
+    transform: translateX(-100%);
+    transition: transform 0.22s ease;
+    z-index: 1044;
+  }
+
+  .sk-nav.is-open {
+    transform: none;
+  }
+
+  .sk-menu {
+    display: block;
+    overflow: visible;
+  }
+
+  .sk-mi {
+    border-bottom: 1px solid var(--sk-soft);
+  }
+
+  .sk-mrow {
+    height: 48px;
+    border-radius: 0;
+    border: 0;
+  }
+
+  .sk-mlink {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 650;
+    padding: 0 8px 0 14px;
+  }
+
+  .sk-menu>.sk-mi>.sk-topmenu-btn {
+    justify-content: space-between;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 0;
+    font-size: 14px;
+  }
+
+  .sk-mcaret {
+    width: 44px;
+    height: 48px;
+    border-radius: 0;
+  }
+
+  .sk-mcaret .sk-caret {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* sub items become a plain indented list, one level at a time */
+  .sk-sm,
+  .sk-sm .sk-sm {
+    position: static;
+    min-width: 0;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 0 0 14px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: #fafbfd;
+    transition: max-height 0.24s ease;
+  }
+
+  .sk-mi.is-open>.sk-sm,
+  .sk-si.is-open>.sk-sm {
+    display: block;
+    max-height: 2600px;
+    padding-bottom: 8px;
+  }
+
+  /* hover must not open anything on a touch screen */
+  .sk-mi:hover>.sk-sm {
+    display: none;
+  }
+
+  .sk-mi.is-open:hover>.sk-sm {
+    display: block;
+  }
+
+  .sk-slink,
+  .sk-sibtn {
+    min-height: 42px;
+    font-size: 13px;
+  }
+
+  /* group headings stay headings, but big enough to tap */
+  .sk-si.is-group>.sk-sibtn {
+    min-height: 40px;
+    font-size: 11px;
+  }
+
+  .sk-slink .sk-caret {
+    display: none;
+  }
+}
+
+@media (max-width: 1079px) {
+  .sk-home-tiles {
+    max-width: 690px;
+  }
+
+  .sk-home-tiles .sk-mtile {
+    flex-basis: calc(33.3333% - var(--hx) * 0.6667);
+  }
+}
+
+@media (max-width: 767px) {
+  .sk-logo {
+    padding: 4px 8px;
+  }
+
+  .sk-logo img {
+    height: 21px;
+  }
+
+  .sk-mtiles {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sk-popup .sk-mtiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sk-home-tiles {
+    max-width: 460px;
+  }
+
+  .sk-home-tiles .sk-mtile {
+    flex-basis: calc(50% - var(--hx) * 0.5);
+  }
+
+  .sk-page {
+    padding: 15px 12px 24px;
+  }
+
+  /* same two row bar, so the gap still comes from --sk-top-h */
+  .sk-home-wrap {
+    padding: calc(var(--sk-top-h) + clamp(8px, 2vh, 18px)) 12px
+      clamp(12px, 2.4vh, 22px);
+  }
+
+  /* a photo fixed to the window is unreliable on phones, so it scrolls */
+  body.sk-home-page {
+    background-attachment: scroll;
+  }
+
+  .sk-footer-in {
+    justify-content: center;
+    text-align: center;
+    padding: 14px 12px;
+  }
+}
+
+@media (max-width: 639px) {
+  .sk-mtiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sk-popup .sk-mtiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  /* the cards keep two columns on a phone: one column of eight would not
+     fit in a full screen without a scroll bar */
+  .sk-home-tiles {
+    --hy: clamp(10px, 2vh, 16px);
+  }
+
+  .sk-home-tiles .sk-mtile-ico {
+    border-radius: 15px;
+  }
+
+  .sk-popup {
+    top: calc(var(--sk-header-h) + 8px);
+    right: 12px;
+    width: calc(100vw - 24px);
+    padding: 10px;
+  }
+
+  .sk-search-results {
+    position: fixed;
+    top: calc(var(--sk-header-h) + 8px);
+    right: 12px;
+    left: 12px;
+    width: auto;
+    max-height: 60vh;
+  }
+
+  .sk-table-tools input,
+  .sk-table-tools input:focus {
+    width: 118px;
+  }
+}
+
+@media (max-width: 460px) {
+  .sk-stat-txt b {
+    font-size: 16px;
+  }
+
+  .sk-stat {
+    padding: 11px;
+    gap: 9px;
+  }
+
+  .sk-stat-ico {
+    width: 32px;
+    height: 32px;
+  }
+
+  .sk-header-in {
+    gap: 5px;
+    padding: 0 5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
+}

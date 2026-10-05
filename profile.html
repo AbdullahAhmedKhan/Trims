@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Profile - SK Trims ERP</title>
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/account-pages.css" />
+<link rel="icon" href="assets/images/favicons/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div id="sk-app">
+  <main class="sk-page account-page profile-page">
+    <header class="account-heading">
+      <div>
+        <span class="account-eyebrow">Your workspace</span>
+        <h1>Profile</h1>
+        <p>Manage your account details and access at a glance.</p>
+      </div>
+      <span class="account-heading-icon" aria-hidden="true">
+        <svg class="sk-svg" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.6 20.5v-1.1a5.9 5.9 0 0 1 5.9-5.9h3a5.9 5.9 0 0 1 5.9 5.9v1.1"/></svg>
+      </span>
+    </header>
+
+    <section class="profile-hero" aria-labelledby="profile-name">
+      <div class="profile-identity">
+        <div class="profile-avatar" aria-hidden="true">A</div>
+        <div class="profile-copy">
+          <span class="account-eyebrow">Account overview</span>
+          <h2 id="profile-name">Admin</h2>
+          <p>Administrator <span class="profile-dot" aria-hidden="true"></span> SK Trims ERP</p>
+        </div>
+      </div>
+      <span class="profile-status"><span></span> Active account</span>
+    </section>
+
+    <section class="profile-summary" aria-label="Account summary">
+      <article class="summary-card">
+        <span class="summary-icon summary-icon-violet" aria-hidden="true"><svg class="sk-svg" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20v-1a7 7 0 0 1 14 0v1"/></svg></span>
+        <div><span class="summary-label">Your role</span><strong>Administrator</strong></div>
+      </article>
+      <article class="summary-card">
+        <span class="summary-icon summary-icon-blue" aria-hidden="true"><svg class="sk-svg" viewBox="0 0 24 24"><rect x="3.5" y="4" width="7" height="7" rx="1.5"/><rect x="13.5" y="4" width="7" height="7" rx="1.5"/><rect x="3.5" y="14" width="7" height="7" rx="1.5"/><rect x="13.5" y="14" width="7" height="7" rx="1.5"/></svg></span>
+        <div><span class="summary-label">Module access</span><strong>All eight modules</strong></div>
+      </article>
+      <article class="summary-card">
+        <span class="summary-icon summary-icon-green" aria-hidden="true"><svg class="sk-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.3 2"/></svg></span>
+        <div><span class="summary-label">Last sign in</span><strong>Today</strong></div>
+      </article>
+    </section>
+
+    <section class="account-panel" aria-labelledby="profile-details-title">
+      <div class="account-panel-heading">
+        <div><span class="account-eyebrow">Personal information</span><h2 id="profile-details-title">Account details</h2></div>
+        <span class="detail-lock" aria-label="Read only"><svg class="sk-svg" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Account info</span>
+      </div>
+      <dl class="profile-details">
+        <div><dt>Full name</dt><dd>Admin</dd></div>
+        <div><dt>Account role</dt><dd><span class="role-pill">Administrator</span></dd></div>
+        <div><dt>Available modules</dt><dd>All eight</dd></div>
+        <div><dt>Recent activity</dt><dd>Signed in today</dd></div>
+      </dl>
+    </section>
+  </main>
+</div>
+<script src="assets/js/menu.js"></script>
+<script src="assets/js/header.js"></script>
+<script src="assets/js/footer.js"></script>
+<script src="assets/js/app.js"></script>
+<script>App.boot();</script>
+</body>
+</html>
