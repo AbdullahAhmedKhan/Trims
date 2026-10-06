@@ -220,18 +220,18 @@ window.PAYROLL_DATA = {
       data: [8740000, 873992, 1498272, 874000, 499336],
       bg: [
         "rgba(20, 184, 166, 0.55)",
-        "rgba(255, 159, 64, 0.55)",
-        "rgba(114, 199, 255, 0.55)",
-        "rgba(247, 107, 138, 0.55)",
-        "rgba(167, 139, 250, 0.55)"
+        "rgba(245, 158, 11, 0.55)",
+        "rgba(14, 165, 233, 0.55)",
+        "rgba(167, 139, 250, 0.55)",
+        "rgba(99, 102, 241, 0.55)"
       ]
     }],
     legend: [
       { label: "Basic Salary", value: "৳ 87,40,000", color: "#14b8a6" },
-      { label: "Overtime", value: "৳ 8,73,992", color: "#ff9f40" },
-      { label: "Allowances", value: "৳ 14,98,272", color: "#72c7ff" },
-      { label: "Bonus", value: "৳ 8,74,000", color: "#f76b8a" },
-      { label: "Commission", value: "৳ 4,99,336", color: "#a78bfa" }
+      { label: "Overtime", value: "৳ 8,73,992", color: "#f59e0b" },
+      { label: "Allowances", value: "৳ 14,98,272", color: "#0ea5e9" },
+      { label: "Bonus", value: "৳ 8,74,000", color: "#a78bfa" },
+      { label: "Commission", value: "৳ 4,99,336", color: "#6366f1" }
     ]
   }
 };

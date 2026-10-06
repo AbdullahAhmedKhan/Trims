@@ -9,20 +9,23 @@
    the page and drops the values in:
 
      <tbody data-rows="topSales">   the rows of that table, plus its total row
-     <div class="skd-sum" data-sum="monitoring">
-                                    a short strip of figures above a table
+     <div data-sum="monitoring">     a short strip of figures above a table
      <div data-legend="output">     the coloured key under a chart
-<div class="skd-flow" data-flow="receipt">
-                                     a share of a whole told with bars
-      <div class="skd-funnel" data-funnel="exportLc">
-                                      a value travelling through stages
-      <div data-tracks="balanceSheet">
-                                      a few named readings, each with a bar,
-                                      and a line of totals under them
-      <div data-bars="voucherMix">    a named value per row with a bar
-      <canvas data-chart="output">   a chart, drawn from that key in the data
-      <div data-hero="Pending"></div>   fill one overview figure
-      <div data-metrics>             the metrics grid
+     <div data-flow="receipt">      a share of a whole told with bars
+     <div data-funnel="exportLc">   a value travelling through stages
+     <div data-tracks="balanceSheet">
+                                     a few named readings, each with a bar,
+                                     and a line of totals under them
+     <div data-bars="voucherMix">   a named value per row with a bar
+     <canvas data-chart="output">   a chart, drawn from that key in the data
+     <div data-hero="Pending"></div>   fill one overview figure
+     <div data-metrics>             the metrics grid
+
+   The blocks carry their own layout as Tailwind utilities; only the data
+   attributes above are read here, and a few hooks the scripts share: .skd-card
+   (the tab scope), .skd-tab / .skd-tabpanel (the tabs), .skd-gauge (the
+   shortfall bar) and .skd-in (the reveal), all styled by the Tailwind build in
+   assets/css/dashboard.css.
 
    Column formats come from the thead above the table - a <th> says how to
    show its column with data-f, for example data-f="money". A table with no
@@ -85,8 +88,8 @@ window.SKPage = (function (w, d) {
     if (head) {
       return [].slice.call(head.querySelectorAll("th")).map(function (th) {
         var f = th.getAttribute("data-f") || "";
-        var align = th.className.match(/\ba-(\w+)/);
-        return { f: f, align: align ? align[1] : "l" };
+        var align = th.className.match(/\btext-(left|right|center)/);
+        return { f: f, align: align ? (align[1] === "left" ? "l" : align[1] === "right" ? "r" : "c") : "l" };
       });
     }
 
@@ -112,18 +115,24 @@ window.SKPage = (function (w, d) {
                                                   diverging bar under it, so a
                                                   shortfall reads against the
                                                   lines that have cover  */
-  function cell(value, col) {
-    var cls = ' class="a-' + col.align + (col.align === "l" ? "" : " num") + '"';
+  function cell(value, col, isTotal) {
+    var base = (isTotal ? "border-t-2 border-slate-300" : "border-t border-slate-200") +
+      " px-2.5 py-[11px] align-middle text-slate-700";
+    var align = col.align === "r" ? " text-right tabular-nums whitespace-nowrap"
+      : col.align === "c" ? " text-center tabular-nums"
+      : " text-left";
+    var cls = ' class="' + base + align + '"';
 
     if (value && typeof value === "object") {
       if (value.b != null) return "<td" + cls + ">" + badge(value.b) + "</td>";
       if (value.t != null) return "<td" + cls + ">" + esc(value.t) + "</td>";
       if (value.lines != null) {
-        return "<td" + cls + '><span class="skd-stack">' + value.lines.map(function (l) {
+        var j = col.align === "r" ? "justify-items-end" : "justify-items-start";
+        return "<td" + cls + '><span class="grid gap-[3px] ' + j + '">' + value.lines.map(function (l) {
           /* "Mat · 28 Oct 2026" puts the short label apart from the value */
           var p = String(l == null ? "" : l).split("\u00b7");
-          return "<span>" + (p.length > 1
-            ? "<i>" + esc(p[0].trim()) + "</i>" + esc(p.slice(1).join("\u00b7").trim())
+          return '<span class="inline-flex items-baseline gap-1.5 whitespace-nowrap text-[12.5px] leading-[1.35] text-slate-700">' + (p.length > 1
+            ? '<i class="min-w-6 flex-none text-[10px] font-bold uppercase tracking-[0.06em] text-slate-400">' + esc(p[0].trim()) + "</i>" + esc(p.slice(1).join("\u00b7").trim())
             : esc(l)) + "</span>";
         }).join("") + "</span></td>";
       }
@@ -137,7 +146,7 @@ window.SKPage = (function (w, d) {
       }
       if (value.n != null) {
         var n = num(value.n);
-        return "<td" + cls + '><span class="skd-num' + (n < 0 ? " is-neg" : "") + '">' +
+        return "<td" + cls + '><span class="tabular-nums' + (n < 0 ? " font-bold text-amber-600" : "") + '">' +
           esc(fmt(n, col.f)) + "</span></td>";
       }
       return "<td" + cls + "></td>";
@@ -158,7 +167,7 @@ window.SKPage = (function (w, d) {
 
       if (!spec || !spec.rows || !spec.rows.length) {
         tbody.innerHTML = '<tr><td colspan="' + span +
-          '"><p class="skd-empty">Nothing to show yet.</p></td></tr>';
+          '"><p class="px-2.5 py-[34px] text-center text-[13px] text-slate-400">Nothing to show yet.</p></td></tr>';
         return;
       }
 
@@ -170,8 +179,8 @@ window.SKPage = (function (w, d) {
 
       /* a total line is written the same way as a row, only styled apart */
       if (spec.total) {
-        html += '<tr class="total">' + spec.total.map(function (v, i) {
-          return cell(v, cols[i] || { f: "", align: "l" });
+        html += '<tr class="border-t-2 border-slate-300 bg-slate-50 font-bold text-slate-900">' + spec.total.map(function (v, i) {
+          return cell(v, cols[i] || { f: "", align: "l" }, true);
         }).join("") + "</tr>";
       }
 
@@ -184,7 +193,7 @@ window.SKPage = (function (w, d) {
   /* A short strip of figures above a table, so a card can say where it got
      to before the reader reaches the rows:
 
-       <div class="skd-sum" data-sum="monitoring"></div>
+       <div data-sum="monitoring"></div>
          filled from the `sum` of that key in the data file
 
        monitoring: {
@@ -200,8 +209,9 @@ window.SKPage = (function (w, d) {
       if (!spec || !spec.sum || !spec.sum.length) return;
 
       host.innerHTML = spec.sum.map(function (c) {
-        return '<div class="skd-sumchip"' + (c.color ? ' style="--c:' + c.color + '"' : "") +
-          "><span>" + esc(c.label) + "</span><b>" + esc(c.value) + "</b></div>";
+        return '<div class="inline-flex items-baseline gap-2 whitespace-nowrap rounded-[10px] border border-slate-200 bg-slate-50 px-3 py-1.5">' +
+          '<span class="text-[10.5px] font-bold uppercase tracking-[0.07em] text-slate-500">' + esc(c.label) + "</span>" +
+          '<b class="text-[13.5px] font-bold tabular-nums" style="color:' + (c.color || "#0f172a") + '">' + esc(c.value) + "</b></div>";
       }).join("");
     });
   }
@@ -235,10 +245,10 @@ window.SKPage = (function (w, d) {
         return;
       }
 
-      host.innerHTML = '<div class="skd-rail">' + cells.map(function (c) {
-        return '<div class="skd-hcell' + (c.div ? " div" : "") + '">' +
-          '<div class="skd-hlabel">' + esc(c.label) + "</div>" +
-          '<div class="skd-hvalue"' + (c.color ? ' style="color:' + c.color + '"' : "") +
+      host.innerHTML = '<div class="flex min-w-0 flex-1 basis-[520px]">' + cells.map(function (c) {
+        return '<div class="min-w-0 flex-1 px-[18px] py-0.5 first:pl-0' + (c.div ? " border-l border-slate-200" : "") + '">' +
+          '<div class="whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">' + esc(c.label) + "</div>" +
+          '<div class="mt-[9px] whitespace-nowrap text-[clamp(19px,2vw,27px)] font-bold leading-none tracking-[-0.03em]"' + (c.color ? ' style="color:' + c.color + '"' : "") +
           ">" + esc(c.value) + "</div></div>";
       }).join("") + "</div>";
     });
@@ -262,31 +272,24 @@ window.SKPage = (function (w, d) {
   }
 
   /* The key host keeps whatever layout class the page gave it, so a card
-     can ask for its keys to sit side by side:
-       <div class="skd-legend skd-legend-inline" data-legend="output">
-     .one is the stacked fallback for a short key; an inline key does not
-     need it, because the inline rule lays the keys out in a row already. */
-  function legendClass(host, count) {
-    var base = "skd-legend";
-    var inline = false;
-
-    [].slice.call(host.classList).forEach(function (c) {
-      if (/^skd-legend-/.test(c)) {
-        base += " " + c;
-        if (c === "skd-legend-inline") inline = true;
-      }
-    });
-
-    return base + (count <= 2 && !inline ? " one" : "");
-  }
-
+     can ask for its keys to sit side by side (a flex host) or stacked in a
+     grid of two columns. A short key of one or two items falls back to a
+     single column so it does not spread over the card. */
   function paintLegend(host, list) {
-    host.className = legendClass(host, list.length);
+    var inline = host.classList.contains("flex");
+    var rowAlign = inline ? "justify-start flex-none" : "justify-between";
+
     host.innerHTML = list.map(function (l) {
-      return '<div class="skd-legend-row"><span><i style="--c:' +
+      return '<div class="flex items-center gap-2.5 text-[13.5px] font-semibold ' + rowAlign + '">' +
+        '<span class="inline-flex min-w-0 items-center gap-[9px] font-medium text-slate-600">' +
+        '<i class="h-[13px] w-[13px] flex-none rounded" style="background:' +
         (l.color || "#0ea5e9") + '"></i>' + esc(l.label) + "</span>" +
-        (l.value ? "<b>" + esc(l.value) + "</b>" : "") + "</div>";
+        (l.value ? '<b class="whitespace-nowrap font-bold">' + esc(l.value) + "</b>" : "") +
+        "</div>";
     }).join("");
+
+    if (inline) host.classList.remove("grid-cols-1");
+    else host.classList.toggle("grid-cols-1", list.length <= 2);
   }
 
   function fillLegends() {
@@ -304,7 +307,7 @@ window.SKPage = (function (w, d) {
   /* A share of a whole told with bars instead of a doughnut, so two cards on
      one page do not end up as the same ring twice:
 
-       <div class="skd-flow" data-flow="receipt"></div>
+       <div data-flow="receipt"></div>
          the whole card is filled here, out of that key in the data file
 
      The data says what the parts are, and the shares are worked out from
@@ -331,26 +334,31 @@ window.SKPage = (function (w, d) {
       var sum = rows.reduce(function (a, r) { return a + share(r.value); }, 0);
       var total = spec.total || {};
 
-      var out = '<div class="skd-flow-top">' +
-        '<div class="skd-flow-total"><b>' + esc(total.value == null ? sum : total.value) +
-        "</b><span>" + esc(total.label || "Total") + "</span></div>" +
-        (total.note ? '<div class="skd-flow-pct">' + esc(total.note) + "</div>" : "") +
+      var out = '<div class="flex items-end justify-between gap-3">' +
+        '<div><b class="block text-[clamp(26px,2.4vw,32px)] font-bold leading-none tracking-[-0.035em] text-slate-900">' + esc(total.value == null ? sum : total.value) +
+        '</b><span class="mt-1.5 block text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">' + esc(total.label || "Total") + "</span></div>" +
+        (total.note ? '<div class="whitespace-nowrap text-[13px] font-bold text-slate-700">' + esc(total.note) + "</div>" : "") +
         "</div>";
 
       /* one rail, split between the parts in the order the rows are written */
-      out += '<div class="skd-flow-rail">' + rows.map(function (r) {
+      out += '<div class="flex h-3 gap-[3px]">' + rows.map(function (r) {
         var pc = sum ? (share(r.value) / sum) * 100 : 0;
-        return '<i style="--c:' + (r.color || "#0ea5e9") + ";width:" + pc + '%"></i>';
+        return '<i class="block h-full min-w-1 rounded-full" style="background:' +
+          (r.color || "#0ea5e9") + ";width:" + pc +
+          '%;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.35)"></i>';
       }).join("") + "</div>";
 
       /* a row per part, each with its own bar on the same scale */
-      out += '<div class="skd-flow-rows">' + rows.map(function (r) {
+      out += '<div class="grid gap-[14px]">' + rows.map(function (r) {
         var pc = sum ? (share(r.value) / sum) * 100 : 0;
-        return '<div class="skd-flow-row" style="--c:' + (r.color || "#0ea5e9") + '">' +
-          '<div class="skd-flow-name"><i></i><span>' + esc(r.label) + "</span></div>" +
-          '<div class="skd-flow-val">' + esc(r.value) +
+        return '<div class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-[5px]" style="--c:' + (r.color || "#0ea5e9") + '">' +
+          '<div class="flex min-w-0 items-center gap-[9px] text-[13.5px] font-semibold text-slate-800">' +
+          '<i class="h-[9px] w-[9px] flex-none rounded-full" style="background:var(--c,currentColor);box-shadow:0 0 0 3px color-mix(in srgb, var(--c) 18%, transparent)"></i>' +
+          '<span class="truncate">' + esc(r.label) + "</span></div>" +
+          '<div class="whitespace-nowrap text-[13.5px] font-bold tabular-nums">' + esc(r.value) +
           "<small>" + pc.toFixed(1) + "%</small></div>" +
-          '<div class="skd-track"><i style="width:' + pc + '%"></i></div>' +
+          '<div class="col-span-full h-[7px] overflow-hidden rounded-full bg-slate-100">' +
+          '<i class="block h-full rounded-full" style="width:' + pc + '%;background:linear-gradient(90deg, color-mix(in srgb, var(--c) 55%, #fff), var(--c))"></i></div>' +
           "</div>";
       }).join("") + "</div>";
 
@@ -364,7 +372,7 @@ window.SKPage = (function (w, d) {
      of steps rather than a ring, so two cards on one page do not end up as
      the same doughnut twice:
 
-        <div class="skd-funnel" data-funnel="exportLc"></div>
+        <div data-funnel="exportLc"></div>
           the whole card is filled here, out of that key in the data file
 
       The data writes the stages in the order they should appear, so the
@@ -380,22 +388,26 @@ window.SKPage = (function (w, d) {
       var spec = DATA[host.getAttribute("data-funnel")];
       if (!spec || !spec.steps || !spec.steps.length) return;
 
-      var out = '<div class="skd-funnel">';
+      var out = "";
 
       spec.steps.forEach(function (s, i) {
-        out += '<div class="skd-fstep"' + (s.color ? ' style="--c:' + s.color + '"' : "") + ">" +
-          '<div class="skd-fstep-top"><b>' + esc(s.step) + "</b><span>" +
+        out += '<div class="relative border-l-4 px-4 py-[13px]" style="--c:' +
+          (s.color || "#0ea5e9") + ';background:color-mix(in srgb, var(--c) 12%, #fff);border-left-color:var(--c)">' +
+          '<div class="flex items-baseline justify-between gap-3">' +
+          '<b class="text-sm font-bold text-slate-800">' + esc(s.step) + "</b><span class=" +
+          '"whitespace-nowrap text-sm font-bold tabular-nums">' +
           esc(s.value == null ? "" : s.value) + "</span></div>" +
-          (s.note ? "<small>" + esc(s.note) + "</small>" : "") + "</div>";
+          (s.note ? '<small class="mt-1 block text-xs text-slate-500">' + esc(s.note) + "</small>" : "") + "</div>";
 
         var carry = (spec.carry || [])[i];
         if (carry) {
-          out += '<div class="skd-fcarry">' + esc(carry.label) +
-            (carry.value != null ? " <b>" + esc(carry.value) + "</b>" : "") + "</div>";
+          out += '<div class="flex items-center gap-2 px-5 py-[7px] text-xs text-slate-400">' +
+            '<i class="h-4 w-px flex-none bg-slate-300"></i>' + esc(carry.label) +
+            (carry.value != null ? ' <b class="font-bold text-slate-600">' + esc(carry.value) + "</b>" : "") + "</div>";
         }
       });
 
-      host.innerHTML = out + "</div>";
+      host.innerHTML = out;
     });
   }
 
@@ -419,21 +431,24 @@ window.SKPage = (function (w, d) {
       var spec = DATA[host.getAttribute("data-tracks")];
       if (!spec || !spec.rows || !spec.rows.length) return;
 
-      var rows = '<div class="skd-tracks">' + spec.rows.map(function (r) {
+      var rows = '<div class="grid gap-4">' + spec.rows.map(function (r) {
         var pc = r.pct == null ? null : Math.min(100, Math.max(0, num(r.pct)));
 
-        return '<div class="skd-trackrow"' + (r.color ? ' style="--c:' + r.color + '"' : "") + ">" +
-          '<div class="skd-trackrow-top"><span>' + esc(r.label) + "</span><b>" +
+        return '<div class="grid gap-[7px]"' + (r.color ? ' style="--c:' + r.color + '"' : "") + ">" +
+          '<div class="flex items-baseline justify-between gap-3 text-[13.5px]"><span class="font-medium text-slate-600">' + esc(r.label) + "</span><b class=" +
+          '"whitespace-nowrap font-bold tabular-nums">' +
           esc(r.value == null ? "" : r.value) + "</b></div>" +
-          (pc == null ? "" : '<div class="skd-track"><i style="width:' + pc + '%"></i></div>') +
+          (pc == null ? "" :
+            '<div class="h-2 overflow-hidden rounded-full bg-slate-100"><i class="block h-full rounded-full" style="width:' + pc + '%;background:var(--c, #0ea5e9)"></i></div>') +
           "</div>";
       }).join("") + "</div>";
 
       var total = (spec.total || []).map(function (t) {
-        return "<div><span>" + esc(t.label) + "</span><b>" + esc(t.value) + "</b></div>";
+        return '<div><span class="block text-[11.5px] font-bold uppercase tracking-[0.06em] text-slate-400">' + esc(t.label) +
+          "</span><b class=" + '"mt-[5px] block text-base font-bold tabular-nums">' + esc(t.value) + "</b></div>";
       }).join("");
 
-      host.innerHTML = rows + (total ? '<div class="skd-tracks-total">' + total + "</div>" : "");
+      host.innerHTML = rows + (total ? '<div class="mt-[18px] flex flex-wrap gap-x-[30px] gap-y-2.5 border-t border-slate-200 pt-[15px]">' + total + "</div>" : "");
     });
   }
 
@@ -442,7 +457,7 @@ window.SKPage = (function (w, d) {
   /* A named value per row with its own bar, for a mix or a ranking where
      each row stands alone rather than adding up to a whole:
 
-        <div class="skd-bars" data-bars="voucherMix"></div>
+        <div data-bars="voucherMix"></div>
 
         voucherMix: {
           rows: [ { label, value, pct, color, badge, note } ]
@@ -455,21 +470,23 @@ window.SKPage = (function (w, d) {
       var spec = DATA[host.getAttribute("data-bars")];
 
       if (!spec || !spec.rows || !spec.rows.length) {
-        host.innerHTML = '<p class="skd-empty">Nothing to show yet.</p>';
+        host.innerHTML = '<p class="px-2.5 py-[34px] text-center text-[13px] text-slate-400">Nothing to show yet.</p>';
         return;
       }
 
-      host.innerHTML = '<div class="skd-bars">' + spec.rows.map(function (r) {
+      host.innerHTML = spec.rows.map(function (r) {
         var pc = r.pct == null ? null : Math.min(100, Math.max(0, num(r.pct)));
 
-        return '<div class="skd-barrow"' + (r.color ? ' style="--c:' + r.color + '"' : "") + ">" +
-          '<div class="skd-barname"><span>' + esc(r.label) + "</span>" +
+        return '<div class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-[14px] gap-y-1"' +
+          (r.color ? ' style="--c:' + r.color + '"' : "") + ">" +
+          '<div class="flex min-w-0 items-center gap-[9px] text-[13.5px] font-semibold text-slate-800"><span class="truncate">' + esc(r.label) + "</span>" +
           (r.badge ? badge(r.badge) : "") + "</div>" +
-          '<div class="skd-barval">' + esc(r.value == null ? "" : r.value) + "</div>" +
-          (pc == null ? "" : '<div class="skd-track"><i style="width:' + pc + '%"></i></div>') +
-          (r.note ? '<div class="skd-barfoot">' + esc(r.note) + "</div>" : "") +
+          '<div class="whitespace-nowrap text-[13.5px] font-bold tabular-nums">' + esc(r.value == null ? "" : r.value) + "</div>" +
+          (pc == null ? "" :
+            '<div class="col-span-full h-2 overflow-hidden rounded-full bg-slate-100"><i class="block h-full rounded-full" style="width:' + pc + '%;background:var(--c, #0ea5e9)"></i></div>') +
+          (r.note ? '<div class="col-span-full text-xs text-slate-400">' + esc(r.note) + "</div>" : "") +
           "</div>";
-      }).join("") + "</div>";
+      }).join("");
     });
   }
 

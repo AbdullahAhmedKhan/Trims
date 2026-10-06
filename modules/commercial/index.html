@@ -43,57 +43,62 @@
 
      The header, the menu bar and the footer are still built by the scripts
      at the bottom, so this file holds only its own content in #sk-app.
-     ===================================================================== -->
-<div id="sk-app"> 
 
-  <div class="skd-page">
+     The layout classes are Tailwind utilities, compiled into
+     assets/css/dashboard.css by the Tailwind CLI. The few classes with no
+     utility equivalent (.skd-card, .skd-select, .skd-in, .skd-scroll) are
+     kept only as shared hooks, styled by that same compiled file.
+     ===================================================================== -->
+<div id="sk-app">
+
+  <div class="mx-auto w-full px-5 pb-2 max-[760px]:px-[14px] max-[760px]:pt-4">
 
     <!-- ============================================== overview cards =====
          Three figures: what has been invoiced, what has been opened against
          it, and what has come back in. -->
-    <div class="skd-row skd-row-3">
-      <div class="skd-in" style="grid-column:span 1">
-        <section class="skd-card skd-ovc" style="--c:#0284c7">
-          <div class="skd-ovc-top">
-            <i class="skd-ovc-dot" aria-hidden="true"></i>
-            <span class="skd-ovc-label">PI</span>
+    <div class="grid grid-cols-2 gap-[18px] mt-[18px] min-[761px]:grid-cols-3">
+      <div class="skd-in">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#0284c7">
+          <div class="flex items-center gap-[9px]">
+            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
+            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">PI</span>
           </div>
-          <div class="skd-ovc-value" data-hero="PI"></div>
+          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="PI"></div>
         </section>
       </div>
 
-      <div class="skd-in" style="grid-column:span 1">
-        <section class="skd-card skd-ovc" style="--c:#14b8a6">
-          <div class="skd-ovc-top">
-            <i class="skd-ovc-dot" aria-hidden="true"></i>
-            <span class="skd-ovc-label">LC</span>
+      <div class="skd-in">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#14b8a6">
+          <div class="flex items-center gap-[9px]">
+            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
+            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">LC</span>
           </div>
-          <div class="skd-ovc-value" data-hero="LC"></div>
+          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="LC"></div>
         </section>
       </div>
 
-      <div class="skd-in" style="grid-column:span 1">
-        <section class="skd-card skd-ovc" style="--c:#f59e0b">
-          <div class="skd-ovc-top">
-            <i class="skd-ovc-dot" aria-hidden="true"></i>
-            <span class="skd-ovc-label">Payment</span>
+      <div class="skd-in">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#f59e0b">
+          <div class="flex items-center gap-[9px]">
+            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
+            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Payment</span>
           </div>
-          <div class="skd-ovc-value" data-hero="Payment"></div>
+          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Payment"></div>
         </section>
       </div>
     </div>
 
     <!-- ==================== ROW 1 : trend chart + LC funnel ============== -->
-    <div class="skd-row">
+    <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
 
       <!-- -------------------------------------------- period driven chart -->
-      <div class="skd-in" style="grid-column:span 8">
-        <section class="skd-card">
-          <div class="skd-head-row">
+      <div class="skd-in col-span-12 min-[1181px]:col-span-8">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
               <!-- the heading follows the picker, see data-period-title -->
-              <h2 class="skd-title" data-period-title>Last 3 months</h2>
-              <p class="skd-sub">LC opened, how much the party accepted and how much the bank then accepted</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]" data-period-title>Last 3 months</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">LC opened, how much the party accepted and how much the bank then accepted</p>
             </div>
             <!-- choosing a period swaps the numbers, the key and the heading -->
             <select class="skd-select" data-period>
@@ -103,21 +108,21 @@
               <option value="lasty">Last year</option>
             </select>
           </div>
-          <div class="skd-canvas" style="height:300px">
+          <div class="relative w-full" style="height:300px">
             <canvas data-chart="lcTrend"></canvas>
           </div>
           <!-- the coloured key, filled from the chart data -->
-          <div class="skd-legend skd-legend-inline" data-legend="lcTrend"></div>
+          <div class="flex flex-wrap gap-x-[22px] gap-y-2.5 mt-4" data-legend="lcTrend"></div>
         </section>
       </div>
 
       <!-- ------------------------------------------------- export LC funnel -->
-      <div class="skd-in" style="grid-column:span 4">
-        <section class="skd-card">
-          <div class="skd-head-row">
+      <div class="skd-in col-span-12 min-[1181px]:col-span-4">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
-              <h2 class="skd-title">Export LC Funnel</h2>
-              <p class="skd-sub">How PI value travels into an opened, accepted and held LC</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Export LC Funnel</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">How PI value travels into an opened, accepted and held LC</p>
             </div>
           </div>
           <!-- the steps are written in the serial the card shows; the data
@@ -128,22 +133,22 @@
     </div>
 
     <!-- ==================================== ROW 2 : RECENT PI ============ -->
-    <div class="skd-row">
-      <div class="skd-in" style="grid-column:span 12">
-        <section class="skd-card">
-          <div class="skd-head-row">
+    <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
+      <div class="skd-in col-span-12">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
-              <h2 class="skd-title">Recent PI</h2>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Recent PI</h2>
             </div>
           </div>
           <div class="skd-scroll">
-            <table class="skd-table">
+            <table class="w-full border-collapse text-[13.5px]">
               <thead>
                 <tr>
-                  <th class="a-l">PI No</th>
-                  <th class="a-l">Party</th>
-                  <th class="a-r" data-f="money">Value</th>
-                  <th class="a-r">Stage</th>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">PI No</th>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party</th>
+                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Value</th>
+                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Stage</th>
                 </tr>
               </thead>
               <tbody data-rows="pi"></tbody>
@@ -154,25 +159,25 @@
     </div>
 
     <!-- ============================= ROW 3 : LC & MATURITY TIMELINE ====== -->
-    <div class="skd-row">
-      <div class="skd-in" style="grid-column:span 12">
-        <section class="skd-card">
-          <div class="skd-head-row">
+    <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
+      <div class="skd-in col-span-12">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
-              <h2 class="skd-title">LC &amp; Maturity Timeline</h2>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">LC &amp; Maturity Timeline</h2>
             </div>
           </div>
           <div class="skd-scroll">
-            <table class="skd-table">
+            <table class="w-full border-collapse text-[13.5px]">
               <thead>
                 <tr>
-                  <th class="a-l">LC No</th>
-                  <th class="a-l">Party</th>
-                  <th class="a-r" data-f="money">Value</th>
-                  <th class="a-l">LC Open</th>
-                  <th class="a-l">Maturity</th>
-                  <th class="a-c">Stage</th>
-                  <th class="a-r" data-f="qty">Days Left</th>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">LC No</th>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party</th>
+                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Value</th>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">LC Open</th>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Maturity</th>
+                  <th class="px-2.5 pb-2.5 text-center whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Stage</th>
+                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Days Left</th>
                 </tr>
               </thead>
               <tbody data-rows="lc"></tbody>

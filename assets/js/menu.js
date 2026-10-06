@@ -24,6 +24,11 @@
        modules/<key>/index.html            the module Dashboard
        modules/<key>/item.html?id=<slug>   one page per sub item
 
+   A leaf may name its own page instead of item.html:
+   { title: 'Costing Analysis', page: 'costing.html' } opens
+   modules/<key>/costing.html?id=costing-analysis. The slug is kept in
+   both cases so the menu match and the breadcrumb keep working.
+
    Slugs and urls are generated from the labels below, so no leaf can point
    at a page that does not exist. Two leaves with the same label (Payroll
    has Salary, Bonus and Earn Leave under both Process and Reports) get a
@@ -81,13 +86,14 @@ window.APP_MENU = [
 
   /* ======================================================== 1. ORDER === */
   {
-    key: 'order', name: 'Order', icon: 'order', color: '#f43f5e',
+    key: 'order', name: 'Order', icon: 'order', color: '#2563eb',
     url: 'modules/order/index.html',
     items: [
       { title: 'Dashboard', dash: true },
       {
         title: 'Operation',
         items: [
+          { title: 'Costing Analysis', page: 'costing.html' },
           { title: 'Manage Order' },
           { title: 'Manage Approval' },
           { title: 'Work Order' },
@@ -279,7 +285,7 @@ window.APP_MENU = [
 
   /* ===================================================== 7. PAYROLL === */
   {
-    key: 'payroll', name: 'Payroll', icon: 'payroll', color: '#ec4899',
+    key: 'payroll', name: 'Payroll', icon: 'payroll', color: '#eab308',
     url: 'modules/payroll/index.html',
     items: [
       { title: 'Dashboard', dash: true },
@@ -381,7 +387,10 @@ window.APP_MENU = [
    Payroll repeats three labels (Salary, Bonus and Earn Leave sit under
    both Process and Reports). Two items with the same slug would share a
    page and only the first would light up, so a repeat gets the group
-   name in front of it: process-salary and reports-salary.             */
+   name in front of it: process-salary and reports-salary.
+
+   The page name comes from it.page (costing.html for Costing Analysis),
+   other leaves keep the shared item.html.                        */
 (function (w) {
   w.APP_MENU.forEach(function (mod) {
     var base = mod.url.replace(/index\.html$/i, "");
@@ -409,7 +418,11 @@ window.APP_MENU = [
         if (it.items && it.items.length) {
           assign(it.items, it.title);
         } else {
-          it.url = base + "item.html?id=" + slug;
+          /* a leaf usually lives on the shared item.html, but an item may
+             name its own page (e.g. page: 'costing.html'). The ?id= slug
+             is kept in both cases so the menu match, the breadcrumb and
+             the active state keep working. */
+          it.url = base + (it.page || "item.html") + "?id=" + slug;
         }
       });
     }

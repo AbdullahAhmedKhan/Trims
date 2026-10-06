@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Costing Analysis - SK Trims ERP</title>
+<link rel="stylesheet" href="../../assets/css/style.css" />
+<link rel="stylesheet" href="../../assets/css/costing.css" />
+<link rel="icon" href="../../assets/images/favicons/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicons/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicons/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+<style>
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.skc-drag-over {
+  outline: 2px dashed #0ea5e9;
+  outline-offset: 3px;
+}
+.skc-ghost {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 70;
+  width: 560px;
+  max-width: 90vw;
+  pointer-events: none;
+  opacity: 0.93;
+  box-shadow: 0 24px 52px -18px rgba(15, 23, 42, 0.35);
+}
+.skc-toast {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 90;
+  max-width: min(340px, calc(100vw - 36px));
+  padding: 11px 14px;
+  background: #0f172a;
+  color: #fff;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 18px 40px -14px rgba(15, 23, 42, 0.45);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.skc-toast.is-on {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<div id="sk-app">
+  <div class="px-5 pb-2">
+
+    <div class="flex flex-wrap justify-end gap-3.5 px-0.5 pb-4 pt-1">
+      <div class="skd-head-tag"><i class="h-2 w-2 flex-none rounded-full bg-sky-500"></i><span id="skcCount">Costings saved this year: 0</span></div>
+    </div>
+
+    <section class="skd-card">
+      <div class="mb-4 flex items-start justify-between gap-3.5">
+        <h2 class="skd-title">Order Information</h2>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div>
+          <label class="skc-label" for="skcParty">Party Name</label>
+          <select id="skcParty" name="party" class="skc-select"></select>
+        </div>
+        <div>
+          <label class="skc-label" for="skcBuyer">Buyer Name</label>
+          <select id="skcBuyer" name="buyer" class="skc-select"></select>
+        </div>
+        <div>
+          <label class="skc-label" for="skcTeam">Team name</label>
+          <select id="skcTeam" name="team" class="skc-select"></select>
+        </div>
+        <div>
+          <label class="skc-label" for="skcRef">Reference number</label>
+          <input id="skcRef" name="ref" type="text" class="skc-input read-only:bg-slate-50 read-only:text-slate-600" readonly />
+        </div>
+        <div>
+          <label class="skc-label" for="skcDate">Costing date</label>
+          <input id="skcDate" name="costingDate" type="date" class="skc-input" />
+        </div>
+        <div>
+          <label class="skc-label" for="skcBranch">Costing for</label>
+          <select id="skcBranch" name="costingFor" class="skc-select"></select>
+        </div>
+      </div>
+    </section>
+
+    <div class="mt-5 grid items-start gap-5 lg:grid-cols-3">
+      <div class="min-w-0 lg:col-span-2">
+        <ul id="ItemFieldUL" class="m-0 list-none space-y-4 p-0"></ul>
+        <button type="button" id="skcAddItemBtn" data-act="add-item" class="skc-addchild mt-4 w-full">+ Add item</button>
+      </div>
+
+      <aside class="space-y-5 lg:sticky lg:top-[104px]">
+        <section class="skd-card">
+          <div class="mb-4 flex items-start justify-between gap-3.5">
+            <h2 class="skd-title">Cost Calculation</h2>
+            <span class="skd-tag">live</span>
+          </div>
+
+          <div class="grid gap-4">
+            <div>
+              <label class="skc-label" for="skcOverhead">Overhead cost</label>
+              <div class="relative flex items-center">
+                <input id="skcOverhead" name="overheadPct" type="number" min="0" step="0.5" value="10" inputmode="decimal" class="skc-input pr-9" />
+                <span class="pointer-events-none absolute right-3 text-sm font-semibold text-slate-400">%</span>
+              </div>
+            </div>
+            <div>
+              <label class="skc-label" for="skcAccessories">Accessories cost</label>
+              <div class="relative flex items-center">
+                <input id="skcAccessories" name="accessoriesPct" type="number" min="0" step="0.5" value="5" inputmode="decimal" class="skc-input pr-9" />
+                <span class="pointer-events-none absolute right-3 text-sm font-semibold text-slate-400">%</span>
+              </div>
+            </div>
+            <div>
+              <label class="skc-label" for="skcAllowance">Allowance cost <em class="not-italic rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-500">internal</em></label>
+              <div class="relative flex items-center">
+                <input id="skcAllowance" name="allowancePct" type="number" min="0" step="0.5" value="2" inputmode="decimal" class="skc-input pr-9" />
+                <span class="pointer-events-none absolute right-3 text-sm font-semibold text-slate-400">%</span>
+              </div>
+              <p class="mt-1 text-[11.5px] text-slate-400">Applied to the cost but not shown to the customer.</p>
+            </div>
+            <div>
+              <label class="skc-label" for="skcMargin">Margin</label>
+              <div class="relative flex items-center">
+                <input id="skcMargin" name="marginPct" type="number" min="0" step="0.5" value="15" inputmode="decimal" class="skc-input pr-9" />
+                <span class="pointer-events-none absolute right-3 text-sm font-semibold text-slate-400">%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 border-t border-line pt-2">
+            <div class="flex items-center justify-between py-1.5 text-sm text-slate-600">
+              <span>Raw Material Cost</span><b id="skcValRaw" class="text-slate-800">৳0.00</b>
+            </div>
+            <div class="flex items-center justify-between py-1.5 text-sm text-slate-600">
+              <span>Overhead Cost</span><b id="skcValOverhead" class="text-slate-800">৳0.00</b>
+            </div>
+            <div class="flex items-center justify-between py-1.5 text-sm text-slate-600">
+              <span>Accessories Cost</span><b id="skcValAccessories" class="text-slate-800">৳0.00</b>
+            </div>
+            <div class="flex items-center justify-between py-1.5 text-sm">
+              <span class="flex items-center gap-1.5 text-slate-500">
+                <span>Allowance Cost</span>
+                <em class="not-italic rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-500">internal</em>
+              </span>
+              <b id="skcValAllowance" class="text-slate-500">৳0.00</b>
+            </div>
+            <div class="mt-1 flex items-center justify-between border-t border-line py-2 text-sm font-bold text-slate-800">
+              <span>Total Cost</span><b id="skcValTotalInternal">৳0.00</b>
+            </div>
+            <div class="flex items-center justify-between py-1.5 text-sm text-slate-600">
+              <span>Cost to Customer</span><b id="skcValTotalCustomer" class="text-slate-800">৳0.00</b>
+            </div>
+            <div class="flex items-center justify-between py-1.5 text-sm text-slate-600">
+              <span>Margin Amount</span><b id="skcValMargin" class="text-slate-800">৳0.00</b>
+            </div>
+          </div>
+
+          <div class="mt-4 rounded-2xl border border-sky-100 bg-sky-50 p-4">
+            <span class="block text-[11.5px] font-bold uppercase tracking-wider text-sky-600">Estimated Unit Price</span>
+            <strong id="skcValPrice" class="mt-1 block text-3xl font-bold text-slate-900">৳0.00</strong>
+            <small id="skcValPiece" class="mt-0.5 block text-xs font-medium text-slate-500"></small>
+          </div>
+
+          <div class="mt-4 grid grid-cols-2 gap-2.5">
+            <button id="skcSaveBtn" class="skc-btn skc-btn-primary" type="button">Save Costing</button>
+            <button id="skcResetBtn" class="skc-btn skc-btn-secondary" type="button">Reset</button>
+          </div>
+        </section>
+
+        <section class="skd-card">
+          <div class="mb-4 flex items-start justify-between gap-3.5">
+            <h2 class="skd-title">Saved This Year</h2>
+          </div>
+          <p class="text-sm text-slate-400" id="skcSavedEmpty">Nothing saved yet.</p>
+          <ul id="skcSavedList" class="m-0 list-none space-y-2 p-0"></ul>
+        </section>
+      </aside>
+    </div>
+
+  </div>
+</div>
+
+<script src="../../assets/js/menu.js"></script>
+<script src="../../assets/js/header.js"></script>
+<script src="../../assets/js/footer.js"></script>
+
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/costing-page.js"></script>
+<script>App.boot(); CostingPage.render();</script>
+</body>
+</html>

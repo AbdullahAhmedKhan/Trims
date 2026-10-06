@@ -37,7 +37,7 @@
      { b: "Healthy" }                    a status pill
      { t: "—" }                          text already written the way it
                                          should appear
-     { gauge: -800, of: 3000 }           a signed figure, red when it has
+     { gauge: -800, of: 3000 }           a signed figure, amber when it has
                                          gone short, with a bar under it
                                          that grows from the right instead
                                          of the left
@@ -152,7 +152,7 @@ window.STOCK_DATA = {
         "rgba(139, 92, 246, 0.55)",
         "rgba(20, 184, 166, 0.55)",
         "rgba(255, 159, 64, 0.55)",
-        "rgba(247, 107, 138, 0.55)"
+        "rgba(34, 211, 238, 0.55)"
       ]
     }],
     legend: [
@@ -160,7 +160,7 @@ window.STOCK_DATA = {
       { label: "Poly", value: "৳ 45.60 L", color: "#8b5cf6" },
       { label: "Trim", value: "৳ 21.74 L", color: "#14b8a6" },
       { label: "Sewing Thread", value: "৳ 9.27 L", color: "#ff9f40" },
-      { label: "Interlining", value: "৳ 6.72 L", color: "#f76b8a" }
+      { label: "Interlining", value: "৳ 6.72 L", color: "#22d3ee" }
     ]
   },
 
@@ -179,14 +179,14 @@ window.STOCK_DATA = {
        Name, Current Stock, Required, Balance (current - required)
 
      `sum` fills the chip strip at the top of the card. The balance column
-     is a { gauge: ..., of: ... } cell: the figure is printed red when it
+     is a { gauge: ..., of: ... } cell: the figure is printed amber when it
      has gone short, and the bar under it grows from the right instead of
      the left, so a shortfall reads against the lines that have cover. */
   monitoring: {
     sum: [
       { label: "Lines Monitored", value: "10" },
       { label: "Covered", value: "6", color: "#0d9488" },
-      { label: "Short", value: "4", color: "#dc2626" },
+      { label: "Short", value: "4", color: "#f59e0b" },
       { label: "Net Balance", value: "+2,070", color: "#0d9488" }
     ],
     rows: [
@@ -208,8 +208,8 @@ window.STOCK_DATA = {
     sum: [
       { label: "Lines Forecasted", value: "10" },
       { label: "Covered", value: "4", color: "#0d9488" },
-      { label: "Short", value: "6", color: "#dc2626" },
-      { label: "Net Balance", value: "-7,100", color: "#dc2626" }
+      { label: "Short", value: "6", color: "#f59e0b" },
+      { label: "Net Balance", value: "-7,100", color: "#f59e0b" }
     ],
     rows: [
       ["20\" · Prime Denim", 19200, 22400, { gauge: -3200, of: 3500 }],

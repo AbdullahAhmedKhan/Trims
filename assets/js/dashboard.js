@@ -110,8 +110,23 @@ window.SKDash = (function (w, d) {
     return "slate";
   }
 
+  /* a status pill in Tailwind utilities, the dot is a real <i> so nothing
+     needs a pseudo-element */
+  var TONE_CLS = {
+    emerald: "bg-emerald-50 text-emerald-700",
+    sky: "bg-sky-100 text-sky-700",
+    violet: "bg-violet-100 text-violet-700",
+    indigo: "bg-indigo-100 text-indigo-700",
+    teal: "bg-teal-100 text-teal-700",
+    amber: "bg-amber-100 text-amber-700",
+    rose: "bg-amber-100 text-amber-700",
+    slate: "bg-slate-100 text-slate-600"
+  };
+
   function badge(label) {
-    return '<span class="skd-badge ' + tone(label) + '">' + esc(label) + "</span>";
+    var cls = TONE_CLS[tone(label)] || TONE_CLS.slate;
+    return '<span class="inline-flex flex-none items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[11.5px] font-bold tracking-[0.01em] ' + cls + '">' +
+      '<i class="h-1.5 w-1.5 flex-none rounded-full bg-current"></i>' + esc(label) + "</span>";
   }
 
   /* ============================================================ helpers = */
@@ -738,7 +753,7 @@ label: function (ctx) {
     /* charts drawn before the fonts land come out squashed */
     if (w.document.fonts && w.document.fonts.ready) {
       w.document.fonts.ready.then(function () {
-        [].slice.call(d.querySelectorAll(".skd-canvas canvas")).forEach(function (c) {
+        [].slice.call(d.querySelectorAll("[data-chart]")).forEach(function (c) {
           var box = c.parentNode;
           if (box) box.style.height = box.offsetHeight + "px";
         });

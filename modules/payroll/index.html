@@ -43,109 +43,114 @@
 
      The header, the menu bar and the footer are still built by the scripts
      at the bottom, so this file holds only its own content in #sk-app.
+
+     The layout classes are Tailwind utilities, compiled into
+     assets/css/dashboard.css by the Tailwind CLI. The few classes with no
+     utility equivalent (.skd-card, .skd-tab, .skd-select, .skd-in, .skd-scroll)
+     are kept only as shared hooks, styled by that same compiled file.
      ===================================================================== -->
 <div id="sk-app">
 
-  <div class="skd-page">
+  <div class="mx-auto w-full px-5 pb-2 max-[760px]:px-[14px] max-[760px]:pt-4">
 
     <!-- ============================================== overview cards =====
          Seven figures: who turned up, who did not, what that cost. -->
-    <div class="skd-row skd-row-7">
-      <div class="skd-in" style="grid-column:span 1">
-        <section class="skd-card skd-ovc" style="--c:#0284c7">
-          <div class="skd-ovc-top">
-            <i class="skd-ovc-dot" aria-hidden="true"></i>
-            <span class="skd-ovc-label">Total Employee</span>
+    <div class="grid grid-cols-2 gap-[18px] mt-[18px] min-[761px]:grid-cols-4 min-[1181px]:grid-cols-7">
+      <div class="skd-in">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#0284c7">
+          <div class="flex items-center gap-[9px]">
+            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
+            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Total Employee</span>
           </div>
-          <div class="skd-ovc-value" data-hero="Total Employee"></div>
+          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Total Employee"></div>
         </section>
       </div>
 
-      <div class="skd-in" style="grid-column:span 1">
-        <section class="skd-card skd-ovc" style="--c:#10b981">
-          <div class="skd-ovc-top">
-            <i class="skd-ovc-dot" aria-hidden="true"></i>
-            <span class="skd-ovc-label">Present</span>
+      <div class="skd-in">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#10b981">
+          <div class="flex items-center gap-[9px]">
+            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
+            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Present</span>
           </div>
-          <div class="skd-ovc-value" data-hero="Present"></div>
+          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Present"></div>
         </section>
       </div>
 
-      <div class="skd-in" style="grid-column:span 1">
-        <section class="skd-card skd-ovc" style="--c:#f43f5e">
-          <div class="skd-ovc-top">
-            <i class="skd-ovc-dot" aria-hidden="true"></i>
-            <span class="skd-ovc-label">Absent</span>
+      <div class="skd-in">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#eab308">
+          <div class="flex items-center gap-[9px]">
+            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
+            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Absent</span>
           </div>
-          <div class="skd-ovc-value" data-hero="Absent"></div>
+          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Absent"></div>
         </section>
       </div>
 
-      <div class="skd-in" style="grid-column:span 1">
-        <section class="skd-card skd-ovc" style="--c:#0ea5e9">
-          <div class="skd-ovc-top">
-            <i class="skd-ovc-dot" aria-hidden="true"></i>
-            <span class="skd-ovc-label">Leave</span>
+      <div class="skd-in">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#0ea5e9">
+          <div class="flex items-center gap-[9px]">
+            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
+            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Leave</span>
           </div>
-          <div class="skd-ovc-value" data-hero="Leave"></div>
+          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Leave"></div>
         </section>
       </div>
 
-      <div class="skd-in" style="grid-column:span 1">
-        <section class="skd-card skd-ovc" style="--c:#f59e0b">
-          <div class="skd-ovc-top">
-            <i class="skd-ovc-dot" aria-hidden="true"></i>
-            <span class="skd-ovc-label">Late Attendance</span>
+      <div class="skd-in">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#f59e0b">
+          <div class="flex items-center gap-[9px]">
+            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
+            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Late Attendance</span>
           </div>
-          <div class="skd-ovc-value" data-hero="Late Attendance"></div>
+          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Late Attendance"></div>
         </section>
       </div>
 
-      <div class="skd-in" style="grid-column:span 1">
-        <section class="skd-card skd-ovc" style="--c:#8b5cf6">
-          <div class="skd-ovc-top">
-            <i class="skd-ovc-dot" aria-hidden="true"></i>
-            <span class="skd-ovc-label">Overtime Hours</span>
+      <div class="skd-in">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#8b5cf6">
+          <div class="flex items-center gap-[9px]">
+            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
+            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Overtime Hours</span>
           </div>
-          <div class="skd-ovc-value" data-hero="Overtime Hours"></div>
+          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Overtime Hours"></div>
         </section>
       </div>
 
-      <div class="skd-in" style="grid-column:span 1">
-        <section class="skd-card skd-ovc" style="--c:#475569">
-          <div class="skd-ovc-top">
-            <i class="skd-ovc-dot" aria-hidden="true"></i>
-            <span class="skd-ovc-label">Overtime Cost</span>
+      <div class="skd-in">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#475569">
+          <div class="flex items-center gap-[9px]">
+            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
+            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Overtime Cost</span>
           </div>
-          <div class="skd-ovc-value" data-hero="Overtime Cost"></div>
+          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Overtime Cost"></div>
         </section>
       </div>
     </div>
 
     <!-- =================================== ROW 1 : ATTENDANCE REGISTER === -->
-    <div class="skd-row">
-      <div class="skd-in" style="grid-column:span 12">
-        <section class="skd-card">
-          <div class="skd-head-row">
+    <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
+      <div class="skd-in col-span-12">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
-              <h2 class="skd-title">Attendance Register</h2>
-              <p class="skd-sub">Day wise attendance with overtime hours and the present share of the working staff</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Attendance Register</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">Day wise attendance with overtime hours and the present share of the working staff</p>
             </div>
           </div>
           <div class="skd-scroll">
-            <table class="skd-table">
+            <table class="w-full border-collapse text-[13.5px]">
               <thead>
                 <tr>
-                  <th class="a-l">Date</th>
-                  <th class="a-l">Day</th>
-                  <th class="a-r" data-f="qty">Working Staff</th>
-                  <th class="a-r" data-f="qty">Present</th>
-                  <th class="a-r" data-f="qty">Absent</th>
-                  <th class="a-r" data-f="qty">Late Marking</th>
-                  <th class="a-r" data-f="qty">Half Day</th>
-                  <th class="a-r" data-f="qty">On Leave</th>
-                  <th class="a-r" data-f="qty">Overtime (hrs)</th>
-                  <th class="a-c" data-f="pct">Present %</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Date</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Day</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Working Staff</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Present</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Absent</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Late Marking</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Half Day</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">On Leave</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Overtime (hrs)</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-center whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="pct">Present %</th>
                 </tr>
               </thead>
               <tbody data-rows="register"></tbody>
@@ -156,24 +161,24 @@
     </div>
 
     <!-- ============================ ROW 2 : ATTENDANCE BY DEPARTMENT ===== -->
-    <div class="skd-row">
-      <div class="skd-in" style="grid-column:span 12">
-        <section class="skd-card">
-          <div class="skd-head-row">
+    <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
+      <div class="skd-in col-span-12">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
-              <h2 class="skd-title">Attendance by Department</h2>
-              <p class="skd-sub">September 2026 · who is turning up, and how often</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Attendance by Department</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">September 2026 · who is turning up, and how often</p>
             </div>
           </div>
           <div class="skd-scroll">
-            <table class="skd-table">
+            <table class="w-full border-collapse text-[13.5px]">
               <thead>
                 <tr>
-                  <th class="a-l">Department</th>
-                  <th class="a-r" data-f="qty">Staff</th>
-                  <th class="a-r" data-f="qty">Absent</th>
-                  <th class="a-r" data-f="qty">Late</th>
-                  <th class="a-r" data-f="pct">Rate</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Department</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Staff</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Absent</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Late</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="pct">Rate</th>
                 </tr>
               </thead>
               <tbody data-rows="attDept"></tbody>
@@ -184,24 +189,24 @@
     </div>
 
     <!-- ================= ROW 3 : ON LEAVE TODAY + RECENT APPLICATIONS ==== -->
-    <div class="skd-row">
+    <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
 
       <!-- ------------------------------------------------- on leave today -->
-      <div class="skd-in" style="grid-column:span 4">
-        <section class="skd-card">
-          <div class="skd-head-row">
+      <div class="skd-in col-span-12 min-[1181px]:col-span-4">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
-              <h2 class="skd-title">On Leave Today</h2>
-              <p class="skd-sub">28 Sep 2026 · approved leave only</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">On Leave Today</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">28 Sep 2026 · approved leave only</p>
             </div>
           </div>
           <div class="skd-scroll">
-            <table class="skd-table">
+            <table class="w-full border-collapse text-[13.5px]">
               <thead>
                 <tr>
-                  <th class="a-l">Employee</th>
-                  <th class="a-l">Detail</th>
-                  <th class="a-r">Return</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Employee</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Detail</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Return</th>
                 </tr>
               </thead>
               <tbody data-rows="leaveToday"></tbody>
@@ -211,26 +216,26 @@
       </div>
 
       <!-- ------------------------------------------ recent leave applications -->
-      <div class="skd-in" style="grid-column:span 8">
-        <section class="skd-card">
-          <div class="skd-head-row">
+      <div class="skd-in col-span-12 min-[1181px]:col-span-8">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
-              <h2 class="skd-title">Recent Leave Applications</h2>
-              <p class="skd-sub">Latest submitted requests and their current status</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Recent Leave Applications</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">Latest submitted requests and their current status</p>
             </div>
           </div>
           <div class="skd-scroll">
-            <table class="skd-table">
+            <table class="w-full border-collapse text-[13.5px]">
               <thead>
                 <tr>
-                  <th class="a-l">Employee</th>
-                  <th class="a-l">ID</th>
-                  <th class="a-l">Leave Type</th>
-                  <th class="a-l">From</th>
-                  <th class="a-l">To</th>
-                  <th class="a-r" data-f="qty">Days</th>
-                  <th class="a-l">Applied On</th>
-                  <th class="a-c">Status</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Employee</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">ID</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Leave Type</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">From</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">To</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Days</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Applied On</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-center whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Status</th>
                 </tr>
               </thead>
               <tbody data-rows="leaveApps"></tbody>
@@ -241,13 +246,13 @@
     </div>
 
     <!-- ==================== ROW 4 : DEPARTMENT / DESIGNATION / SECTION ==== -->
-    <div class="skd-row">
-      <div class="skd-in" style="grid-column:span 12">
-        <section class="skd-card">
-          <div class="skd-head-row">
+    <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
+      <div class="skd-in col-span-12">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
-              <h2 class="skd-title">Payroll Breakdown</h2>
-              <p class="skd-sub">The same month's payroll read by department, by designation and by section</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Payroll Breakdown</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">The same month's payroll read by department, by designation and by section</p>
             </div>
           </div>
 
@@ -262,13 +267,13 @@
 
           <div class="skd-tabpanel" data-skd-panel="pr-pay-0">
             <div class="skd-scroll">
-              <table class="skd-table">
+              <table class="w-full border-collapse text-[13.5px]">
                 <thead>
                   <tr>
-                    <th class="a-l">Name</th>
-                    <th class="a-r" data-f="qty">Staff</th>
-                    <th class="a-r" data-f="taka">Gross</th>
-                    <th class="a-r" data-f="taka">Net</th>
+                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Name</th>
+                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Staff</th>
+                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="taka">Gross</th>
+                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="taka">Net</th>
                   </tr>
                 </thead>
                 <tbody data-rows="breakDept"></tbody>
@@ -278,13 +283,13 @@
 
           <div class="skd-tabpanel" data-skd-panel="pr-pay-1" hidden>
             <div class="skd-scroll">
-              <table class="skd-table">
+              <table class="w-full border-collapse text-[13.5px]">
                 <thead>
                   <tr>
-                    <th class="a-l">Designation</th>
-                    <th class="a-r" data-f="qty">Staff</th>
-                    <th class="a-r" data-f="taka">Gross</th>
-                    <th class="a-r" data-f="taka">Net</th>
+                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Designation</th>
+                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Staff</th>
+                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="taka">Gross</th>
+                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="taka">Net</th>
                   </tr>
                 </thead>
                 <tbody data-rows="breakDesig"></tbody>
@@ -294,13 +299,13 @@
 
           <div class="skd-tabpanel" data-skd-panel="pr-pay-2" hidden>
             <div class="skd-scroll">
-              <table class="skd-table">
+              <table class="w-full border-collapse text-[13.5px]">
                 <thead>
                   <tr>
-                    <th class="a-l">Section</th>
-                    <th class="a-r" data-f="qty">Staff</th>
-                    <th class="a-r" data-f="taka">Gross</th>
-                    <th class="a-r" data-f="taka">Net</th>
+                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Section</th>
+                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Staff</th>
+                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="taka">Gross</th>
+                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="taka">Net</th>
                   </tr>
                 </thead>
                 <tbody data-rows="breakSection"></tbody>
@@ -312,16 +317,16 @@
     </div>
 
     <!-- ================= ROW 5 : PAYROLL COST + SALARY COMPOSITION ======== -->
-    <div class="skd-row">
+    <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
 
       <!-- ------------------------------------------ period driven chart -->
-      <div class="skd-in" style="grid-column:span 8">
-        <section class="skd-card">
-          <div class="skd-head-row">
+      <div class="skd-in col-span-12 min-[1181px]:col-span-8">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
               <!-- the heading follows the picker, see data-period-title -->
-              <h2 class="skd-title" data-period-title>Last 3 months</h2>
-              <p class="skd-sub">Gross earnings, deductions and net paid</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]" data-period-title>Last 3 months</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">Gross earnings, deductions and net paid</p>
             </div>
             <!-- choosing a period swaps the numbers, the key and the heading -->
             <select class="skd-select" data-period>
@@ -331,27 +336,27 @@
               <option value="lasty">Last year</option>
             </select>
           </div>
-          <div class="skd-canvas" style="height:300px">
+          <div class="relative w-full" style="height:300px">
             <canvas data-chart="payrollCost"></canvas>
           </div>
           <!-- the coloured key, filled from the chart data -->
-          <div class="skd-legend skd-legend-inline" data-legend="payrollCost"></div>
+          <div class="flex flex-wrap gap-x-[22px] gap-y-2.5 mt-4" data-legend="payrollCost"></div>
         </section>
       </div>
 
       <!-- ------------------------------------------------- salary composition -->
-      <div class="skd-in" style="grid-column:span 4">
-        <section class="skd-card">
-          <div class="skd-head-row">
+      <div class="skd-in col-span-12 min-[1181px]:col-span-4">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
-              <h2 class="skd-title">Salary Composition</h2>
-              <p class="skd-sub">Where the gross payroll goes</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Salary Composition</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">Where the gross payroll goes</p>
             </div>
           </div>
-          <div class="skd-canvas" style="height:230px">
+          <div class="relative w-full" style="height:230px">
             <canvas data-chart="salaryComp"></canvas>
           </div>
-          <div class="skd-legend" data-legend="salaryComp"></div>
+          <div class="grid grid-cols-2 gap-y-2 gap-x-5 mt-4" data-legend="salaryComp"></div>
         </section>
       </div>
     </div>
