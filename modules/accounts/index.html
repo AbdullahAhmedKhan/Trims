@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Accounts - SK Trims ERP</title>
+<title>Accounts Dashboard - SK Trims ERP</title>
 <link rel="stylesheet" href="../../assets/css/style.css" />
 <link rel="stylesheet" href="../../assets/css/dashboard.css" />
 <link rel="icon" href="../../assets/images/favicons/favicon.ico" sizes="any" />
@@ -16,16 +16,242 @@
 </head>
 <body>
 
-<!-- Module dashboard. The header, the menu bar and the footer are built by
-     the scripts below, so this file only holds its own content in #sk-app. -->
-<div id="sk-app"></div>
+<!-- =====================================================================
+     ACCOUNTS DASHBOARD
 
+     This page is written out in full: every card, table and chart canvas
+     below is real HTML. Only the numbers are filled in from JavaScript, so
+     the layout can be changed here and the numbers changed in one data
+     file.
+
+       assets/js/dash-accounts.js   the numbers      <- edit values here
+       assets/js/accounts-page.js   says what goes where
+       assets/js/page-binder.js     fills them in
+
+     The data attributes the binder looks for:
+
+       data-rows="..."      fill the rows of the table it sits in
+       data-tracks="..."    the named readings of a card, each with a bar
+       data-bars="..."      the named values of a card, each with a bar
+       data-legend="..."    fill the coloured key under a chart
+       data-chart="..."     draw this chart into this canvas
+       data-hero="..."      fill the overview figure of that card
+       data-period          the select the period picker wires up
+       data-period-title    the heading the picker rewrites
+
+     A <th> says how to show its column: data-f="money" for crore and lakh,
+     data-f="qty" for a plain count, or nothing to leave the value alone.
+
+     The header, the menu bar and the footer are still built by the scripts
+     at the bottom, so this file holds only its own content in #sk-app.
+     ===================================================================== -->
+<div id="sk-app">
+
+  <div class="skd-page">
+
+    <!-- ============================================== overview cards =====
+         Five figures from the posted trial balance: what the business
+         holds, what it took in, what it kept, what it owes and what is
+         sitting in the bank. -->
+    <div class="skd-row skd-row-5">
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#0284c7">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Total Assets</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Total Assets"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#14b8a6">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Revenue</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Revenue"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#16a34a">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Net Profit</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Net Profit"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#f59e0b">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Total Liabilities</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Total Liabilities"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#8b5cf6">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Cash &amp; Bank</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Cash &amp; Bank"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ==================== ROW 1 : P&amp;L + BALANCE SHEET ============== -->
+    <div class="skd-row">
+
+      <!-- -------------------------------------------- period driven chart -->
+      <div class="skd-in" style="grid-column:span 8">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <!-- the heading follows the picker, see data-period-title -->
+              <h2 class="skd-title" data-period-title>Last 3 months</h2>
+              <p class="skd-sub">Revenue against expense for the period, with the profit carried on the right axis</p>
+            </div>
+            <!-- choosing a period swaps the numbers, the key and the heading -->
+            <select class="skd-select" data-period>
+              <option value="3m" selected>Last 3 months</option>
+              <option value="6m">Last 6 months</option>
+              <option value="ytd">This year</option>
+              <option value="lasty">Last year</option>
+            </select>
+          </div>
+          <div class="skd-canvas" style="height:270px">
+            <canvas data-chart="pl"></canvas>
+          </div>
+          <!-- the coloured key, filled from the chart data -->
+          <div class="skd-legend skd-legend-inline" data-legend="pl"></div>
+        </section>
+      </div>
+
+      <!-- ---------------------------------------- balance sheet position -->
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Balance Sheet Position</h2>
+              <p class="skd-sub">Assets measured against what funds them</p>
+            </div>
+          </div>
+          <div data-tracks="balanceSheet"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============== ROW 2 : LEDGER BALANCES + VOUCHER MIX ============= -->
+    <div class="skd-row">
+
+      <div class="skd-in" style="grid-column:span 8">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Ledger Balances</h2>
+              <p class="skd-sub">18 ledgers &middot; total debit ৳ 14.51 Cr against total credit ৳ 14.51 Cr</p>
+            </div>
+          </div>
+          <div class="skd-scroll" style="max-height:430px">
+            <table class="skd-table">
+              <thead>
+                <tr>
+                  <th class="a-l">Ledger</th>
+                  <th class="a-l">Group</th>
+                  <th class="a-l">Cost centre</th>
+                  <th class="a-r" data-f="money">Opening</th>
+                  <th class="a-r" data-f="money">Debit</th>
+                  <th class="a-r" data-f="money">Credit</th>
+                  <th class="a-r" data-f="money">Closing</th>
+                </tr>
+              </thead>
+              <tbody data-rows="ledger"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Voucher Mix</h2>
+              <p class="skd-sub">342 posted vouchers worth ৳ 16.37 Cr, bar length by voucher count</p>
+            </div>
+          </div>
+          <div data-bars="voucherMix"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============== ROW 3 : RECENT VOUCHERS + LIQUIDITY ============== -->
+    <div class="skd-row">
+
+      <div class="skd-in" style="grid-column:span 8">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Recent Vouchers</h2>
+              <p class="skd-sub">8 most recent &middot; 2 still in draft</p>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="skd-table">
+              <thead>
+                <tr>
+                  <th class="a-l">Voucher</th>
+                  <th class="a-l">Type</th>
+                  <th class="a-l">Date</th>
+                  <th class="a-l">Party / ledger</th>
+                  <th class="a-r" data-f="money">Debit</th>
+                  <th class="a-r" data-f="money">Credit</th>
+                  <th class="a-c">Status</th>
+                </tr>
+              </thead>
+              <tbody data-rows="recentVouchers"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Liquidity &amp; Returns</h2>
+              <p class="skd-sub">Ratios read straight off the trial balance</p>
+            </div>
+          </div>
+          <div data-tracks="liquidity"></div>
+        </section>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- The header, the menu bar and the footer are built by these scripts. -->
 <script src="../../assets/js/menu.js"></script>
 <script src="../../assets/js/header.js"></script>
 <script src="../../assets/js/footer.js"></script>
-<script src="../../assets/js/dashboard-kit.js"></script>
+
+<!-- Chart.js draws the charts, dashboard.js holds the shared formatters
+     (money, qty, badges) that page-binder.js uses to fill the tables. -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="../../assets/js/dashboard.js"></script>
+
+<!-- the numbers for this page -->
+<script src="../../assets/js/dash-accounts.js"></script>
+
 <script src="../../assets/js/app.js"></script>
-<script src="../../assets/js/module-page.js"></script>
-<script>App.boot(); ModulePage.render();</script>
+<script src="../../assets/js/page-binder.js"></script>
+<script src="../../assets/js/accounts-page.js"></script>
+<script>App.boot(); AccountsPage.render();</script>
 </body>
 </html>

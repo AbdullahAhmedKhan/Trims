@@ -14,11 +14,15 @@
      <div data-legend="output">     the coloured key under a chart
 <div class="skd-flow" data-flow="receipt">
                                      a share of a whole told with bars
-     <div class="skd-funnel" data-funnel="exportLc">
-                                     a value travelling through stages
-     <canvas data-chart="output">   a chart, drawn from that key in the data
-     <div data-hero="Pending"></div>   fill one overview figure
-     <div data-metrics>             the metrics grid
+      <div class="skd-funnel" data-funnel="exportLc">
+                                      a value travelling through stages
+      <div data-tracks="balanceSheet">
+                                      a few named readings, each with a bar,
+                                      and a line of totals under them
+      <div data-bars="voucherMix">    a named value per row with a bar
+      <canvas data-chart="output">   a chart, drawn from that key in the data
+      <div data-hero="Pending"></div>   fill one overview figure
+      <div data-metrics>             the metrics grid
 
    Column formats come from the thead above the table - a <th> says how to
    show its column with data-f, for example data-f="money". A table with no
@@ -40,6 +44,7 @@ window.SKPage = (function (w, d) {
   var H = null;        /* the shared formatters, taken from dashboard.js */
   var DATA = {};       /* the numbers for the page being filled */
   var CHARTS = {};     /* canvas key -> chart, so one can be replaced */
+  var PERIOD = null;   /* the chart the page's period picker drives */
 
   /* ------------------------------------------------------------- small -- */
   function esc(s) {
@@ -394,6 +399,80 @@ window.SKPage = (function (w, d) {
     });
   }
 
+  /* ============================================================= tracks == */
+
+  /* A handful of named readings, each drawn as a bar on the same scale,
+     with a line of totals ruled off underneath:
+
+        <div data-tracks="balanceSheet"></div>
+
+        balanceSheet: {
+          rows: [ { label, value, pct, color } ],
+          total: [ { label, value } ]
+        }
+
+      `pct` is the width of the bar, written out by hand so a card can put
+      assets against liabilities on one scale without working anything out
+      here. Leave it off and the row shows only its figure. */
+  function fillTracks() {
+    [].slice.call(d.querySelectorAll("[data-tracks]")).forEach(function (host) {
+      var spec = DATA[host.getAttribute("data-tracks")];
+      if (!spec || !spec.rows || !spec.rows.length) return;
+
+      var rows = '<div class="skd-tracks">' + spec.rows.map(function (r) {
+        var pc = r.pct == null ? null : Math.min(100, Math.max(0, num(r.pct)));
+
+        return '<div class="skd-trackrow"' + (r.color ? ' style="--c:' + r.color + '"' : "") + ">" +
+          '<div class="skd-trackrow-top"><span>' + esc(r.label) + "</span><b>" +
+          esc(r.value == null ? "" : r.value) + "</b></div>" +
+          (pc == null ? "" : '<div class="skd-track"><i style="width:' + pc + '%"></i></div>') +
+          "</div>";
+      }).join("") + "</div>";
+
+      var total = (spec.total || []).map(function (t) {
+        return "<div><span>" + esc(t.label) + "</span><b>" + esc(t.value) + "</b></div>";
+      }).join("");
+
+      host.innerHTML = rows + (total ? '<div class="skd-tracks-total">' + total + "</div>" : "");
+    });
+  }
+
+  /* ============================================================== bars == */
+
+  /* A named value per row with its own bar, for a mix or a ranking where
+     each row stands alone rather than adding up to a whole:
+
+        <div class="skd-bars" data-bars="voucherMix"></div>
+
+        voucherMix: {
+          rows: [ { label, value, pct, color, badge, note } ]
+        }
+
+      `badge` is a status pill beside the name, `note` a line under the
+      bar, and `pct` the width of the bar, written out by hand. */
+  function fillBars() {
+    [].slice.call(d.querySelectorAll("[data-bars]")).forEach(function (host) {
+      var spec = DATA[host.getAttribute("data-bars")];
+
+      if (!spec || !spec.rows || !spec.rows.length) {
+        host.innerHTML = '<p class="skd-empty">Nothing to show yet.</p>';
+        return;
+      }
+
+      host.innerHTML = '<div class="skd-bars">' + spec.rows.map(function (r) {
+        var pc = r.pct == null ? null : Math.min(100, Math.max(0, num(r.pct)));
+
+        return '<div class="skd-barrow"' + (r.color ? ' style="--c:' + r.color + '"' : "") + ">" +
+          '<div class="skd-barname"><span>' + esc(r.label) + "</span>" +
+          (r.badge ? badge(r.badge) : "") + "</div>" +
+          '<div class="skd-barval">' + esc(r.value == null ? "" : r.value) + "</div>" +
+          (pc == null ? "" : '<div class="skd-track"><i style="width:' + pc + '%"></i></div>') +
+          (r.note ? '<div class="skd-barfoot">' + esc(r.note) + "</div>" : "") +
+          "</div>";
+      }).join("") + "</div>";
+    });
+  }
+
   /* =========================================================== metrics == */
 
   /* The heading is in the HTML, so only the grid under it is filled here. */
@@ -443,8 +522,10 @@ window.SKPage = (function (w, d) {
       var spec = DATA[key];
       if (!spec) return;
 
-      /* a chart the period picker drives is drawn by showPeriod() instead */
+      /* a chart the period picker drives is drawn by showPeriod() instead,
+         so it is not painted once here only to be replaced below */
       if (DATA.periods && DATA.periods[key]) return;
+      if (PERIOD === key && d.querySelector("[data-period]")) return;
 
       paint(canvas, spec);
     });
@@ -486,13 +567,23 @@ window.SKPage = (function (w, d) {
 
     if (period.series) {
       /* a bar chart: the periods give the axis and the numbers, the base
-         spec gives every bar its colour */
+         spec gives every bar its colour. The colour entry may also carry
+         how that series is drawn - a line on the second axis, a bar with
+         rounded corners, a wider stroke - so a mixed chart keeps its shape
+         when the period changes. */
       var colors = base.series || {};
+      var SHAPE = ["type", "axis", "w", "borderRadius", "order"];
 
       spec.labels = period.labels || [];
       spec.datasets = period.series.map(function (s) {
         var c = colors[s.label] || {};
-        return { label: s.label, data: s.data || [], bg: c.bg, border: c.border };
+        var out = { label: s.label, data: s.data || [], bg: c.bg, border: c.border };
+
+        SHAPE.forEach(function (flag) {
+          if (c[flag] != null) out[flag] = c[flag];
+        });
+
+        return out;
       });
     } else {
       /* a doughnut: the base spec gives the segment names and colours */
@@ -558,6 +649,7 @@ window.SKPage = (function (w, d) {
   function mount(opts) {
     opts = opts || {};
     DATA = opts.data || {};
+    PERIOD = opts.period || null;
 
     var mod = w.SK && w.SK.activeModule();
     var main = d.getElementById("skMain");
@@ -573,6 +665,8 @@ window.SKPage = (function (w, d) {
     fillLegends();
     fillFlow();
     fillFunnel();
+    fillTracks();
+    fillBars();
     fillMetrics();
     fillCharts();
     if (opts.period) wirePeriod(opts.period);

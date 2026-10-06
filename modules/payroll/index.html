@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Payroll - SK Trims ERP</title>
+<title>Payroll Dashboard - SK Trims ERP</title>
 <link rel="stylesheet" href="../../assets/css/style.css" />
 <link rel="stylesheet" href="../../assets/css/dashboard.css" />
 <link rel="icon" href="../../assets/images/favicons/favicon.ico" sizes="any" />
@@ -16,16 +16,366 @@
 </head>
 <body>
 
-<!-- Module dashboard. The header, the menu bar and the footer are built by
-     the scripts below, so this file only holds its own content in #sk-app. -->
-<div id="sk-app"></div>
+<!-- =====================================================================
+     PAYROLL DASHBOARD
 
+     This page is written out in full: every card, table and chart canvas
+     below is real HTML. Only the numbers are filled in from JavaScript, so
+     the layout can be changed here and the numbers changed in one data
+     file.
+
+       assets/js/dash-payroll.js    the numbers      <- edit values here
+       assets/js/payroll-page.js    says what goes where
+       assets/js/page-binder.js     fills them in
+
+     The data attributes the binder looks for:
+
+       data-rows="..."      fill the rows of the table it sits in
+       data-legend="..."    fill the coloured key under a chart
+       data-chart="..."     draw this chart into this canvas
+       data-hero="..."      fill the overview figure of that card
+       data-period          the select the period picker wires up
+       data-period-title    the heading the picker rewrites
+
+     A <th> says how to show its column: data-f="taka" for lakh and crore,
+     data-f="qty" for a plain count, data-f="pct" for a percentage, or
+     nothing to leave the value alone.
+
+     The header, the menu bar and the footer are still built by the scripts
+     at the bottom, so this file holds only its own content in #sk-app.
+     ===================================================================== -->
+<div id="sk-app">
+
+  <div class="skd-page">
+
+    <!-- ============================================== overview cards =====
+         Seven figures: who turned up, who did not, what that cost. -->
+    <div class="skd-row skd-row-7">
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#0284c7">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Total Employee</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Total Employee"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#10b981">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Present</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Present"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#f43f5e">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Absent</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Absent"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#0ea5e9">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Leave</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Leave"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#f59e0b">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Late Attendance</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Late Attendance"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#8b5cf6">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Overtime Hours</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Overtime Hours"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#475569">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Overtime Cost</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Overtime Cost"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- =================================== ROW 1 : ATTENDANCE REGISTER === -->
+    <div class="skd-row">
+      <div class="skd-in" style="grid-column:span 12">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Attendance Register</h2>
+              <p class="skd-sub">Day wise attendance with overtime hours and the present share of the working staff</p>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="skd-table">
+              <thead>
+                <tr>
+                  <th class="a-l">Date</th>
+                  <th class="a-l">Day</th>
+                  <th class="a-r" data-f="qty">Working Staff</th>
+                  <th class="a-r" data-f="qty">Present</th>
+                  <th class="a-r" data-f="qty">Absent</th>
+                  <th class="a-r" data-f="qty">Late Marking</th>
+                  <th class="a-r" data-f="qty">Half Day</th>
+                  <th class="a-r" data-f="qty">On Leave</th>
+                  <th class="a-r" data-f="qty">Overtime (hrs)</th>
+                  <th class="a-c" data-f="pct">Present %</th>
+                </tr>
+              </thead>
+              <tbody data-rows="register"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============================ ROW 2 : ATTENDANCE BY DEPARTMENT ===== -->
+    <div class="skd-row">
+      <div class="skd-in" style="grid-column:span 12">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Attendance by Department</h2>
+              <p class="skd-sub">September 2026 · who is turning up, and how often</p>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="skd-table">
+              <thead>
+                <tr>
+                  <th class="a-l">Department</th>
+                  <th class="a-r" data-f="qty">Staff</th>
+                  <th class="a-r" data-f="qty">Absent</th>
+                  <th class="a-r" data-f="qty">Late</th>
+                  <th class="a-r" data-f="pct">Rate</th>
+                </tr>
+              </thead>
+              <tbody data-rows="attDept"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ================= ROW 3 : ON LEAVE TODAY + RECENT APPLICATIONS ==== -->
+    <div class="skd-row">
+
+      <!-- ------------------------------------------------- on leave today -->
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">On Leave Today</h2>
+              <p class="skd-sub">28 Sep 2026 · approved leave only</p>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="skd-table">
+              <thead>
+                <tr>
+                  <th class="a-l">Employee</th>
+                  <th class="a-l">Detail</th>
+                  <th class="a-r">Return</th>
+                </tr>
+              </thead>
+              <tbody data-rows="leaveToday"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- ------------------------------------------ recent leave applications -->
+      <div class="skd-in" style="grid-column:span 8">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Recent Leave Applications</h2>
+              <p class="skd-sub">Latest submitted requests and their current status</p>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="skd-table">
+              <thead>
+                <tr>
+                  <th class="a-l">Employee</th>
+                  <th class="a-l">ID</th>
+                  <th class="a-l">Leave Type</th>
+                  <th class="a-l">From</th>
+                  <th class="a-l">To</th>
+                  <th class="a-r" data-f="qty">Days</th>
+                  <th class="a-l">Applied On</th>
+                  <th class="a-c">Status</th>
+                </tr>
+              </thead>
+              <tbody data-rows="leaveApps"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ==================== ROW 4 : DEPARTMENT / DESIGNATION / SECTION ==== -->
+    <div class="skd-row">
+      <div class="skd-in" style="grid-column:span 12">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Payroll Breakdown</h2>
+              <p class="skd-sub">The same month's payroll read by department, by designation and by section</p>
+            </div>
+          </div>
+
+          <div class="skd-tabs" role="tablist">
+            <button type="button" class="skd-tab is-on" role="tab" aria-selected="true"
+              data-skd-tab="pr-pay-0">Department</button>
+            <button type="button" class="skd-tab" role="tab" aria-selected="false"
+              data-skd-tab="pr-pay-1">Designation</button>
+            <button type="button" class="skd-tab" role="tab" aria-selected="false"
+              data-skd-tab="pr-pay-2">Section</button>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="pr-pay-0">
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Name</th>
+                    <th class="a-r" data-f="qty">Staff</th>
+                    <th class="a-r" data-f="taka">Gross</th>
+                    <th class="a-r" data-f="taka">Net</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="breakDept"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="pr-pay-1" hidden>
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Designation</th>
+                    <th class="a-r" data-f="qty">Staff</th>
+                    <th class="a-r" data-f="taka">Gross</th>
+                    <th class="a-r" data-f="taka">Net</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="breakDesig"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="pr-pay-2" hidden>
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Section</th>
+                    <th class="a-r" data-f="qty">Staff</th>
+                    <th class="a-r" data-f="taka">Gross</th>
+                    <th class="a-r" data-f="taka">Net</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="breakSection"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ================= ROW 5 : PAYROLL COST + SALARY COMPOSITION ======== -->
+    <div class="skd-row">
+
+      <!-- ------------------------------------------ period driven chart -->
+      <div class="skd-in" style="grid-column:span 8">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <!-- the heading follows the picker, see data-period-title -->
+              <h2 class="skd-title" data-period-title>Last 3 months</h2>
+              <p class="skd-sub">Gross earnings, deductions and net paid</p>
+            </div>
+            <!-- choosing a period swaps the numbers, the key and the heading -->
+            <select class="skd-select" data-period>
+              <option value="3m" selected>Last 3 months</option>
+              <option value="6m">Last 6 months</option>
+              <option value="ytd">This year</option>
+              <option value="lasty">Last year</option>
+            </select>
+          </div>
+          <div class="skd-canvas" style="height:300px">
+            <canvas data-chart="payrollCost"></canvas>
+          </div>
+          <!-- the coloured key, filled from the chart data -->
+          <div class="skd-legend skd-legend-inline" data-legend="payrollCost"></div>
+        </section>
+      </div>
+
+      <!-- ------------------------------------------------- salary composition -->
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Salary Composition</h2>
+              <p class="skd-sub">Where the gross payroll goes</p>
+            </div>
+          </div>
+          <div class="skd-canvas" style="height:230px">
+            <canvas data-chart="salaryComp"></canvas>
+          </div>
+          <div class="skd-legend" data-legend="salaryComp"></div>
+        </section>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- The header, the menu bar and the footer are built by these scripts. -->
 <script src="../../assets/js/menu.js"></script>
 <script src="../../assets/js/header.js"></script>
 <script src="../../assets/js/footer.js"></script>
-<script src="../../assets/js/dashboard-kit.js"></script>
+
+<!-- Chart.js draws the charts, dashboard.js holds the shared formatters
+     (money, taka, qty, pct, badges) that page-binder.js uses to fill the
+     tables. -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="../../assets/js/dashboard.js"></script>
+
+<!-- the numbers for this page -->
+<script src="../../assets/js/dash-payroll.js"></script>
+
 <script src="../../assets/js/app.js"></script>
-<script src="../../assets/js/module-page.js"></script>
-<script>App.boot(); ModulePage.render();</script>
+<script src="../../assets/js/page-binder.js"></script>
+<script src="../../assets/js/payroll-page.js"></script>
+<script>App.boot(); PayrollPage.render();</script>
 </body>
 </html>
