@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Stock - SK Trims ERP</title>
+<title>Stock Dashboard - SK Trims ERP</title>
 <link rel="stylesheet" href="../../assets/css/style.css" />
 <link rel="stylesheet" href="../../assets/css/dashboard.css" />
 <link rel="icon" href="../../assets/images/favicons/favicon.ico" sizes="any" />
@@ -16,16 +16,260 @@
 </head>
 <body>
 
-<!-- Module dashboard. The header, the menu bar and the footer are built by
-     the scripts below, so this file only holds its own content in #sk-app. -->
-<div id="sk-app"></div>
+<!-- =====================================================================
+     STOCK DASHBOARD
 
+     This page is written out in full: every card, table and chart canvas
+     below is real HTML. Only the numbers are filled in from JavaScript, so
+     the layout can be changed here and the numbers changed in one data
+     file.
+
+       assets/js/dash-stock.js   the numbers      <- edit values here
+       assets/js/stock-page.js   says what goes where
+       assets/js/page-binder.js  fills them in
+
+     The data attributes the binder looks for:
+
+       data-rows="..."     fill the rows of the table it sits in
+       data-sum="..."     fill the strip of figures above a table
+       data-legend="..."   fill the coloured key under a chart
+       data-chart="..."    draw this chart into this canvas
+       data-hero="..."     fill the overview figure of that card
+
+     A <th> says how to show its column: data-f="money" for crore and lakh,
+     data-f="qty" for a plain count, or nothing to leave the value alone.
+
+     The header, the menu bar and the footer are still built by the scripts
+     at the bottom, so this file holds only its own content in #sk-app.
+     ===================================================================== -->
+<div id="sk-app">
+
+  <div class="skd-page">
+
+    <!-- ============================================== overview cards =====
+         Four stage cards, one per step the material moves through. No
+         title, no sub title, no progress bars: a dot for the stage, its
+         name and the figure underneath, which the data file fills in. -->
+    <div class="skd-row skd-row-4">
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#0284c7">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Total Stock</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Total Stock"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#0ea5e9">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Stock In Process</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Stock In Process"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#14b8a6">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Used Stock</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Used Stock"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#f59e0b">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Balance Stock</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Balance Stock"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ==================== ROW 1 : stock movement + value by group ====== -->
+    <div class="skd-row">
+
+      <!-- -------------------------------------------- stock movement chart -->
+      <div class="skd-in" style="grid-column:span 8">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <!-- the heading follows the picker, see data-period-title -->
+              <h2 class="skd-title" data-period-title>Last 3 months</h2>
+              <p class="skd-sub">Received, issued and the balance left at the end of the month</p>
+            </div>
+            <!-- choosing a period swaps the numbers, the key and the heading -->
+            <select class="skd-select" data-period>
+              <option value="3m" selected>Last 3 months</option>
+              <option value="6m">Last 6 months</option>
+              <option value="ytd">This year</option>
+              <option value="lasty">Last year</option>
+            </select>
+          </div>
+          <div class="skd-canvas" style="height:300px">
+            <canvas data-chart="movement"></canvas>
+          </div>
+          <!-- the coloured key, filled from the chart data -->
+          <div class="skd-legend skd-legend-inline" data-legend="movement"></div>
+        </section>
+      </div>
+
+      <!-- --------------------------------------------- value by group -->
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Value by Group</h2>
+              <p class="skd-sub">How the ware house value splits</p>
+            </div>
+          </div>
+          <div class="skd-canvas" style="height:230px">
+            <canvas data-chart="group"></canvas>
+          </div>
+          <div class="skd-legend" data-legend="group"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ========================================= ROW 2 : MONITORING ======= -->
+    <div class="skd-row">
+      <div class="skd-in" style="grid-column:span 12">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Stock Monitoring &amp; Forecasting</h2>
+              <p class="skd-sub">Balance is Required minus what is already in hand or already used</p>
+            </div>
+          </div>
+
+          <!-- the strip of figures above the table, one inside each panel so
+               it follows the tab that is open -->
+          <div class="skd-tabs" role="tablist">
+            <button type="button" class="skd-tab is-on" role="tab" aria-selected="true"
+              data-skd-tab="s-stock-0">Stock Monitoring</button>
+            <button type="button" class="skd-tab" role="tab" aria-selected="false"
+              data-skd-tab="s-stock-1">Stock Forecasting</button>
+          </div>
+
+          <!-- a shortfall prints in red and its bar grows in from the right,
+               so it reads against the lines that still have cover -->
+          <div class="skd-tabpanel" data-skd-panel="s-stock-0">
+            <div class="skd-sum" data-sum="monitoring"></div>
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Name</th>
+                    <th class="a-r" data-f="qty">Required</th>
+                    <th class="a-r" data-f="qty">Consumption</th>
+                    <th class="a-r" data-f="qty">Balance</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="monitoring"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="s-stock-1" hidden>
+            <div class="skd-sum" data-sum="forecasting"></div>
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Name</th>
+                    <th class="a-r" data-f="qty">Current Stock</th>
+                    <th class="a-r" data-f="qty">Required</th>
+                    <th class="a-r" data-f="qty">Balance</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="forecasting"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ==================================== ROW 3 : PURCHASE ORDERS ======= -->
+    <div class="skd-row">
+
+      <!-- ------------------------------------------ recent purchase orders -->
+      <div class="skd-in" style="grid-column:span 8">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Recent Purchase Orders</h2>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="skd-table">
+              <thead>
+                <tr>
+                  <th class="a-l">PO No</th>
+                  <th class="a-l">Supplier</th>
+                  <th class="a-r" data-f="qty">Qty</th>
+                  <th class="a-r" data-f="money">Value</th>
+                  <th class="a-r" data-f="money">Payable</th>
+                  <th class="a-l">Expected</th>
+                  <th class="a-c">Status</th>
+                </tr>
+              </thead>
+              <tbody data-rows="po"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- ----------------------------------------------- requisitions -->
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Requisitions</h2>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="skd-table">
+              <thead>
+                <tr>
+                  <th class="a-l">Req No</th>
+                  <th class="a-l">Department</th>
+                  <th class="a-r">Delivered</th>
+                  <th class="a-c">Status</th>
+                </tr>
+              </thead>
+              <tbody data-rows="req"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- The header, the menu bar and the footer are built by these scripts. -->
 <script src="../../assets/js/menu.js"></script>
 <script src="../../assets/js/header.js"></script>
 <script src="../../assets/js/footer.js"></script>
-<script src="../../assets/js/dashboard-kit.js"></script>
+
+<!-- Chart.js draws the charts, dashboard.js holds the shared formatters
+     (money, qty, badges) that page-binder.js uses to fill the tables. -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="../../assets/js/dashboard.js"></script>
+
+<!-- the numbers for this page -->
+<script src="../../assets/js/dash-stock.js"></script>
+
 <script src="../../assets/js/app.js"></script>
-<script src="../../assets/js/module-page.js"></script>
-<script>App.boot(); ModulePage.render();</script>
+<script src="../../assets/js/page-binder.js"></script>
+<script src="../../assets/js/stock-page.js"></script>
+<script>App.boot(); StockPage.render();</script>
 </body>
 </html>

@@ -9,7 +9,11 @@
    the page and drops the values in:
 
      <tbody data-rows="topSales">   the rows of that table, plus its total row
+     <div class="skd-sum" data-sum="monitoring">
+                                    a short strip of figures above a table
      <div data-legend="output">     the coloured key under a chart
+     <div class="skd-flow" data-flow="receipt">
+                                    a share of a whole told with bars
      <canvas data-chart="output">   a chart, drawn from that key in the data
      <div data-hero="Pending"></div>   fill one overview figure
      <div data-metrics>             the metrics grid
@@ -46,6 +50,17 @@ window.SKPage = (function (w, d) {
     return H && H.badge ? H.badge(label) : esc(label);
   }
 
+  /* a plain number, through the format its column asked for */
+  function num(v) {
+    var n = Number(v);
+    return isFinite(n) ? n : 0;
+  }
+
+  function fmt(value, f) {
+    var fn = H && H[value == null ? "text" : f || "text"];
+    return fn ? fn(value) : String(value == null ? "" : value);
+  }
+
   /* ============================================================= tables == */
 
   /* The format of each column. Normally it comes from the thead above the
@@ -74,21 +89,54 @@ window.SKPage = (function (w, d) {
     });
   }
 
-  /* one cell. A plain value is formatted, an object is a status pill or a
-     piece of text that is already written the way it should appear. */
+  /* one cell. A plain value is formatted with the format the thead asked for.
+     An object is one of the shapes below, so a table can carry something
+     other than a plain number:
+
+       { b: "Healthy" }                          a status pill
+       { t: "—" }                                text written as it should show
+       { lines: ["Mat · 28 Oct 2026"] }          a short label and a value,
+                                                  stacked - several dates in
+                                                  one cell, so the table keeps
+                                                  its width
+       { n: -800 }                               a signed number, printed in
+                                                  red when it goes below zero
+       { gauge: -800, of: 3000 }                 the same number with a
+                                                  diverging bar under it, so a
+                                                  shortfall reads against the
+                                                  lines that have cover  */
   function cell(value, col) {
     var cls = ' class="a-' + col.align + (col.align === "l" ? "" : " num") + '"';
 
     if (value && typeof value === "object") {
       if (value.b != null) return "<td" + cls + ">" + badge(value.b) + "</td>";
       if (value.t != null) return "<td" + cls + ">" + esc(value.t) + "</td>";
+      if (value.lines != null) {
+        return "<td" + cls + '><span class="skd-stack">' + value.lines.map(function (l) {
+          /* "Mat · 28 Oct 2026" puts the short label apart from the value */
+          var p = String(l == null ? "" : l).split("\u00b7");
+          return "<span>" + (p.length > 1
+            ? "<i>" + esc(p[0].trim()) + "</i>" + esc(p.slice(1).join("\u00b7").trim())
+            : esc(l)) + "</span>";
+        }).join("") + "</span></td>";
+      }
+      if (value.gauge != null) {
+        var g = num(value.gauge);
+        var scale = num(value.of);
+        var pc = scale ? Math.min(100, (Math.abs(g) / Math.abs(scale)) * 100) : 0;
+        return "<td" + cls + '><span class="skd-gauge' + (g < 0 ? " neg" : "") + '">' +
+          "<b>" + esc(fmt(g, col.f)) + "</b>" +
+          '<i style="--w:' + pc.toFixed(1) + '%"></i></span></td>';
+      }
+      if (value.n != null) {
+        var n = num(value.n);
+        return "<td" + cls + '><span class="skd-num' + (n < 0 ? " is-neg" : "") + '">' +
+          esc(fmt(n, col.f)) + "</span></td>";
+      }
       return "<td" + cls + "></td>";
     }
 
-    var fmt = H && H[value == null ? "text" : col.f || "text"];
-    var out = fmt ? fmt(value) : String(value == null ? "" : value);
-
-    return "<td" + cls + ">" + esc(out) + "</td>";
+    return "<td" + cls + ">" + esc(fmt(value, col.f)) + "</td>";
   }
 
   function row(cells) {
@@ -121,6 +169,33 @@ window.SKPage = (function (w, d) {
       }
 
       tbody.innerHTML = html;
+    });
+  }
+
+  /* =============================================================== sum == */
+
+  /* A short strip of figures above a table, so a card can say where it got
+     to before the reader reaches the rows:
+
+       <div class="skd-sum" data-sum="monitoring"></div>
+         filled from the `sum` of that key in the data file
+
+       monitoring: {
+         sum: [ { label, value, color } ],
+         rows: [...]
+       }
+
+     `color` ties one chip to one reading, a shortfall in red and a covered
+     line in green, so the strip carries the same story as the table. */
+  function fillSums() {
+    [].slice.call(d.querySelectorAll("[data-sum]")).forEach(function (host) {
+      var spec = DATA[host.getAttribute("data-sum")];
+      if (!spec || !spec.sum || !spec.sum.length) return;
+
+      host.innerHTML = spec.sum.map(function (c) {
+        return '<div class="skd-sumchip"' + (c.color ? ' style="--c:' + c.color + '"' : "") +
+          "><span>" + esc(c.label) + "</span><b>" + esc(c.value) + "</b></div>";
+      }).join("");
     });
   }
 
@@ -214,6 +289,65 @@ window.SKPage = (function (w, d) {
 
       var list = legendFor(spec);
       if (list.length) paintLegend(host, list);
+    });
+  }
+
+  /* ============================================================== flow == */
+
+  /* A share of a whole told with bars instead of a doughnut, so two cards on
+     one page do not end up as the same ring twice:
+
+       <div class="skd-flow" data-flow="receipt"></div>
+         the whole card is filled here, out of that key in the data file
+
+     The data says what the parts are, and the shares are worked out from
+     their values, so only the numbers have to be edited:
+
+       receipt: {
+         total: { label: "Challans", value: "37" },
+         rows: [ { label, value, color } ]
+       }
+
+     `value` is the figure shown and the share it is worked out from, so a
+     part written as a number needs no counting here. */
+  function fillFlow() {
+    function share(v) {
+      var n = Number(v);
+      return isFinite(n) ? n : 0;
+    }
+
+    [].slice.call(d.querySelectorAll("[data-flow]")).forEach(function (host) {
+      var spec = DATA[host.getAttribute("data-flow")];
+      if (!spec || !spec.rows || !spec.rows.length) return;
+
+      var rows = spec.rows;
+      var sum = rows.reduce(function (a, r) { return a + share(r.value); }, 0);
+      var total = spec.total || {};
+
+      var out = '<div class="skd-flow-top">' +
+        '<div class="skd-flow-total"><b>' + esc(total.value == null ? sum : total.value) +
+        "</b><span>" + esc(total.label || "Total") + "</span></div>" +
+        (total.note ? '<div class="skd-flow-pct">' + esc(total.note) + "</div>" : "") +
+        "</div>";
+
+      /* one rail, split between the parts in the order the rows are written */
+      out += '<div class="skd-flow-rail">' + rows.map(function (r) {
+        var pc = sum ? (share(r.value) / sum) * 100 : 0;
+        return '<i style="--c:' + (r.color || "#0ea5e9") + ";width:" + pc + '%"></i>';
+      }).join("") + "</div>";
+
+      /* a row per part, each with its own bar on the same scale */
+      out += '<div class="skd-flow-rows">' + rows.map(function (r) {
+        var pc = sum ? (share(r.value) / sum) * 100 : 0;
+        return '<div class="skd-flow-row" style="--c:' + (r.color || "#0ea5e9") + '">' +
+          '<div class="skd-flow-name"><i></i><span>' + esc(r.label) + "</span></div>" +
+          '<div class="skd-flow-val">' + esc(r.value) +
+          "<small>" + pc.toFixed(1) + "%</small></div>" +
+          '<div class="skd-track"><i style="width:' + pc + '%"></i></div>' +
+          "</div>";
+      }).join("") + "</div>";
+
+      host.innerHTML = out;
     });
   }
 
@@ -391,8 +525,10 @@ window.SKPage = (function (w, d) {
 
     setTitle();
     fillRows();
+    fillSums();
     fillHero();
     fillLegends();
+    fillFlow();
     fillMetrics();
     fillCharts();
     if (opts.period) wirePeriod(opts.period);

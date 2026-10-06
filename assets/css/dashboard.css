@@ -220,11 +220,19 @@
 }
 
 /* =============================================================== hero === */
-/* The overview written as five separate cards. The stage colour is passed in
+/* The overview written as separate cards. The stage colour is passed in
    as --c and used three times: the dot, the soft ring around it, and a tint
    on the figure, so one line of CSS ties a card to its stage. */
 .skd-row-5 {
   grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.skd-row-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.skd-row-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .skd-ovc {
@@ -447,6 +455,128 @@
   color: #0f172a;
   font-weight: 700;
   white-space: nowrap;
+}
+
+/* ================================================================ flow === */
+/* A share of a whole, told with bars instead of a doughnut: the total on
+   top, one segmented rail under it that is split between the rows in the
+   same colours, and a row per part with its own progress bar. Each row
+   brings its colour in as --c, so one line of CSS ties it to its part. */
+.skd-flow {
+  display: grid;
+  gap: 16px;
+}
+
+.skd-flow-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.skd-flow-total b {
+  display: block;
+  font-size: clamp(26px, 2.4vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  color: #0f172a;
+}
+
+.skd-flow-total span {
+  display: block;
+  margin-top: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.skd-flow-pct {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+  white-space: nowrap;
+}
+
+/* the one rail, split between the parts in the order the rows are written */
+.skd-flow-rail {
+  display: flex;
+  gap: 3px;
+  height: 12px;
+}
+
+.skd-flow-rail > i {
+  display: block;
+  min-width: 4px;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--c, var(--sk-accent));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.skd-flow-rows {
+  display: grid;
+  gap: 14px;
+}
+
+.skd-flow-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 5px 12px;
+}
+
+.skd-flow-name {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #1e293b;
+  min-width: 0;
+}
+
+.skd-flow-name span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.skd-flow-name i {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--c, var(--sk-accent));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, var(--sk-accent)) 18%, transparent);
+}
+
+.skd-flow-val {
+  font-size: 13.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.skd-flow-val small {
+  margin-left: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.skd-flow-row .skd-track {
+  grid-column: 1 / -1;
+  height: 7px;
+}
+
+.skd-flow-row .skd-track > i {
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--c, #0ea5e9) 55%, #fff),
+    var(--c, #0ea5e9));
 }
 
 /* =============================================================== table == */
@@ -1004,6 +1134,140 @@
   margin-bottom: 10px;
 }
 
+/* ================================================================ sum ===
+   A short strip of figures above a table, so a card can say where it got
+   to before the reader reaches the rows. Each chip carries its own reading
+   in --c, so a shortfall reads red and a covered line green. */
+.skd-sum {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.skd-sumchip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--sk-line);
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.skd-sumchip span {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.skd-sumchip b {
+  font-size: 13.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--c, #0f172a);
+  white-space: nowrap;
+}
+
+/* ============================================================== gauge ===
+   A signed figure with a bar under it. The bar grows from the left for a
+   figure that is in hand and from the right for one that has gone short, so
+   the two read as opposites at a glance across the column. */
+.skd-num {
+  font-variant-numeric: tabular-nums;
+}
+
+.skd-num.is-neg {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.skd-gauge {
+  display: grid;
+  gap: 5px;
+  justify-items: end;
+  min-width: 104px;
+}
+
+.skd-gauge b {
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #0f766e;
+  white-space: nowrap;
+}
+
+.skd-gauge.neg b {
+  color: #dc2626;
+}
+
+.skd-gauge i {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--sk-soft);
+  overflow: hidden;
+}
+
+.skd-gauge i::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--w, 0%);
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2dd4bf, #0d9488);
+}
+
+.skd-gauge.neg i::before {
+  left: auto;
+  right: 0;
+  background: linear-gradient(270deg, #f87171, #dc2626);
+}
+
+/* ============================================================== stack ===
+   One cell carrying several short values, so a table can keep its width:
+   three dates stacked under one heading, each with a short label in front
+   of it. Written out by page-binder.js from a { lines: [...] } value. */
+.skd-stack {
+  display: grid;
+  gap: 3px;
+  justify-items: start;
+}
+
+/* in a right aligned column the block itself moves to the right edge, so
+   the three lines line up with the figures beside them */
+td.a-r .skd-stack {
+  justify-items: end;
+  margin-left: auto;
+}
+
+.skd-stack > span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: #334155;
+  white-space: nowrap;
+}
+
+.skd-stack i {
+  flex: none;
+  min-width: 24px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
 /* ============================================================== empty === */
 .skd-empty {
   padding: 34px 10px;
@@ -1177,7 +1441,8 @@
   .skd-page-404::before,
   .skd-page-404::after { animation: none; }
   .skd-track > i,
-  .skd-hbar > i { transition: none; }
+  .skd-hbar > i,
+  .skd-flow-rail > i { transition: none; }
 }
 
 /* ========================================================= responsive === */
@@ -1188,6 +1453,12 @@
      becomes 3 + 2 instead of one card per row */
   .skd-row-5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .skd-row-5 > * { grid-column: span 1 !important; }
+
+  .skd-row-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .skd-row-3 > * { grid-column: span 1 !important; }
+
+  .skd-row-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .skd-row-4 > * { grid-column: span 1 !important; }
 
   .skd-mrow > label { font-size: 13px; }
   .skd-mrow > div { font-size: 13px; }
@@ -1207,6 +1478,8 @@
   .skd-mbody { min-width: 640px; }
 
   .skd-row-5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .skd-row-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .skd-row-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   /* hero: five squeezed cells become a readable 2-column grid */
   .skd-rail {

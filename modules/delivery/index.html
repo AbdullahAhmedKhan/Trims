@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Delivery - SK Trims ERP</title>
+<title>Delivery Dashboard - SK Trims ERP</title>
 <link rel="stylesheet" href="../../assets/css/style.css" />
 <link rel="stylesheet" href="../../assets/css/dashboard.css" />
 <link rel="icon" href="../../assets/images/favicons/favicon.ico" sizes="any" />
@@ -16,16 +16,241 @@
 </head>
 <body>
 
-<!-- Module dashboard. The header, the menu bar and the footer are built by
-     the scripts below, so this file only holds its own content in #sk-app. -->
-<div id="sk-app"></div>
+<!-- =====================================================================
+     DELIVERY DASHBOARD
 
+     This page is written out in full: every card, table and chart canvas
+     below is real HTML. Only the numbers are filled in from JavaScript, so
+     the layout can be changed here and the numbers changed in one data
+     file.
+
+       assets/js/dash-delivery.js   the numbers      <- edit values here
+       assets/js/delivery-page.js   says what goes where
+       assets/js/page-binder.js     fills them in
+
+     The data attributes the binder looks for:
+
+       data-rows="..."     fill the rows of the table it sits in
+       data-legend="..."   fill the coloured key under a chart
+       data-chart="..."    draw this chart into this canvas
+       data-flow="..."     fill the progress bars of a share of a whole
+       data-hero="..."     fill the overview figure of that card
+
+     A <th> says how to show its column: data-f="qty" for a plain count,
+     data-f="pct" for a percentage, or nothing to leave the value alone.
+
+     The header, the menu bar and the footer are still built by the scripts
+     at the bottom, so this file holds only its own content in #sk-app.
+     ===================================================================== -->
+<div id="sk-app">
+
+  <div class="skd-page">
+
+    <!-- ============================================== overview cards =====
+         Three stage cards, one per step the quantity moves through. No
+         title, no sub title, no progress bars: a dot for the stage, its name
+         and the figure underneath, which the data file fills in. -->
+    <div class="skd-row skd-row-3">
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#0284c7">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Order Qty</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Order Qty"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#0ea5e9">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Conning Qty</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Conning Qty"></div>
+        </section>
+      </div>
+
+      <div class="skd-in" style="grid-column:span 1">
+        <section class="skd-card skd-ovc" style="--c:#14b8a6">
+          <div class="skd-ovc-top">
+            <i class="skd-ovc-dot" aria-hidden="true"></i>
+            <span class="skd-ovc-label">Delivered Qty</span>
+          </div>
+          <div class="skd-ovc-value" data-hero="Delivered Qty"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ================== ROW 1 : delivery trend + where the quantity is -->
+    <div class="skd-row">
+
+      <!-- ----------------------------------------- delivery trend chart -->
+      <div class="skd-in" style="grid-column:span 8">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <!-- the heading follows the picker, see data-period-title -->
+              <h2 class="skd-title" data-period-title>Last 7 days delivery</h2>
+            </div>
+            <!-- choosing a period swaps the numbers and the heading -->
+            <select class="skd-select" data-period>
+              <option value="7d" selected>Last 7 days</option>
+              <option value="30d">Last 30 days</option>
+              <option value="ytd">This year</option>
+            </select>
+          </div>
+          <div class="skd-canvas" style="height:300px">
+            <canvas data-chart="last7"></canvas>
+          </div>
+        </section>
+      </div>
+
+      <!-- ---------------------------------------- delivery status doughnut -->
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Delivery Status</h2>
+            </div>
+          </div>
+          <div class="skd-canvas" style="height:230px">
+            <canvas data-chart="status"></canvas>
+          </div>
+          <div class="skd-legend" data-legend="status"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============================== ROW 2 : receipts + recent challans == -->
+    <div class="skd-row">
+
+      <!-- ----------------------------------------- challan receipt progress bars -->
+      <div class="skd-in" style="grid-column:span 4">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Challan Receipt Status</h2>
+              <p class="skd-sub">Where the raised challans have been received</p>
+            </div>
+          </div>
+          <div class="skd-flow" data-flow="receipt"></div>
+        </section>
+      </div>
+
+      <!-- ---------------------------------------------- recent challans -->
+      <div class="skd-in" style="grid-column:span 8">
+        <section class="skd-card">
+          <div class="skd-head-row">
+            <div>
+              <h2 class="skd-title">Recent Challans</h2>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="skd-table">
+              <thead>
+                <tr>
+                  <th class="a-l">Challan</th>
+                  <th class="a-l">Job</th>
+                  <th class="a-r" data-f="qty">Qty</th>
+                  <th class="a-r">Status</th>
+                </tr>
+              </thead>
+              <tbody data-rows="challans"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ================================================ ROW 3 : JOB POOL == -->
+    <div class="skd-row">
+      <div class="skd-in" style="grid-column:span 12">
+        <section class="skd-card">
+          <div class="skd-tabs" role="tablist">
+            <button type="button" class="skd-tab is-on" role="tab" aria-selected="true"
+              data-skd-tab="d-pool-0">Party</button>
+            <button type="button" class="skd-tab" role="tab" aria-selected="false"
+              data-skd-tab="d-pool-1">Item</button>
+            <button type="button" class="skd-tab" role="tab" aria-selected="false"
+              data-skd-tab="d-pool-2">Team</button>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="d-pool-0">
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Party</th>
+                    <th class="a-r" data-f="qty">Jobs</th>
+                    <th class="a-r" data-f="qty">Order</th>
+                    <th class="a-r" data-f="qty">Conning</th>
+                    <th class="a-r" data-f="qty">Delivered</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="party"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="d-pool-1" hidden>
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Item</th>
+                    <th class="a-r" data-f="qty">Jobs</th>
+                    <th class="a-r" data-f="qty">Order</th>
+                    <th class="a-r" data-f="qty">Conning</th>
+                    <th class="a-r" data-f="qty">Delivered</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="item"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="d-pool-2" hidden>
+            <div class="skd-scroll">
+              <table class="skd-table">
+                <thead>
+                  <tr>
+                    <th class="a-l">Team</th>
+                    <th class="a-r" data-f="qty">Jobs</th>
+                    <th class="a-r" data-f="qty">Order</th>
+                    <th class="a-r" data-f="qty">Conning</th>
+                    <th class="a-r" data-f="qty">Delivered</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="team"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="skd-tfoot"><span>Date: 1 Sep 2026 - 30 Sep 2026</span></div>
+        </section>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- The header, the menu bar and the footer are built by these scripts. -->
 <script src="../../assets/js/menu.js"></script>
 <script src="../../assets/js/header.js"></script>
 <script src="../../assets/js/footer.js"></script>
-<script src="../../assets/js/dashboard-kit.js"></script>
+
+<!-- Chart.js draws the charts, dashboard.js holds the shared formatters
+     (qty, pct, badges) that page-binder.js uses to fill the tables. -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="../../assets/js/dashboard.js"></script>
+
+<!-- the numbers for this page -->
+<script src="../../assets/js/dash-delivery.js"></script>
+
 <script src="../../assets/js/app.js"></script>
-<script src="../../assets/js/module-page.js"></script>
-<script>App.boot(); ModulePage.render();</script>
+<script src="../../assets/js/page-binder.js"></script>
+<script src="../../assets/js/delivery-page.js"></script>
+<script>App.boot(); DeliveryPage.render();</script>
 </body>
 </html>
