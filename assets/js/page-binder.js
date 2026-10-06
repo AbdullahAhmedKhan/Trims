@@ -12,8 +12,10 @@
      <div class="skd-sum" data-sum="monitoring">
                                     a short strip of figures above a table
      <div data-legend="output">     the coloured key under a chart
-     <div class="skd-flow" data-flow="receipt">
-                                    a share of a whole told with bars
+<div class="skd-flow" data-flow="receipt">
+                                     a share of a whole told with bars
+     <div class="skd-funnel" data-funnel="exportLc">
+                                     a value travelling through stages
      <canvas data-chart="output">   a chart, drawn from that key in the data
      <div data-hero="Pending"></div>   fill one overview figure
      <div data-metrics>             the metrics grid
@@ -351,6 +353,47 @@ window.SKPage = (function (w, d) {
     });
   }
 
+  /* ============================================================== funnel ==
+
+     A value travelling through a fixed sequence of stages, told as a stack
+     of steps rather than a ring, so two cards on one page do not end up as
+     the same doughnut twice:
+
+        <div class="skd-funnel" data-funnel="exportLc"></div>
+          the whole card is filled here, out of that key in the data file
+
+      The data writes the stages in the order they should appear, so the
+      serial the page shows is the serial in the file:
+
+        exportLc: {
+          steps: [ { step, value, note, color } ],
+          carry:  [ { label, value } ]   one connector line between two steps,
+                                         matched to the step above it
+        } */
+  function fillFunnel() {
+    [].slice.call(d.querySelectorAll("[data-funnel]")).forEach(function (host) {
+      var spec = DATA[host.getAttribute("data-funnel")];
+      if (!spec || !spec.steps || !spec.steps.length) return;
+
+      var out = '<div class="skd-funnel">';
+
+      spec.steps.forEach(function (s, i) {
+        out += '<div class="skd-fstep"' + (s.color ? ' style="--c:' + s.color + '"' : "") + ">" +
+          '<div class="skd-fstep-top"><b>' + esc(s.step) + "</b><span>" +
+          esc(s.value == null ? "" : s.value) + "</span></div>" +
+          (s.note ? "<small>" + esc(s.note) + "</small>" : "") + "</div>";
+
+        var carry = (spec.carry || [])[i];
+        if (carry) {
+          out += '<div class="skd-fcarry">' + esc(carry.label) +
+            (carry.value != null ? " <b>" + esc(carry.value) + "</b>" : "") + "</div>";
+        }
+      });
+
+      host.innerHTML = out + "</div>";
+    });
+  }
+
   /* =========================================================== metrics == */
 
   /* The heading is in the HTML, so only the grid under it is filled here. */
@@ -529,6 +572,7 @@ window.SKPage = (function (w, d) {
     fillHero();
     fillLegends();
     fillFlow();
+    fillFunnel();
     fillMetrics();
     fillCharts();
     if (opts.period) wirePeriod(opts.period);
