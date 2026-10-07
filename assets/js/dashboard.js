@@ -416,7 +416,7 @@ label: function (ctx) {
   function tabs(b) {
     var out = '<div class="skd-tabs" role="tablist">';
     b.tabs.forEach(function (t, i) {
-      out += '<button type="button" class="skd-tab' + (i ? "" : " is-on") +
+      out += '<button type="button" class="skd-tab' + (i ? " text-slate-600 hover:bg-slate-100" : " is-on !bg-sky-600 !text-white") +
         '" role="tab" aria-selected="' + (i ? "false" : "true") +
         '" data-skd-tab="' + esc(b.id || "") + "-" + i + '">' + esc(t.label) + "</button>";
     });
@@ -744,6 +744,10 @@ label: function (ctx) {
         var on = t === btn;
         t.classList.toggle("is-on", on);
         t.setAttribute("aria-selected", String(on));
+        t.classList.toggle("!bg-sky-600", on);
+        t.classList.toggle("!text-white", on);
+        t.classList.toggle("text-slate-600", !on);
+        t.classList.toggle("hover:bg-slate-100", !on);
       });
       [].slice.call(wrap.querySelectorAll(".skd-tabpanel")).forEach(function (p) {
         p.hidden = p.getAttribute("data-skd-panel") !== id;

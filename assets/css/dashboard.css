@@ -794,8 +794,7 @@
     }
   }
 }
-index.html and in the markup built by assets/js/page-binder.js. Only the shared hooks below carry their own CSS: tabs, the period picker, the reveal, the scroll wrapper, the shortfall gauge, the financial metrics grid (order) and the 404 page (module-page.js). Everything else is a utility, compiled out of the classes that appear in the sources. Rebuild: node @tailwindcss/cli/dist/index.mjs -i dash.config.css \
- -o assets/css/dashboard.css --cwd skbuild ========================================================================== */ @source "./sk8/";
+/* Shared dashboard component styles; utility classes are compiled separately. */
 @layer components {
   .skd-page {
     width: 100%;
@@ -1147,7 +1146,6 @@ index.html and in the markup built by assets/js/page-binder.js. Only the shared 
   }
   .skd-metrics {
     padding: 14px;
-    overflow-x: auto;
   }
   .skd-mhead, .skd-mrow {
     --ml: 150px;

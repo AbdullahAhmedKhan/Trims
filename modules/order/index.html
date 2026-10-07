@@ -6,6 +6,7 @@
 <title>Order Dashboard - SK Trims ERP</title>
 <link rel="stylesheet" href="../../assets/css/style.css" />
 <link rel="stylesheet" href="../../assets/css/dashboard.css" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <link rel="icon" href="../../assets/images/favicons/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicons/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicons/favicon-16x16.png" />
@@ -92,30 +93,30 @@
         </section>
       </div>
 
-      <!-- --------------------------------------- top party / creditors -->
+      <!-- ---------------------------------------------- top parties -->
       <div class="skd-in col-span-12 min-[1181px]:col-span-4">
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
-          <div class="skd-tabs" role="tablist">
-            <button type="button" class="skd-tab is-on" role="tab" aria-selected="true"
-              data-skd-tab="o-top-0">Top Party</button>
-            <button type="button" class="skd-tab" role="tab" aria-selected="false"
-              data-skd-tab="o-top-1">Top Creditors</button>
-          </div>
-
-          <!-- no header row on these two: data-cols says what each column
-               is, so money still shows as crore and lakh -->
-          <div class="skd-tabpanel" data-skd-panel="o-top-0">
-            <div class="skd-scroll">
-              <table class="w-full border-collapse text-[13.5px]" data-cols="text,money,money">
-                <tbody data-rows="topParty"></tbody>
-              </table>
+          <div class="flex items-start justify-between gap-[14px] mb-4">
+            <div>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Top Party</h2>
             </div>
+            <select class="skd-select" data-period-top>
+              <option value="thism">This Month</option>
+              <option value="lastm">Last Month</option>
+              <option value="3m">3 Months</option>
+            </select>
           </div>
-
-          <div class="skd-tabpanel" data-skd-panel="o-top-1" hidden>
+          <div class="skd-tabpanel">
             <div class="skd-scroll">
               <table class="w-full border-collapse text-[13.5px]" data-cols="text,money,money">
-                <tbody data-rows="topCreditors"></tbody>
+                <thead>
+                  <tr>
+                    <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party</th>
+                    <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Order Value</th>
+                    <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Delivery</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="topParty"></tbody>
               </table>
             </div>
           </div>
@@ -133,13 +134,17 @@
             <div>
               <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Party &amp; Product Breakdown</h2>
             </div>
-            <span class="flex-none inline-flex items-center whitespace-nowrap rounded-full border border-slate-200 bg-slate-100 px-2.5 py-[5px] text-xs font-semibold leading-none text-slate-600">This Month</span>
+            <select class="skd-select" data-period-breakdown>
+              <option value="thism">This Month</option>
+              <option value="lastm">Last Month</option>
+              <option value="3m">3 Months</option>
+            </select>
           </div>
 
           <div class="skd-tabs" role="tablist">
-            <button type="button" class="skd-tab is-on" role="tab" aria-selected="true"
+            <button type="button" class="skd-tab is-on !bg-sky-600 !text-white" role="tab" aria-selected="true"
               data-skd-tab="o-break-0">Party</button>
-            <button type="button" class="skd-tab" role="tab" aria-selected="false"
+            <button type="button" class="skd-tab text-slate-600 hover:bg-slate-100" role="tab" aria-selected="false"
               data-skd-tab="o-break-1">Product</button>
           </div>
 
@@ -150,7 +155,7 @@
                   <tr>
                     <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party</th>
                     <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Order Value</th>
-                    <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Qty</th>
+                    <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Delivery</th>
                   </tr>
                 </thead>
                 <tbody data-rows="party"></tbody>
@@ -165,7 +170,7 @@
                   <tr>
                     <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Product</th>
                     <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Order Value</th>
-                    <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Qty</th>
+                    <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Delivery</th>
                   </tr>
                 </thead>
                 <tbody data-rows="product"></tbody>
@@ -193,35 +198,11 @@
       </div>
     </div>
 
-    <!-- ============================ ROW 3 : recent orders / item chart === -->
+    <!-- ============================ ROW 3 : item chart === -->
     <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
 
-      <!-- ---------------------------------------------- recent orders -->
-      <div class="skd-in col-span-12 min-[1181px]:col-span-4">
-        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
-          <div class="flex items-start justify-between gap-[14px] mb-4">
-            <div>
-              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Recent Orders</h2>
-            </div>
-          </div>
-          <div class="skd-scroll">
-            <table class="w-full border-collapse text-[13.5px]">
-              <thead>
-                <tr>
-                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Order No</th>
-                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party</th>
-                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Value</th>
-                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Status</th>
-                </tr>
-              </thead>
-              <tbody data-rows="recent"></tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-
       <!-- ----------------------------------------- item performance -->
-      <div class="skd-in col-span-12 min-[1181px]:col-span-8">
+      <div class="skd-in col-span-12">
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
           <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
@@ -245,7 +226,7 @@
         <!-- the heading is written here; only the grid below it is filled -->
         <div class="skd-metrics" data-metrics>
           <h2>Financial Metrics Overview</h2>
-          <div data-metrics-grid></div>
+          <div class="overflow-x-auto" data-metrics-grid></div>
         </div>
       </div>
     </div>

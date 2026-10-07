@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
 
@@ -157,10 +158,10 @@
           <!-- the strip of figures above the table, one inside each panel so
                it follows the tab that is open -->
           <div class="skd-tabs" role="tablist">
-            <button type="button" class="skd-tab is-on" role="tab" aria-selected="true"
-              data-skd-tab="s-stock-0">Stock Monitoring</button>
-            <button type="button" class="skd-tab" role="tab" aria-selected="false"
-              data-skd-tab="s-stock-1">Stock Forecasting</button>
+            <button type="button" class="skd-tab is-on !bg-sky-600 !text-white" role="tab" aria-selected="true"
+              data-skd-tab="s-stock-0">Party</button>
+            <button type="button" class="skd-tab text-slate-600 hover:bg-slate-100" role="tab" aria-selected="false"
+              data-skd-tab="s-stock-1">Product</button>
           </div>
 
           <!-- a shortfall prints in amber and its bar grows in from the right,

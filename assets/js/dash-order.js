@@ -61,7 +61,7 @@ window.ORDER_DATA = {
     type: "doughnut",
     height: 230,
     center: "Total",
-    labels: ["Order", "Approved Order", "Pending Order", "Sample"],
+    labels: ["Order", "Production", "Delivery", "Sample"],
     bg: [
       "rgba(14, 165, 233, 0.55)",
       "rgba(20, 184, 166, 0.55)",
@@ -108,16 +108,6 @@ window.ORDER_DATA = {
       ["Hanuman Textile", 41200000, 358000],
       ["Noman Group", 38600000, 341000],
       ["Envy Pacific", 35400000, 328000]
-    ]
-  },
-
-  topCreditors: {
-    rows: [
-      ["Prime Denim", 18400000, 212000],
-      ["Shanta Holdings", 16300000, 198000],
-      ["Rupali Knitwear", 14900000, 185000],
-      ["MJ Group", 13200000, 174000],
-      ["Beximco Limited", 11800000, 162000]
     ]
   },
 

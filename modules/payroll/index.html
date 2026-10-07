@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
 
@@ -257,12 +258,10 @@
           </div>
 
           <div class="skd-tabs" role="tablist">
-            <button type="button" class="skd-tab is-on" role="tab" aria-selected="true"
+            <button type="button" class="skd-tab is-on !bg-sky-600 !text-white" role="tab" aria-selected="true"
               data-skd-tab="pr-pay-0">Department</button>
-            <button type="button" class="skd-tab" role="tab" aria-selected="false"
+            <button type="button" class="skd-tab text-slate-600 hover:bg-slate-100" role="tab" aria-selected="false"
               data-skd-tab="pr-pay-1">Designation</button>
-            <button type="button" class="skd-tab" role="tab" aria-selected="false"
-              data-skd-tab="pr-pay-2">Section</button>
           </div>
 
           <div class="skd-tabpanel" data-skd-panel="pr-pay-0">
@@ -297,21 +296,7 @@
             </div>
           </div>
 
-          <div class="skd-tabpanel" data-skd-panel="pr-pay-2" hidden>
-            <div class="skd-scroll">
-              <table class="w-full border-collapse text-[13.5px]">
-                <thead>
-                  <tr>
-                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Section</th>
-                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Staff</th>
-                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="taka">Gross</th>
-                    <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="taka">Net</th>
-                  </tr>
-                </thead>
-                <tbody data-rows="breakSection"></tbody>
-              </table>
-            </div>
-          </div>
+
         </section>
       </div>
     </div>

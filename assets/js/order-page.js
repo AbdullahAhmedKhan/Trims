@@ -12,8 +12,7 @@
 
      overview                       unused on this page
      last7, months, team, item      the charts
-     topParty, topCreditors,        the tables, one key per table
-     party, product, recent
+     topParty, party, product, recent tables
      metrics                        the financial metrics grid
      periods                        the numbers behind the period picker
    ========================================================================== */
