@@ -43,49 +43,47 @@
   <div class="w-full px-4 pb-12 pt-[18px] md:px-7 md:pt-6 lg:px-9">
 
     <!-- ============================================================ HERO -->
-    <section class="relative isolate overflow-hidden rounded-[28px] border border-white/20 bg-slate-950 bg-[radial-gradient(ellipse_90%_90%_at_50%_-20%,rgba(14,165,233,0.32),rgba(255,255,255,0)),linear-gradient(135deg,#071a33_0%,#0c3258_52%,#055e8c_100%)] shadow-[0_25px_60px_-15px_rgba(7,38,68,0.42)]">
+    <!-- Light theme: white card, sky tint glow, dark text; shapebox.png decorates the right edge -->
+    <section class="relative isolate overflow-hidden rounded-[28px] border border-slate-200 bg-white bg-no-repeat bg-right bg-[length:auto_150%] bg-[url(assets/images/shapebox.png),radial-gradient(ellipse_90%_90%_at_50%_-20%,rgba(14,165,233,0.16),rgba(255,255,255,0)),linear-gradient(135deg,#ffffff_0%,#f4faff_52%,#e8f4ff_100%)]">
       
       <!-- Subtle ambient glow blurs -->
-      <span class="pointer-events-none absolute -right-16 -top-20 h-72 w-72 rounded-full bg-sky-400/20 blur-3xl"></span>
-      <span class="pointer-events-none absolute -bottom-28 left-6 h-64 w-64 rounded-full bg-blue-500/25 blur-3xl"></span>
-      
-      <!-- Subtle geometric mesh grid overlay -->
-      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] opacity-10"></div>
+      <span class="pointer-events-none absolute -right-16 -top-20 h-72 w-72 rounded-full bg-sky-300/40 blur-3xl"></span>
+      <span class="pointer-events-none absolute -bottom-28 left-6 h-64 w-64 rounded-full bg-indigo-300/30 blur-3xl"></span>
 
       <div class="relative flex flex-col gap-6 p-4 sm:p-8 md:flex-row md:items-center md:justify-between md:p-4 lg:p-6">
 
         <!-- Welcome copy -->
         <div class="min-w-0">
 
-          <h1 class="mt-3.5 text-[22px] font-black leading-[1.12] tracking-[-0.03em] text-white sm:text-[26px] md:text-[32px] lg:text-[38px]">
-            Welcome, <span class="bg-gradient-to-r from-white via-sky-100 to-sky-300 bg-clip-text text-transparent" data-home="user">Admin</span>
-            <span class="mt-1 block text-[17px] font-medium text-sky-200/90 tracking-normal sm:text-[20px] md:text-[22px] capitalize" data-home="greeting">good morning</span>
+          <h1 class="mt-3.5 text-[22px] font-black leading-[1.12] tracking-[-0.03em] text-slate-900 sm:text-[26px] md:text-[32px] lg:text-[38px]">
+            Welcome, <span class="bg-gradient-to-r from-slate-900 via-sky-700 to-sky-500 bg-clip-text text-transparent" data-home="user">Admin</span>
+            <span class="mt-1 block text-[17px] font-medium text-slate-500 tracking-normal sm:text-[20px] md:text-[22px] capitalize" data-home="greeting">good morning</span>
           </h1>
         </div>
 
         <!-- Today's Calendar (No calendar icon, bigger date number, sleek modern styling) -->
-        <div class="flex flex-none items-center gap-3 sm:gap-3.5 rounded-[24px] border border-white/20 bg-white/10 p-3 sm:p-3.5 backdrop-blur-xl shadow-2xl shadow-black/20">
+        <div class="flex flex-none items-center gap-3 sm:gap-3.5 rounded-[24px] border border-slate-200/80 bg-white/70 p-3 sm:p-3.5 backdrop-blur-xl shadow-xl shadow-slate-200/70">
 
           <!-- Big Date Badge -->
-          <div class="flex h-[80px] w-[80px] sm:h-[88px] sm:w-[88px] flex-none items-center justify-center rounded-[20px] bg-gradient-to-br from-sky-400 via-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-950/45">
+          <div class="flex h-[80px] w-[80px] sm:h-[88px] sm:w-[88px] flex-none items-center justify-center rounded-[20px] bg-gradient-to-br from-sky-500 via-blue-600 to-indigo-600 text-white shadow-lg shadow-sky-200">
             <span class="text-[44px] sm:text-[50px] font-black leading-none tracking-tight select-none" data-home="day">01</span>
           </div>
 
           <!-- Month & Year Badge -->
-          <div class="flex h-[80px] min-w-[74px] sm:h-[88px] sm:min-w-[82px] flex-col items-center justify-center rounded-[20px] border border-white/15 bg-white/10 px-3 text-white shadow-sm">
-            <span class="text-[17px] sm:text-[19px] font-black uppercase tracking-wider text-sky-200" data-home="month">Jan</span>
-            <span class="mt-1 rounded-md bg-white/15 px-2.5 py-0.5 text-[11px] font-bold tracking-wide text-white/90" data-home="year">2026</span>
+          <div class="flex h-[80px] min-w-[74px] sm:h-[88px] sm:min-w-[82px] flex-col items-center justify-center rounded-[20px] border border-slate-200 bg-white px-3 text-slate-800 shadow-sm">
+            <span class="text-[17px] sm:text-[19px] font-black uppercase tracking-wider text-sky-700" data-home="month">Jan</span>
+            <span class="mt-1 rounded-md bg-sky-50 px-2.5 py-0.5 text-[11px] font-bold tracking-wide text-sky-700" data-home="year">2026</span>
           </div>
 
           <!-- Weekday & Live Today Badge -->
           <div class="flex min-w-[105px] sm:min-w-[115px] flex-col justify-center px-1 sm:px-2">
-            <b class="text-[15px] sm:text-[16px] font-bold leading-tight text-white" data-home="weekday">Wednesday</b>
+            <b class="text-[15px] sm:text-[16px] font-bold leading-tight text-slate-900" data-home="weekday">Wednesday</b>
             <div class="mt-1.5 inline-flex items-center gap-1.5">
               <span class="relative flex h-2 w-2">
-                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-                <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75"></span>
+                <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
               </span>
-              <small class="text-[11px] font-bold uppercase tracking-wider text-emerald-300">Today</small>
+              <small class="text-[11px] font-bold uppercase tracking-wider text-emerald-600">Today</small>
             </div>
           </div>
 
@@ -116,18 +114,6 @@
             <h3 class="text-[16.5px] font-bold leading-tight tracking-[-0.01em] text-slate-900 transition-colors group-hover:text-slate-950" data-tile-name>Order</h3>
             <p class="mt-1 text-[12.5px] leading-relaxed text-slate-500 line-clamp-2" data-tile-blurb></p>
           </div>
-
-          <div class="relative mt-auto flex items-center justify-between border-t border-slate-100 pt-3.5">
-            <span class="text-[12px] font-bold text-slate-600 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              Open Module
-            </span>
-            <span class="flex items-center gap-1 text-[11px] font-semibold text-slate-400 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              <span>Enter</span>
-              <svg class="sk-svg transition-transform duration-200 group-hover:translate-x-1" style="width:13px;height:13px" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 12h14M13 6.5 18.5 12 13 17.5" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </span>
-          </div>
         </a>
 
         <!-- 2. PRODUCTION -->
@@ -146,18 +132,6 @@
           <div class="relative mt-4">
             <h3 class="text-[16.5px] font-bold leading-tight tracking-[-0.01em] text-slate-900 transition-colors group-hover:text-slate-950" data-tile-name>Production</h3>
             <p class="mt-1 text-[12.5px] leading-relaxed text-slate-500 line-clamp-2" data-tile-blurb></p>
-          </div>
-
-          <div class="relative mt-auto flex items-center justify-between border-t border-slate-100 pt-3.5">
-            <span class="text-[12px] font-bold text-slate-600 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              Open Module
-            </span>
-            <span class="flex items-center gap-1 text-[11px] font-semibold text-slate-400 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              <span>Enter</span>
-              <svg class="sk-svg transition-transform duration-200 group-hover:translate-x-1" style="width:13px;height:13px" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 12h14M13 6.5 18.5 12 13 17.5" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </span>
           </div>
         </a>
 
@@ -178,18 +152,6 @@
             <h3 class="text-[16.5px] font-bold leading-tight tracking-[-0.01em] text-slate-900 transition-colors group-hover:text-slate-950" data-tile-name>Delivery</h3>
             <p class="mt-1 text-[12.5px] leading-relaxed text-slate-500 line-clamp-2" data-tile-blurb></p>
           </div>
-
-          <div class="relative mt-auto flex items-center justify-between border-t border-slate-100 pt-3.5">
-            <span class="text-[12px] font-bold text-slate-600 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              Open Module
-            </span>
-            <span class="flex items-center gap-1 text-[11px] font-semibold text-slate-400 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              <span>Enter</span>
-              <svg class="sk-svg transition-transform duration-200 group-hover:translate-x-1" style="width:13px;height:13px" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 12h14M13 6.5 18.5 12 13 17.5" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </span>
-          </div>
         </a>
 
         <!-- 4. BILLING -->
@@ -208,18 +170,6 @@
           <div class="relative mt-4">
             <h3 class="text-[16.5px] font-bold leading-tight tracking-[-0.01em] text-slate-900 transition-colors group-hover:text-slate-950" data-tile-name>Billing</h3>
             <p class="mt-1 text-[12.5px] leading-relaxed text-slate-500 line-clamp-2" data-tile-blurb></p>
-          </div>
-
-          <div class="relative mt-auto flex items-center justify-between border-t border-slate-100 pt-3.5">
-            <span class="text-[12px] font-bold text-slate-600 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              Open Module
-            </span>
-            <span class="flex items-center gap-1 text-[11px] font-semibold text-slate-400 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              <span>Enter</span>
-              <svg class="sk-svg transition-transform duration-200 group-hover:translate-x-1" style="width:13px;height:13px" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 12h14M13 6.5 18.5 12 13 17.5" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </span>
           </div>
         </a>
 
@@ -240,18 +190,6 @@
             <h3 class="text-[16.5px] font-bold leading-tight tracking-[-0.01em] text-slate-900 transition-colors group-hover:text-slate-950" data-tile-name>Stock</h3>
             <p class="mt-1 text-[12.5px] leading-relaxed text-slate-500 line-clamp-2" data-tile-blurb></p>
           </div>
-
-          <div class="relative mt-auto flex items-center justify-between border-t border-slate-100 pt-3.5">
-            <span class="text-[12px] font-bold text-slate-600 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              Open Module
-            </span>
-            <span class="flex items-center gap-1 text-[11px] font-semibold text-slate-400 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              <span>Enter</span>
-              <svg class="sk-svg transition-transform duration-200 group-hover:translate-x-1" style="width:13px;height:13px" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 12h14M13 6.5 18.5 12 13 17.5" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </span>
-          </div>
         </a>
 
         <!-- 6. COMMERCIAL -->
@@ -270,18 +208,6 @@
           <div class="relative mt-4">
             <h3 class="text-[16.5px] font-bold leading-tight tracking-[-0.01em] text-slate-900 transition-colors group-hover:text-slate-950" data-tile-name>Commercial</h3>
             <p class="mt-1 text-[12.5px] leading-relaxed text-slate-500 line-clamp-2" data-tile-blurb></p>
-          </div>
-
-          <div class="relative mt-auto flex items-center justify-between border-t border-slate-100 pt-3.5">
-            <span class="text-[12px] font-bold text-slate-600 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              Open Module
-            </span>
-            <span class="flex items-center gap-1 text-[11px] font-semibold text-slate-400 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              <span>Enter</span>
-              <svg class="sk-svg transition-transform duration-200 group-hover:translate-x-1" style="width:13px;height:13px" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 12h14M13 6.5 18.5 12 13 17.5" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </span>
           </div>
         </a>
 
@@ -302,18 +228,6 @@
             <h3 class="text-[16.5px] font-bold leading-tight tracking-[-0.01em] text-slate-900 transition-colors group-hover:text-slate-950" data-tile-name>Payroll</h3>
             <p class="mt-1 text-[12.5px] leading-relaxed text-slate-500 line-clamp-2" data-tile-blurb></p>
           </div>
-
-          <div class="relative mt-auto flex items-center justify-between border-t border-slate-100 pt-3.5">
-            <span class="text-[12px] font-bold text-slate-600 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              Open Module
-            </span>
-            <span class="flex items-center gap-1 text-[11px] font-semibold text-slate-400 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              <span>Enter</span>
-              <svg class="sk-svg transition-transform duration-200 group-hover:translate-x-1" style="width:13px;height:13px" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 12h14M13 6.5 18.5 12 13 17.5" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </span>
-          </div>
         </a>
 
         <!-- 8. ACCOUNTS -->
@@ -332,18 +246,6 @@
           <div class="relative mt-4">
             <h3 class="text-[16.5px] font-bold leading-tight tracking-[-0.01em] text-slate-900 transition-colors group-hover:text-slate-950" data-tile-name>Accounts</h3>
             <p class="mt-1 text-[12.5px] leading-relaxed text-slate-500 line-clamp-2" data-tile-blurb></p>
-          </div>
-
-          <div class="relative mt-auto flex items-center justify-between border-t border-slate-100 pt-3.5">
-            <span class="text-[12px] font-bold text-slate-600 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              Open Module
-            </span>
-            <span class="flex items-center gap-1 text-[11px] font-semibold text-slate-400 transition-colors group-hover:text-[var(--m,#0ea5e9)]">
-              <span>Enter</span>
-              <svg class="sk-svg transition-transform duration-200 group-hover:translate-x-1" style="width:13px;height:13px" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 12h14M13 6.5 18.5 12 13 17.5" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </span>
           </div>
         </a>
 
