@@ -455,6 +455,9 @@ window.SK = (function (w) {
     var p = w.location.pathname;
     var m = p.match(/\/modules\/[^/]+\//i);
     if (m) return p.slice(0, m.index + 1);
+    /* a file address drops the file name; a plain directory address (no
+       file name, no trailing slash) keeps itself as the root */
+    if (!/[^/]*\.[^/]*$/.test(p) && !/\/$/.test(p)) return p + "/";
     return p.replace(/[^/]*$/, "");
   })();
 
@@ -514,6 +517,16 @@ window.SK = (function (w) {
     return null;
   }
 
+  /* ------------------------------------------------------------- is home
+     The home page is the index at the project ROOT only. Root level pages
+     that carry no module (profile.html, settings.html, template.html) are
+     NOT the home page: they keep the two row bar, the breadcrumb, the page
+     padding and the footer like any other page, instead of the full screen
+     photo treatment the homepage gets.                                   */
+  function isHome() {
+    return !activeModule() && here() === norm(ROOT);
+  }
+
   /* --------------------------------------------------------------- the
      dashboard page. It carries every module's dashboard in one file, so
      #m in the address bar says which one is on screen. #m is read first
@@ -560,6 +573,7 @@ window.SK = (function (w) {
     esc: esc,
     activeModule: activeModule,
     activeItem: activeItem,
+    isHome: isHome,
     isDashboard: isDashboard,
     dashboardPage: function () { return DASH_PAGE; },
     dashboardKey: dashboardKey,

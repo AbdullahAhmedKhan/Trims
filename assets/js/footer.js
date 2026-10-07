@@ -1,10 +1,11 @@
 /* ==========================================================================
    SK Trims ERP - FOOTER
    --------------------------------------------------------------------------
-   Builds the footer at the bottom of the module pages. It is only the
+   Builds the footer at the bottom of the page. It is only the
    copyright line: the module links and Logout live in the account menu in
    the top right of the header. The homepage has no footer at all, because
-   it fills the window on its own.
+   it fills the window on its own; every other page (the modules and the
+   plain pages such as profile and settings) carries it.
    ========================================================================== */
 
 window.SKFooter = (function (w, d) {
@@ -14,7 +15,7 @@ window.SKFooter = (function (w, d) {
     var C = SK.config;
 
     /* nothing below the modules: the homepage is one full screen */
-    if (!SK.activeModule()) return "";
+    if (SK.isHome()) return "";
 
     return (
       '<footer class="sk-footer" id="skFooter">' +

@@ -1184,17 +1184,35 @@ body.sk-home-page {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: calc(var(--sk-top-h) + clamp(8px, 2.4vh, 22px)) 18px
+  margin: 0;
+  padding: calc(var(--sk-top-h) + clamp(8px, 2.4vh, 22px)) clamp(14px, 2vw, 34px)
     clamp(14px, 3vh, 28px);
 }
 
+/* The welcome line and the calendar sit in one card that runs the full
+   width of the page: copy on the left, the date boxes on the right. */
 .sk-home-hero {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(16px, 3vw, 44px);
+  width: 100%;
+  flex: none;
+  margin: 0 0 clamp(14px, 2.6vh, 26px);
+  padding: clamp(15px, 2.6vh, 28px) clamp(18px, 3vw, 38px);
+  text-align: left;
   color: #0f172a;
-  max-width: 640px;
-  margin: 0 auto clamp(12px, 2.6vh, 26px);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: clamp(16px, 2.4vh, 26px);
+  box-shadow: 0 22px 48px -32px rgba(15, 73, 140, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.sk-hero-copy {
+  min-width: 0;
+  flex: 1;
 }
 
 .sk-home-kicker {
@@ -1207,7 +1225,7 @@ body.sk-home-page {
 }
 
 .sk-home-title {
-  font-size: clamp(22px, 4.6vh, 46px);
+  font-size: clamp(22px, 4.4vh, 44px);
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.1;
@@ -1221,17 +1239,104 @@ body.sk-home-page {
   color: #475569;
 }
 
-/* 8 modules, laid out as a wrapping flex row. The group itself is capped so
-   the cards stay a comfortable size on a big screen instead of drifting
-   apart, and the rows center themselves in the space below the heading. */
+/* ------------------------------------------------------------- calendar --
+   The icon, the day and the month are three separate tiles, the day and
+   the month each carrying their own colour so they read as two boxes. */
+.sk-hero-cal {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.2vw, 16px);
+  flex: none;
+}
+
+.sk-cal-ico {
+  display: grid;
+  place-items: center;
+  width: clamp(52px, 8.4vh, 84px);
+  height: clamp(52px, 8.4vh, 84px);
+  border-radius: clamp(14px, 2vh, 22px);
+  color: var(--sk-accent-ink);
+  background: linear-gradient(150deg, #e0f2fe, #eff6ff);
+  border: 1px solid #bae6fd;
+  box-shadow: 0 14px 30px -20px rgba(3, 105, 161, 0.65);
+}
+
+.sk-cal-ico .sk-svg {
+  width: 52%;
+  height: 52%;
+  stroke-width: 1.6;
+}
+
+.sk-cal-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: clamp(58px, 8.4vh, 84px);
+  height: clamp(58px, 8.4vh, 84px);
+  border-radius: clamp(14px, 2vh, 22px);
+  color: #fff;
+  text-align: center;
+  line-height: 1;
+  box-shadow: 0 18px 34px -18px rgba(15, 73, 140, 0.7);
+}
+
+.sk-cal-day {
+  font-size: clamp(24px, 4vh, 38px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  background: linear-gradient(140deg, #38bdf8, #2563eb);
+}
+
+.sk-cal-mon {
+  font-size: clamp(14px, 2vh, 19px);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(140deg, #818cf8, #7c3aed);
+}
+
+.sk-cal-mon small {
+  margin-top: 5px;
+  font-size: clamp(9px, 1.3vh, 11px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  opacity: 0.9;
+}
+
+.sk-cal-dow {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-left: clamp(2px, 0.6vw, 10px);
+}
+
+.sk-cal-dow b {
+  font-size: clamp(13px, 2vh, 16px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.sk-cal-dow small {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sk-accent-ink);
+}
+
+/* 8 modules, laid out as a wrapping flex row. The group fills the page so
+   the two rows of four share the whole width, and the rows center
+   themselves in the space below the heading. */
 .sk-home-tiles {
-  --hx: clamp(10px, 1.8vw, 20px);
+  --hx: clamp(10px, 2.4vw, 46px);
   --hy: clamp(15px, 2.5vw, 30px);
   flex: 1;
   min-height: 0;
   width: 100%;
-  max-width: 580px;
-  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   align-content: start;
@@ -1250,7 +1355,7 @@ body.sk-home-page {
   flex-direction: column;
   align-items: center;
   gap: clamp(8px, 1.5vh, 13px);
-  padding: 0;
+  padding: clamp(6px, 1.4vh, 16px) 6px;
   min-height: 0;
   text-align: center;
   border: 0;
@@ -1269,8 +1374,8 @@ body.sk-home-page {
 
 /* the icon box is the only box on the card */
 .sk-home-tiles .sk-mtile-ico {
-  width: clamp(48px, 10vh, 88px);
-  height: clamp(48px, 10vh, 88px);
+  width: clamp(52px, 11vh, 100px);
+  height: clamp(52px, 11vh, 100px);
   /* border-radius: clamp(15px, 2.4vh, 24px); */
   background: rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.42);
@@ -1835,10 +1940,6 @@ body.sk-home-page {
 }
 
 @media (max-width: 1079px) {
-  .sk-home-tiles {
-    max-width: 690px;
-  }
-
   .sk-home-tiles .sk-mtile {
     flex-basis: calc(33.3333% - var(--hx) * 0.6667);
   }
@@ -1861,12 +1962,25 @@ body.sk-home-page {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .sk-home-tiles {
-    max-width: 460px;
-  }
-
   .sk-home-tiles .sk-mtile {
     flex-basis: calc(50% - var(--hx) * 0.5);
+  }
+
+  /* the calendar drops below the welcome line and stays left aligned */
+  .sk-home-hero {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .sk-hero-cal {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .sk-cal-dow {
+    padding-left: 0;
   }
 
   .sk-page {
@@ -1911,6 +2025,24 @@ body.sk-home-page {
     border-radius: 15px;
   }
 
+  .sk-home-title {
+    font-size: clamp(20px, 4vh, 28px);
+  }
+}
+
+@media (max-width: 460px) {
+  .sk-home-hero {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  /* the weekday would push the two boxes onto a line of their own */
+  .sk-cal-dow {
+    display: none;
+  }
+}
+
+@media (max-width: 639px) {
   .sk-popup {
     top: calc(var(--sk-header-h) + 8px);
     right: 12px;

@@ -4,7 +4,8 @@
    Rebuild with the Tailwind CLI v4.3.3:
      node @tailwindcss/cli/dist/index.mjs -i dash.config.css
        -o assets/css/dashboard.css --cwd skbuild
-   Sources: modules/*/index.html, assets/js/page-binder.js,
+   Sources: modules/*
+   /index.html, assets/js/page-binder.js,
             assets/js/dashboard.js, assets/js/module-page.js
    ============================================================ */
 /*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */

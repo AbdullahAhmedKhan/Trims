@@ -294,7 +294,7 @@ window.SKHeader = (function (w, d) {
   function markup() {
     var C = SK.config;
     var mod = SK.activeModule();
-    var home = !mod;
+    var home = SK.isHome();
 
     return (
       '<a class="sk-skip" href="#skMain">Skip to content</a>' +
@@ -340,7 +340,7 @@ window.SKHeader = (function (w, d) {
 
   function render() {
     var mod = SK.activeModule();
-    var home = !mod;
+    var home = SK.isHome();
 
     /* the bar is shorter without the menu row, so the page is told to
        start higher up */
