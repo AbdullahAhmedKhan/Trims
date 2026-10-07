@@ -37,20 +37,79 @@
 window.ORDER_DATA = {
 
   /* ------------------------------------------------------ chart: 7 days --
-     Last seven days of order value, one bar per day. */
+      Order value over the window the date filter on the card chooses. The
+      picker swaps the numbers, the key and the card heading, so only the
+      shell of the chart is written here and `periods` below holds one set
+      per choice.
+
+      `series` gives each bar its colour by name, so a period only has to
+      say the label and the numbers. */
   last7: {
     type: "bar",
     height: 250,
     yfmt: "money",
-    labels: ["22 Sep", "23 Sep", "24 Sep", "25 Sep", "26 Sep", "27 Sep", "28 Sep"],
-    datasets: [
-      {
-        label: "Order Value",
-        data: [4860000, 5240000, 4680000, 6120000, 5840000, 6420000, 5180000],
+    series: {
+      "Order Value": {
         bg: "rgba(114, 199, 255, 0.3)",
         border: "rgba(114, 199, 255, 1)"
       }
-    ]
+    },
+
+    /* one entry per option of the date filter on the first card, in the
+       order the options are written in modules/order/index.html. `title`
+       becomes the card heading, `labels` is the x axis and `series` is one
+       entry per bar group. */
+    periods: {
+      "7d": {
+        title: "Last 7 days order",
+        labels: ["22 Sep", "23 Sep", "24 Sep", "25 Sep", "26 Sep", "27 Sep", "28 Sep"],
+        series: [
+          { label: "Order Value", data: [4860000, 5240000, 4680000, 6120000, 5840000, 6420000, 5180000] }
+        ]
+      },
+      "30d": {
+        title: "Last Month",
+        labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
+        series: [
+          { label: "Order Value", data: [33800000, 36200000, 34900000, 37500000, 35400000] }
+        ]
+      },
+      thism: {
+        title: "This Month",
+        labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+        series: [
+          { label: "Order Value", data: [36400000, 38200000, 37100000, 39600000] }
+        ]
+      },
+      "3m": {
+        title: "Last 3 Months",
+        labels: ["Jul", "Aug", "Sep"],
+        series: [
+          { label: "Order Value", data: [154600000, 161800000, 159400000] }
+        ]
+      },
+      "6m": {
+        title: "Last 6 Months",
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+        series: [
+          { label: "Order Value", data: [138400000, 142600000, 146900000, 154600000, 161800000, 159400000] }
+        ]
+      },
+      ytd: {
+        title: "This Year",
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+        series: [
+          { label: "Order Value", data: [132400000, 136800000, 141200000, 138400000, 142600000, 146900000, 154600000, 161800000, 159400000] }
+        ]
+      },
+      lasty: {
+        title: "Last Year",
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        series: [
+          { label: "Order Value", data: [118600000, 121400000, 126800000, 124200000, 129600000, 133400000, 136800000, 131200000, 135600000, 140200000, 138900000, 143600000] }
+        ]
+      }
+    }
   },
 
   /* ------------------------------------------------------ chart: 6 months --

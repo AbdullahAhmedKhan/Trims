@@ -21,7 +21,8 @@ window.OrderPage = (function (w) {
   "use strict";
 
   function render() {
-    /* "months" is the chart the picker on the second card drives */
+    /* "months" is the chart the bare <select data-period> drives; the first
+       card names its own chart with <select data-period="last7"> */
     w.SKPage.mount({ data: w.ORDER_DATA, period: "months" });
   }
 

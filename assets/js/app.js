@@ -4,8 +4,9 @@
    Runs on every page:
      1. renders the header (header.js) and the footer (footer.js)
      2. moves your #sk-app content into the page shell
-     3. fills the homepage tiles from menu.js
-     4. handles the drop down menu, the mobile menu drawer and the modules popup
+     3. handles the drop down menu, the mobile menu drawer and the modules popup
+   The homepage body itself is static HTML in index.html - only the values
+   that change are filled by home.js, which runs after boot().
    No fetch and no server needed - it all works from file://
    ========================================================================== */
 
@@ -30,77 +31,6 @@ window.App = (function (w, d) {
     wrap.appendChild(main);
     d.body.appendChild(wrap);
     app.parentNode.removeChild(app);
-  }
-
-  /* ================================================== homepage tiles === */
-  var HOME_DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  var HOME_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  var HOME_MONTHS_FULL = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
-
-  /* the greeting follows the clock: morning up to noon, afternoon to 5pm */
-  function greeting(h) {
-    if (h < 12) return "good morning";
-    if (h < 17) return "good afternoon";
-    return "good evening";
-  }
-
-  /* the welcome line and the calendar card above the module tiles */
-  function homeHero() {
-    var C = SK.config;
-    var now = new Date();
-    var day = now.getDate();
-    var full = HOME_DAYS[now.getDay()] + ", " + day + " " +
-      HOME_MONTHS_FULL[now.getMonth()] + " " + now.getFullYear();
-
-    return (
-      '<section class="sk-home-hero">' +
-
-      '<div class="sk-hero-copy">' +
-      '<span class="sk-home-kicker">Welcome back</span>' +
-      '<h1 class="sk-home-title">Welcome ' + SK.esc(C.user.name) + ", " +
-      greeting(now.getHours()) + "</h1>" +
-      '<p class="sk-home-lead">' + SK.esc(full) +
-      " &middot; Open any module below to get started.</p>" +
-      "</div>" +
-
-      '<div class="sk-hero-cal" role="img" aria-label="' + SK.esc("Today, " + full) + '">' +
-      '<span class="sk-cal-ico"><svg class="sk-svg" viewBox="0 0 24 24">' +
-      '<rect x="3" y="5" width="18" height="16" rx="2.5"/>' +
-      '<path d="M3 9.6h18M8 3v4M16 3v4"/>' +
-      '<path d="M7.5 13.4h2M11 13.4h2M14.5 13.4h2M7.5 16.9h2M11 16.9h2"/>' +
-      "</svg></span>" +
-      '<span class="sk-cal-box sk-cal-day">' + (day < 10 ? "0" + day : day) + "</span>" +
-      '<span class="sk-cal-box sk-cal-mon">' + HOME_MONTHS[now.getMonth()] +
-      "<small>" + now.getFullYear() + "</small></span>" +
-      '<span class="sk-cal-dow"><b>' + HOME_DAYS[now.getDay()] + "</b><small>Today</small></span>" +
-      "</div>" +
-
-      "</section>"
-    );
-  }
-
-  function fillHome() {
-    var host = qs("[data-sk-home]");
-    if (!host) return;
-
-    host.className = "sk-home-wrap";
-    host.innerHTML =
-      homeHero() +
-
-      '<div class="sk-mtiles sk-home-tiles">' +
-      SK.menu
-        .map(function (m) {
-          /* the whole card is the link, so it needs no arrow */
-          return (
-            '<a class="sk-mtile" href="' + SK.href(m.url) + '" style="--m:' + m.color + '">' +
-            '<span class="sk-mtile-ico">' + SK.iconImg(m.icon) + "</span>" +
-            '<span class="sk-mtile-name">' + SK.esc(m.name) + "</span>" +
-            "</a>"
-          );
-        })
-        .join("") +
-      "</div>";
   }
 
   /* ======================================================== menu ======== */
@@ -407,7 +337,6 @@ window.App = (function (w, d) {
     SKHeader.render();
     buildShell();
     SKFooter.render();
-    fillHome();
 
     /* only the homepage carries the photo and the see-through header */
     var home = SK.isHome();
@@ -425,7 +354,6 @@ window.App = (function (w, d) {
 
   return {
     boot: boot,
-    fillHome: fillHome,
     openNav: openNav,
     closeNav: closeNav,
     openPopup: openPopup,
