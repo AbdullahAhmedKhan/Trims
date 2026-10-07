@@ -31,9 +31,8 @@
 
      The data attributes the binder looks for:
 
-       data-rows="..."      fill the rows of the table it sits in
-       data-funnel="..."    write out the steps of a stage by stage flow
-       data-legend="..."    fill the coloured key under a chart
+        data-rows="..."      fill the rows of the table it sits in
+        data-legend="..."    fill the coloured key under a chart
        data-chart="..."     draw this chart into this canvas
        data-hero="..."      fill the overview figure of that card
        data-period          the select the period picker wires up
@@ -57,6 +56,7 @@
     <!-- ============================================== overview cards =====
          Three figures: what has been invoiced, what has been opened against
          it, and what has come back in. -->
+    <!-- stat cards commented out for now
     <div class="grid grid-cols-2 gap-[18px] mt-[18px] min-[761px]:grid-cols-3">
       <div class="skd-in">
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#0284c7">
@@ -88,8 +88,9 @@
         </section>
       </div>
     </div>
+    end stat cards -->
 
-    <!-- ==================== ROW 1 : trend chart + LC funnel ============== -->
+    <!-- ============ ROW 1 : new LC trend + commercial status =========== -->
     <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
 
       <!-- -------------------------------------------- period driven chart -->
@@ -98,15 +99,18 @@
           <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
               <!-- the heading follows the picker, see data-period-title -->
-              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]" data-period-title>Last 3 months</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">LC opened, how much the party accepted and how much the bank then accepted</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]" data-period-title>Last 3 Months</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">New LC value, period by period</p>
             </div>
             <!-- choosing a period swaps the numbers, the key and the heading -->
-            <select class="skd-select" data-period>
-              <option value="3m" selected>Last 3 months</option>
-              <option value="6m">Last 6 months</option>
-              <option value="ytd">This year</option>
-              <option value="lasty">Last year</option>
+            <select class="skd-select" data-period aria-label="Date filter">
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last Month</option>
+              <option value="thism">This Month</option>
+              <option value="3m" selected>Last 3 Months</option>
+              <option value="6m">Last 6 Months</option>
+              <option value="lasty">Last Year</option>
+              <option value="ytd">This Year</option>
             </select>
           </div>
           <div class="relative w-full" style="height:300px">
@@ -117,18 +121,28 @@
         </section>
       </div>
 
-      <!-- ------------------------------------------------- export LC funnel -->
+      <!-- ------------------------------------------ commercial status -->
       <div class="skd-in col-span-12 min-[1181px]:col-span-4">
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
           <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
-              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Export LC Funnel</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">How PI value travels into an opened, accepted and held LC</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Commercial Status</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">LC, party acceptance, bank acceptance and payment</p>
             </div>
+            <select class="skd-select" data-period="status" aria-label="Date filter">
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last Month</option>
+              <option value="thism">This Month</option>
+              <option value="3m" selected>Last 3 Months</option>
+              <option value="6m">Last 6 Months</option>
+              <option value="lasty">Last Year</option>
+              <option value="ytd">This Year</option>
+            </select>
           </div>
-          <!-- the steps are written in the serial the card shows; the data
-               file decides what each one is worth -->
-          <div data-funnel="exportLc"></div>
+          <div class="relative w-full" style="height:230px">
+            <canvas data-chart="status"></canvas>
+          </div>
+          <div class="grid grid-cols-2 gap-y-2 gap-x-5 mt-4" data-legend="status"></div>
         </section>
       </div>
     </div>

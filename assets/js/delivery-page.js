@@ -13,10 +13,10 @@
      overview                    the figure behind each overview card
      last7                       the bar chart behind the period picker
      status                      the doughnut of where the quantity stands
-     challans                    the Recent Challans table
-     receipt                     the challan receipt progress bars
-     party, item, team           the three tabs of the job pool
-     periods                     the numbers behind the period picker
+      challans                    the Recent Challans table
+      receipt                     the challan receipt progress bars
+      party, item, team           the three tabs of the job pool
+      periods                     the numbers behind the period picker
    ========================================================================== */
 
 window.DeliveryPage = (function (w) {

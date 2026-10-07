@@ -55,6 +55,7 @@
          Four stage cards, one per step the money moves through. No title,
          no sub title, no progress bars: a dot for the stage, its name and
          the figure underneath, which the data file fills in. -->
+    <!-- stat cards commented out for now
     <div class="grid grid-cols-2 gap-[18px] mt-[18px] min-[761px]:grid-cols-4">
       <div class="skd-in">
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#0284c7">
@@ -96,23 +97,29 @@
         </section>
       </div>
     </div>
+    end stat cards -->
 
     <!-- ================================================== ROW 1 : BILLING = -->
     <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
-      <div class="skd-in col-span-12">
+
+      <!-- ----------------------------------------- billing trend chart -->
+      <div class="skd-in col-span-12 min-[1181px]:col-span-8">
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
           <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
               <!-- the heading follows the picker, see data-period-title -->
               <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]" data-period-title>Last 3 Months Billing</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">Sales, bill value and received value, all on one scale</p>
+              <p class="mt-1 text-[12.5px] text-slate-500">Bill value, period by period</p>
             </div>
             <!-- choosing a period swaps the numbers, the key and the heading -->
             <select class="skd-select" data-period>
-              <option value="3m" selected>Last 3 months</option>
-              <option value="6m">Last 6 months</option>
-              <option value="ytd">This year</option>
-              <option value="lasty">Last year</option>
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last Month</option>
+              <option value="thism">This Month</option>
+              <option value="3m" selected>Last 3 Months</option>
+              <option value="6m">Last 6 Months</option>
+              <option value="lasty">Last Year</option>
+              <option value="ytd">This Year</option>
             </select>
           </div>
           <div class="relative w-full" style="height:300px">
@@ -120,6 +127,100 @@
           </div>
           <!-- the coloured key, filled from the chart data -->
           <div class="flex flex-wrap gap-x-[22px] gap-y-2.5 mt-4" data-legend="billing"></div>
+        </section>
+      </div>
+
+      <!-- ------------------------------------------- billing status doughnut -->
+      <div class="skd-in col-span-12 min-[1181px]:col-span-4">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
+            <div>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Billing Status</h2>
+            </div>
+            <select class="skd-select" data-period="status" aria-label="Date filter">
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last Month</option>
+              <option value="thism">This Month</option>
+              <option value="3m" selected>Last 3 Months</option>
+              <option value="6m">Last 6 Months</option>
+              <option value="lasty">Last Year</option>
+              <option value="ytd">This Year</option>
+            </select>
+          </div>
+          <div class="relative w-full" style="height:230px">
+            <canvas data-chart="status"></canvas>
+          </div>
+          <div class="grid grid-cols-2 gap-y-2 gap-x-5 mt-4" data-legend="status"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============ ROW 1B : top collection + creditors + inactive party -->
+    <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
+
+      <!-- --------------------------------------------- top collection -->
+      <div class="skd-in col-span-12 min-[761px]:col-span-6 min-[1181px]:col-span-4">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
+            <div>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Top Collection</h2>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="w-full border-collapse text-[13.5px]">
+              <thead>
+                <tr>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party</th>
+                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Collection</th>
+                </tr>
+              </thead>
+              <tbody data-rows="collection"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- ----------------------------------------------- top creditors -->
+      <div class="skd-in col-span-12 min-[761px]:col-span-6 min-[1181px]:col-span-4">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
+            <div>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Top Creditors</h2>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="w-full border-collapse text-[13.5px]">
+              <thead>
+                <tr>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party</th>
+                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Balance</th>
+                </tr>
+              </thead>
+              <tbody data-rows="creditors"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- --------------------------------------------- inactive party -->
+      <div class="skd-in col-span-12 min-[761px]:col-span-12 min-[1181px]:col-span-4">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
+            <div>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Inactive Party</h2>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="w-full border-collapse text-[13.5px]">
+              <thead>
+                <tr>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party</th>
+                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Days</th>
+                </tr>
+              </thead>
+              <tbody data-rows="inactive"></tbody>
+            </table>
+          </div>
         </section>
       </div>
     </div>

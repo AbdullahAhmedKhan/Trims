@@ -10,10 +10,14 @@
 
    Everything the page needs from the data file:
 
-     overview       the figure behind each of the four overview cards
-     billing        the bar chart behind the period picker
-     lc             the LC & Collection Timeline table
-     periods        the numbers behind the period picker
+      overview       the figure behind each of the four overview cards
+      billing        the bar chart behind the period picker
+      status         the Sales / Bill Value / Received doughnut
+      lc             the LC & Collection Timeline table
+      collection,
+      creditors,
+      inactive       the three cards under the Billing Status ring
+      periods        the numbers behind the period picker
    ========================================================================== */
 
 window.BillingPage = (function (w) {

@@ -10,16 +10,16 @@
 
    Everything the page needs from the data file:
 
-     overview        the figure behind each of the seven overview cards
-     register        the day wise Attendance Register
-     attDept         Attendance by Department
-     leaveToday      On Leave Today
-     leaveApps       Recent Leave Applications
-     breakDept, breakDesig, breakSection
-                     the three tabs of the payroll breakdown
-     payrollCost     the bar chart behind the period picker
-     salaryComp      the Salary Composition doughnut
-     periods         the numbers behind the period picker
+      overview        the figure behind each of the five overview cards
+      register        the day wise Attendance Register
+      attDept         Attendance by Department (own date filter)
+      leaveToday      On Leave Today
+      leaveApps       Recent Leave Applications
+      breakDept, breakDesig, breakSection
+                      the three tabs of the payroll breakdown
+      payrollCost     the bar chart behind the period picker
+      salaryComp      the Salary Composition doughnut (own date filter)
+      periods         the numbers behind the period picker
    ========================================================================== */
 
 window.PayrollPage = (function (w) {

@@ -55,8 +55,8 @@
   <div class="mx-auto w-full px-5 pb-2 max-[760px]:px-[14px] max-[760px]:pt-4">
 
     <!-- ============================================== overview cards =====
-         Seven figures: who turned up, who did not, what that cost. -->
-    <div class="grid grid-cols-2 gap-[18px] mt-[18px] min-[761px]:grid-cols-4 min-[1181px]:grid-cols-7">
+         Five figures: who turned up, who did not. -->
+    <div class="grid grid-cols-2 gap-[18px] mt-[18px] min-[761px]:grid-cols-5">
       <div class="skd-in">
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#0284c7">
           <div class="flex items-center gap-[9px]">
@@ -106,26 +106,6 @@
           <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Late Attendance"></div>
         </section>
       </div>
-
-      <div class="skd-in">
-        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#8b5cf6">
-          <div class="flex items-center gap-[9px]">
-            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
-            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Overtime Hours</span>
-          </div>
-          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Overtime Hours"></div>
-        </section>
-      </div>
-
-      <div class="skd-in">
-        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#475569">
-          <div class="flex items-center gap-[9px]">
-            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
-            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Overtime Cost</span>
-          </div>
-          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Overtime Cost"></div>
-        </section>
-      </div>
     </div>
 
     <!-- =================================== ROW 1 : ATTENDANCE REGISTER === -->
@@ -135,7 +115,7 @@
           <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
               <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Attendance Register</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">Day wise attendance with overtime hours and the present share of the working staff</p>
+              <p class="mt-1 text-[12.5px] text-slate-500">Day wise attendance with overtime value and the present share of the working staff</p>
             </div>
           </div>
           <div class="skd-scroll">
@@ -148,9 +128,8 @@
                   <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Present</th>
                   <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Absent</th>
                   <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Late Marking</th>
-                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Half Day</th>
                   <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">On Leave</th>
-                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Overtime (hrs)</th>
+                  <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="taka">Overtime Value</th>
                   <th class="sticky top-0 z-10 bg-white px-2.5 pb-2.5 text-center whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="pct">Present %</th>
                 </tr>
               </thead>
@@ -168,8 +147,18 @@
           <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
               <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Attendance by Department</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">September 2026 · who is turning up, and how often</p>
+              <p class="mt-1 text-[12.5px] text-slate-500" data-period-title>September 2026 · who is turning up, and how often</p>
             </div>
+            <!-- the date filter swaps the rows of this table alone -->
+            <select class="skd-select" data-period="attDept" aria-label="Date filter">
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last Month</option>
+              <option value="thism" selected>This Month</option>
+              <option value="3m">Last 3 Months</option>
+              <option value="6m">Last 6 Months</option>
+              <option value="lasty">Last Year</option>
+              <option value="ytd">This Year</option>
+            </select>
           </div>
           <div class="skd-scroll">
             <table class="w-full border-collapse text-[13.5px]">
@@ -224,6 +213,9 @@
               <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Recent Leave Applications</h2>
               <p class="mt-1 text-[12.5px] text-slate-500">Latest submitted requests and their current status</p>
             </div>
+            <!-- opens the leave application approval page -->
+            <a href="item.html?id=leave-applied"
+              class="flex-none rounded-[9px] border border-sky-200 bg-sky-50 px-3 py-1.5 text-[12.5px] font-semibold text-sky-700 hover:bg-sky-100">Leave Application Approval</a>
           </div>
           <div class="skd-scroll">
             <table class="w-full border-collapse text-[13.5px]">
@@ -311,14 +303,17 @@
             <div>
               <!-- the heading follows the picker, see data-period-title -->
               <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]" data-period-title>Last 3 months</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">Gross earnings, deductions and net paid</p>
+              <p class="mt-1 text-[12.5px] text-slate-500">Gross salary, deductions and net paid</p>
             </div>
             <!-- choosing a period swaps the numbers, the key and the heading -->
-            <select class="skd-select" data-period>
-              <option value="3m" selected>Last 3 months</option>
-              <option value="6m">Last 6 months</option>
-              <option value="ytd">This year</option>
-              <option value="lasty">Last year</option>
+            <select class="skd-select" data-period aria-label="Date filter">
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last Month</option>
+              <option value="thism">This Month</option>
+              <option value="3m" selected>Last 3 Months</option>
+              <option value="6m">Last 6 Months</option>
+              <option value="lasty">Last Year</option>
+              <option value="ytd">This Year</option>
             </select>
           </div>
           <div class="relative w-full" style="height:300px">
@@ -335,8 +330,17 @@
           <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
               <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Salary Composition</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">Where the gross payroll goes</p>
+              <p class="mt-1 text-[12.5px] text-slate-500">Net salary, overtime and allowance out of the gross</p>
             </div>
+            <select class="skd-select" data-period="salaryComp" aria-label="Date filter">
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last Month</option>
+              <option value="thism">This Month</option>
+              <option value="3m" selected>Last 3 Months</option>
+              <option value="6m">Last 6 Months</option>
+              <option value="lasty">Last Year</option>
+              <option value="ytd">This Year</option>
+            </select>
           </div>
           <div class="relative w-full" style="height:230px">
             <canvas data-chart="salaryComp"></canvas>

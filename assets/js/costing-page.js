@@ -234,13 +234,6 @@ window.CostingPage = (function (w, d) {
     var specSel = mkSel("spec_id", OPTIONS.specifications, seed.spec);
     head.appendChild(fieldGroup("Specification", specSel, "min-w-[190px] flex-1"));
 
-    var note = d.createElement("input");
-    note.type = "text";
-    note.className = "skc-input spec_note";
-    note.placeholder = "e.g. 3 ply corrugated carton, B / C flute";
-    if (seed.note) note.value = seed.note;
-    head.appendChild(fieldGroup("Style / More", note, "min-w-[190px] flex-1"));
-
     head.appendChild(mkBtn("add-spec", "skc-icobtn-add", "Add specification"));
     head.appendChild(mkBtn("del-spec", "skc-icobtn-del", "Remove specification"));
     lg.appendChild(head);
@@ -361,8 +354,8 @@ window.CostingPage = (function (w, d) {
     $("#skcValAccessories").textContent = money(c.accAmt);
     $("#skcValAllowance").textContent = money(c.allowAmt);
     $("#skcValTotalInternal").textContent = money(c.totalInternal);
-    $("#skcValTotalCustomer").textContent = money(c.customer);
     $("#skcValMargin").textContent = money(c.margAmt);
+    $("#skcValOffer").textContent = money(c.unitPrice);
     $("#skcValPrice").textContent = money(c.unitPrice);
 
     var unitSel = $(".piece_per");
@@ -385,7 +378,6 @@ window.CostingPage = (function (w, d) {
         specs: $$(".skc-spec", itemLi).map(function (specLi) {
           return {
             spec: $(".spec_id", specLi).value,
-            note: $(".spec_note", specLi).value,
             measures: $$(".skc-meas", specLi).map(function (mL) {
               return {
                 grade: $(".m-grade", mL).value,

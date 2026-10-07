@@ -16,11 +16,14 @@
    Shape of each part
    ------------------
    overview.cells   one entry per overview card: the label the page shows and
-                    the figure the binder drops into it
-   lcTrend          the bar chart behind the period picker; `series` gives
-                    every bar its colour, the numbers come from `periods`
-   periods          one entry per option in the period picker
-   exportLc         the Export LC Funnel, written in the serial the page shows
+                     the figure the binder drops into it
+   lcTrend          the bar chart behind the period picker; one New LC value
+                     bar per period, colours from `series`, numbers from
+                     `periods`
+   status           the Commercial Status doughnut: LC, party acceptance,
+                     bank acceptance and payment, with its own date filter
+                     reading status.periods
+   periods          one entry per option in the bar chart picker
    pi, lc           Recent PI and LC & Maturity Timeline
 
    When the real application is wired up, replace the literals below with a
@@ -43,80 +46,143 @@ window.COMMERCIAL_DATA = {
   },
 
   /* ------------------------------------------------------- chart: lcTrend --
-     LC opened in the month, how much of it the party accepted, and how much
-     the bank then accepted. The picker swaps the window; the colours stay. */
+     One bar per period: the new LC value. The picker swaps the window; the
+     colour stays. */
   lcTrend: {
     type: "bar",
     height: 300,
     yfmt: "money",
     series: {
-      "LC": { bg: "rgba(14, 165, 233, 0.26)", border: "rgba(14, 165, 233, 1)" },
-      "Party acceptance": { bg: "rgba(114, 199, 255, 0.30)", border: "rgba(114, 199, 255, 1)" },
-      "Bank acceptance": { bg: "rgba(255, 159, 64, 0.28)", border: "rgba(255, 159, 64, 1)" }
+      "New LC value": { bg: "rgba(14, 165, 233, 0.26)", border: "rgba(14, 165, 233, 1)" }
     }
   },
 
   /* one entry per option in the picker. `title` becomes the card heading,
-     `labels` is the x axis and `series` is one entry per bar group. */
+     `labels` is the x axis and `series` holds the single New LC value bar. */
   periods: {
+    "7d": {
+      title: "Last 7 days",
+      labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      series: [
+        { label: "New LC value", data: [412000, 368000, 524000, 286000, 475000, 198000, 334000] }
+      ]
+    },
+    "30d": {
+      title: "Last Month",
+      labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
+      series: [
+        { label: "New LC value", data: [860000, 920000, 780000, 590000, 310000] }
+      ]
+    },
+    thism: {
+      title: "This Month",
+      labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+      series: [
+        { label: "New LC value", data: [480000, 520000, 430000, 356500] }
+      ]
+    },
     "3m": {
-      title: "Last 3 months",
+      title: "Last 3 Months",
       labels: ["Jul", "Aug", "Sep"],
       series: [
-        { label: "LC", data: [3790000, 3460000, 1786500] },
-        { label: "Party acceptance", data: [3240000, 2910000, 1530000] },
-        { label: "Bank acceptance", data: [2760000, 2480000, 1190000] }
+        { label: "New LC value", data: [3790000, 3460000, 1786500] }
       ]
     },
     "6m": {
-      title: "Last 6 months",
+      title: "Last 6 Months",
       labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep"],
       series: [
-        { label: "LC", data: [3310000, 3680000, 4020000, 3790000, 3460000, 1786500] },
-        { label: "Party acceptance", data: [2840000, 3150000, 3480000, 3240000, 2910000, 1530000] },
-        { label: "Bank acceptance", data: [2380000, 2670000, 2940000, 2760000, 2480000, 1190000] }
-      ]
-    },
-    ytd: {
-      title: "This year",
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
-      series: [
-        { label: "LC", data: [2640000, 2910000, 3150000, 3310000, 3680000, 4020000, 3790000, 3460000, 1786500] },
-        { label: "Party acceptance", data: [2270000, 2490000, 2710000, 2840000, 3150000, 3480000, 3240000, 2910000, 1530000] },
-        { label: "Bank acceptance", data: [1910000, 2090000, 2280000, 2380000, 2670000, 2940000, 2760000, 2480000, 1190000] }
+        { label: "New LC value", data: [3310000, 3680000, 4020000, 3790000, 3460000, 1786500] }
       ]
     },
     lasty: {
-      title: "Last year",
+      title: "Last Year",
       labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"],
       series: [
-        { label: "LC", data: [2480000, 2660000, 2840000, 3010000, 3180000, 3340000, 3120000, 3270000, 3450000, 2980000, 3150000, 3390000] },
-        { label: "Party acceptance", data: [2120000, 2270000, 2430000, 2570000, 2720000, 2860000, 2670000, 2800000, 2950000, 2550000, 2700000, 2900000] },
-        { label: "Bank acceptance", data: [1780000, 1910000, 2050000, 2170000, 2300000, 2420000, 2260000, 2370000, 2500000, 2160000, 2290000, 2450000] }
+        { label: "New LC value", data: [2480000, 2660000, 2840000, 3010000, 3180000, 3340000, 3120000, 3270000, 3450000, 2980000, 3150000, 3390000] }
+      ]
+    },
+    ytd: {
+      title: "This Year",
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+      series: [
+        { label: "New LC value", data: [2640000, 2910000, 3150000, 3310000, 3680000, 4020000, 3790000, 3460000, 1786500] }
       ]
     }
   },
 
-  /* -------------------------------------------------------- funnel: exportLc --
-     How PI value travels into an opened, accepted and held LC, in the serial
-     the card shows. The connector after each step says what share of the
-     LC Opened total has got that far, because the steps are not in value
-     order - In Hand is held before the bank is asked. */
-  exportLc: {
-    steps: [
-      { step: "LC Open", value: "4,160,000", note: "7 LCs reached this far", color: "#94a3b8" },
-      { step: "Forward to Party", value: "3,540,000", note: "6 LCs reached this far", color: "#72c7ff" },
-      { step: "In Hand", value: "1,313,000", note: "2 LCs reached this far", color: "#14b8a6" },
-      { step: "Forward to Bank", value: "2,977,000", note: "5 LCs reached this far", color: "#818cf8" },
-      { step: "Bank Acceptance", value: "2,512,000", note: "4 LCs reached this far", color: "#ff9f40" }
+  /* --------------------------------------------------- chart: status --
+     Where the new LC value stands: still LC, accepted by the party,
+     accepted by the bank, and paid. The segment names and colours are
+     fixed; its own picker reads `status.periods` for the window, so the
+     bar card and this ring each carry a date filter of their own. */
+  status: {
+    type: "doughnut",
+    height: 230,
+    center: "New LC",
+    centerValue: "৳ 90.36 L",
+    labels: ["LC", "Party acceptance", "Bank acceptance", "Payment"],
+    datasets: [{
+      data: [9036500, 7680000, 6430000, 6495000],
+      bg: [
+        "rgba(14, 165, 233, 0.55)",
+        "rgba(114, 199, 255, 0.55)",
+        "rgba(255, 159, 64, 0.55)",
+        "rgba(20, 184, 166, 0.55)"
+      ]
+    }],
+    legend: [
+      { label: "LC", value: "৳ 90.36 L", color: "#0ea5e9" },
+      { label: "Party acceptance", value: "৳ 76.80 L", color: "#72c7ff" },
+      { label: "Bank acceptance", value: "৳ 64.30 L", color: "#ff9f40" },
+      { label: "Payment", value: "৳ 64.95 L", color: "#14b8a6" }
     ],
-    carry: [
-      { label: "share of LC Open", value: "85.1% Forward to Party" },
-      { label: "share of LC Open", value: "31.6% In Hand" },
-      { label: "share of LC Open", value: "71.6% Forward to Bank" },
-      { label: "share of LC Open", value: "60.4% Bank Acceptance" }
-    ]
+    periods: {
+      "7d": {
+        title: "Last 7 days",
+        centerValue: "৳ 25.97 L",
+        values: [2597000, 2245000, 1915000, 1865000],
+        amounts: ["৳ 25.97 L", "৳ 22.45 L", "৳ 19.15 L", "৳ 18.65 L"]
+      },
+      "30d": {
+        title: "Last Month",
+        centerValue: "৳ 34.60 L",
+        values: [3460000, 2910000, 2480000, 2490000],
+        amounts: ["৳ 34.60 L", "৳ 29.10 L", "৳ 24.80 L", "৳ 24.90 L"]
+      },
+      thism: {
+        title: "This Month",
+        centerValue: "৳ 17.86 L",
+        values: [1786500, 1530000, 1190000, 1285000],
+        amounts: ["৳ 17.86 L", "৳ 15.30 L", "৳ 11.90 L", "৳ 12.85 L"]
+      },
+      "3m": {
+        title: "Last 3 Months",
+        centerValue: "৳ 90.36 L",
+        values: [9036500, 7680000, 6430000, 6495000],
+        amounts: ["৳ 90.36 L", "৳ 76.80 L", "৳ 64.30 L", "৳ 64.95 L"]
+      },
+      "6m": {
+        title: "Last 6 Months",
+        centerValue: "৳ 2.00 Cr",
+        values: [20046500, 17150000, 14420000, 14415000],
+        amounts: ["৳ 2.00 Cr", "৳ 1.72 Cr", "৳ 1.44 Cr", "৳ 1.44 Cr"]
+      },
+      lasty: {
+        title: "Last Year",
+        centerValue: "৳ 3.69 Cr",
+        values: [36870000, 31540000, 26660000, 26510000],
+        amounts: ["৳ 3.69 Cr", "৳ 3.15 Cr", "৳ 2.67 Cr", "৳ 2.65 Cr"]
+      },
+      ytd: {
+        title: "This Year",
+        centerValue: "৳ 2.87 Cr",
+        values: [28746500, 24620000, 20700000, 20670000],
+        amounts: ["৳ 2.87 Cr", "৳ 2.46 Cr", "৳ 2.07 Cr", "৳ 2.07 Cr"]
+      }
+    }
   },
+
 
   /* ------------------------------------------------------------ table: pi --
      The most recent proforma invoices raised, with the stage each sits at. */

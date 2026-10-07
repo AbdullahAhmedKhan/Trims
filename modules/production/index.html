@@ -56,6 +56,7 @@
          Five stage cards, one per step the work moves through. No title,
          no sub title, no progress bars: a dot for the stage, its name and
          the figure underneath, which the data file fills in. -->
+    <!-- stat cards commented out for now
     <div class="grid grid-cols-2 gap-[18px] mt-[18px] min-[761px]:grid-cols-3 min-[1181px]:grid-cols-5">
       <div class="skd-in">
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#f59e0b">
@@ -107,6 +108,7 @@
         </section>
       </div>
     </div>
+    end stat cards -->
 
     <!-- ================== ROW 1 : order output + where the jobs are === -->
     <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
@@ -117,13 +119,16 @@
           <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
               <!-- the heading follows the picker, see data-period-title -->
-              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]" data-period-title>Last 3 months</h2>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]" data-period-title>Last 7 days production</h2>
             </div>
             <select class="skd-select" data-period>
-              <option value="6m">Last 6 month</option>
-              <option value="3m" selected>Last 3 month</option>
-              <option value="ytd">This year</option>
-              <option value="lasty">Last year</option>
+              <option value="7d" selected>Last 7 days</option>
+              <option value="30d">Last Month</option>
+              <option value="thism">This Month</option>
+              <option value="3m">Last 3 Months</option>
+              <option value="6m">Last 6 Months</option>
+              <option value="lasty">Last Year</option>
+              <option value="ytd">This Year</option>
             </select>
           </div>
           <div class="relative w-full" style="height:300px">
@@ -144,6 +149,15 @@
             <div>
               <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Production Status</h2>
             </div>
+            <select class="skd-select" data-period="status" aria-label="Date filter">
+              <option value="7d" selected>Last 7 days</option>
+              <option value="30d">Last Month</option>
+              <option value="thism">This Month</option>
+              <option value="3m">Last 3 Months</option>
+              <option value="6m">Last 6 Months</option>
+              <option value="lasty">Last Year</option>
+              <option value="ytd">This Year</option>
+            </select>
           </div>
           <div class="relative w-full" style="height:230px">
             <canvas data-chart="status"></canvas>
@@ -168,7 +182,6 @@
                 <tr>
                   <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Date</th>
                   <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Day</th>
-                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Jobs</th>
                   <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Plan Qty</th>
                   <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Board Making</th>
                   <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Finishing</th>
@@ -191,11 +204,20 @@
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
           <div class="skd-tabs" role="tablist">
             <button type="button" class="skd-tab is-on !bg-sky-600 !text-white" role="tab" aria-selected="true"
-              data-skd-tab="p-pool-0">Machine</button>
+              data-skd-tab="p-pool-0">Party</button>
             <button type="button" class="skd-tab text-slate-600 hover:bg-slate-100" role="tab" aria-selected="false"
-              data-skd-tab="p-pool-1">Party</button>
+              data-skd-tab="p-pool-1">Item</button>
             <button type="button" class="skd-tab text-slate-600 hover:bg-slate-100" role="tab" aria-selected="false"
-              data-skd-tab="p-pool-2">Item</button>
+              data-skd-tab="p-pool-2">Team</button>
+            <select class="skd-select ml-auto self-center" aria-label="Date filter">
+              <option>Last 7 days</option>
+              <option>Last Month</option>
+              <option selected>This Month</option>
+              <option>Last 3 Months</option>
+              <option>Last 6 Months</option>
+              <option>Last Year</option>
+              <option>This Year</option>
+            </select>
           </div>
 
           <div class="skd-tabpanel" data-skd-panel="p-pool-0">
@@ -204,7 +226,6 @@
                 <thead>
                   <tr>
                     <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party</th>
-                    <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Job</th>
                     <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Planning</th>
                     <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Finishing</th>
                     <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Production</th>
@@ -221,7 +242,6 @@
                 <thead>
                   <tr>
                     <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Item</th>
-                    <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Job</th>
                     <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Planning</th>
                     <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Finishing</th>
                     <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Production</th>
@@ -238,7 +258,6 @@
                 <thead>
                   <tr>
                     <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Team</th>
-                    <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Job</th>
                     <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Planning</th>
                     <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Finishing</th>
                     <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="qty">Production</th>

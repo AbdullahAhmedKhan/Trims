@@ -79,7 +79,7 @@ window.DELIVERY_DATA = {
       ]
     },
     "30d": {
-      title: "Last 30 days delivery",
+      title: "Last Month",
       labels: ["30 Aug", "29 Aug", "28 Aug", "27 Aug", "26 Aug", "25 Aug", "24 Aug",
         "23 Aug", "22 Aug", "21 Aug", "20 Aug", "19 Aug", "18 Aug", "17 Aug", "16 Aug",
         "15 Aug", "14 Aug", "13 Aug", "12 Aug", "11 Aug", "10 Aug", "09 Aug",
@@ -90,12 +90,41 @@ window.DELIVERY_DATA = {
           5300, 8800, 6400, 9900, 4500, 8200, 7300, 10100, 5900, 7600, 4900, 8700] }
       ]
     },
+    thism: {
+      title: "This Month",
+      labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+      series: [
+        { label: "Delivered Qty", data: [52600, 54100, 51800, 55800] }
+      ]
+    },
+    "3m": {
+      title: "Last 3 Months",
+      labels: ["Jul", "Aug", "Sep"],
+      series: [
+        { label: "Delivered Qty", data: [196400, 188200, 214300] }
+      ]
+    },
+    "6m": {
+      title: "Last 6 Months",
+      labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+      series: [
+        { label: "Delivered Qty", data: [182600, 188400, 194200, 196400, 188200, 214300] }
+      ]
+    },
     ytd: {
       title: "This year delivery",
       labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
       series: [
         { label: "Delivered Qty", data: [179800, 186200, 190600, 182600, 188400,
           194200, 196400, 188200, 214300] }
+      ]
+    },
+    lasty: {
+      title: "Last Year",
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      series: [
+        { label: "Delivered Qty", data: [154200, 160600, 165800, 163100, 168400, 174900,
+          178600, 172400, 183100, 190600, 188200, 196700] }
       ]
     }
   },
@@ -124,7 +153,49 @@ window.DELIVERY_DATA = {
       { label: "Production", value: "258,000", color: "#0284c7" },
       { label: "Delivery", value: "214,200", color: "#14b8a6" },
       { label: "Pending", value: "43,800", color: "#f59e0b" }
-    ]
+    ],
+
+    /* one entry per option of the date filter on the card, in the order the
+       options are written in modules/delivery/index.html. The segment names
+       and colours stay as they are above; `centerValue` is the Order figure
+       in the middle of the ring. */
+    periods: {
+      "7d": {
+        values: [351000, 258000, 214200, 43800],
+        amounts: ["351,000", "258,000", "214,200", "43,800"],
+        centerValue: "351,000"
+      },
+      "30d": {
+        values: [412000, 306500, 258900, 53100],
+        amounts: ["412,000", "306,500", "258,900", "53,100"],
+        centerValue: "412,000"
+      },
+      thism: {
+        values: [388500, 287400, 241600, 46900],
+        amounts: ["388,500", "287,400", "241,600", "46,900"],
+        centerValue: "388,500"
+      },
+      "3m": {
+        values: [596000, 441200, 372800, 74600],
+        amounts: ["596,000", "441,200", "372,800", "74,600"],
+        centerValue: "596,000"
+      },
+      "6m": {
+        values: [1048000, 779600, 658300, 141200],
+        amounts: ["1,048,000", "779,600", "658,300", "141,200"],
+        centerValue: "1,048,000"
+      },
+      lasty: {
+        values: [2214300, 1642800, 1387400, 351100],
+        amounts: ["2,214,300", "1,642,800", "1,387,400", "351,100"],
+        centerValue: "2,214,300"
+      },
+      ytd: {
+        values: [1658900, 1224500, 1034600, 261400],
+        amounts: ["1,658,900", "1,224,500", "1,034,600", "261,400"],
+        centerValue: "1,658,900"
+      }
+    }
   },
 
   /* ------------------------------------------------------ table: recent challans */

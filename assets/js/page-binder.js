@@ -31,9 +31,12 @@
    show its column with data-f, for example data-f="money". A table with no
    header row says it itself with data-cols.
 
-   A page with a period picker also passes the name of its period driven
-   chart. The picker swaps the numbers, the coloured key and the card
-   heading, all three coming from data.periods in the data file.
+    A page with a period picker also passes the name of its period driven
+    chart. The picker swaps the numbers, the coloured key and the card
+    heading, all three coming from data.periods in the data file. A second
+    picker on the same page names its own chart - <select data-period="status">
+    - and that chart then keeps its periods under its own key, away from the
+    page wide data.periods.
 
    This file builds no page of its own, so the HTML stays the one place the
    layout is written.
@@ -355,8 +358,8 @@ window.SKPage = (function (w, d) {
           '<div class="flex min-w-0 items-center gap-[9px] text-[13.5px] font-semibold text-slate-800">' +
           '<i class="h-[9px] w-[9px] flex-none rounded-full" style="background:var(--c,currentColor);box-shadow:0 0 0 3px color-mix(in srgb, var(--c) 18%, transparent)"></i>' +
           '<span class="truncate">' + esc(r.label) + "</span></div>" +
-          '<div class="whitespace-nowrap text-[13.5px] font-bold tabular-nums">' + esc(r.value) +
-          "<small>" + pc.toFixed(1) + "%</small></div>" +
+          '<div class="whitespace-nowrap text-[13.5px] font-bold tabular-nums"><span>' + esc(r.value) +
+          '</span><small style="margin-left:10px" class="text-slate-400">' + pc.toFixed(1) + "%</small></div>" +
           '<div class="col-span-full h-[7px] overflow-hidden rounded-full bg-slate-100">' +
           '<i class="block h-full rounded-full" style="width:' + pc + '%;background:linear-gradient(90deg, color-mix(in srgb, var(--c) 55%, #fff), var(--c))"></i></div>' +
           "</div>";
@@ -541,6 +544,7 @@ window.SKPage = (function (w, d) {
 
       /* a chart the period picker drives is drawn by showPeriod() instead,
          so it is not painted once here only to be replaced below */
+      if (pickerFor(key)) return;
       if (DATA.periods && DATA.periods[key]) return;
       if (PERIOD === key && d.querySelector("[data-period]")) return;
 
@@ -552,7 +556,10 @@ window.SKPage = (function (w, d) {
      A page with a picker names its period driven chart, for example
      "months". The <select data-period> chooses between the entries in
      data.periods, and each entry supplies the heading, the numbers and the
-     amounts for its own key under the chart.
+     amounts for its own key under the chart. A picker written as
+     <select data-period="status"> drives that chart alone and reads its
+     entries from data.status.periods instead, so two charts on one page
+     can each carry a date filter without clashing.
 
      Two shapes are read, so a bar chart and a doughnut can both use it:
 
@@ -562,14 +569,40 @@ window.SKPage = (function (w, d) {
          periods: { "3m": { title, labels: [...],
                              series: [{ label: "Order", data: [...] }] } }
 
-       a doughnut gives `values` for the segments and `amounts` for the
-       key; the names and colours come from the base spec:
+        a doughnut gives `values` for the segments and `amounts` for the
+        key; the names and colours come from the base spec:
 
-         periods: { "3m": { title, values: [...], amounts: [...] } } */
+          periods: { "3m": { title, values: [...], amounts: [...] } }
 
-  function periodSpec(key) {
-    var periods = DATA.periods || {};
-    return periods[key] || periods[Object.keys(periods)[0]] || null;
+        a table gives `rows` (and optionally `total`) and the binder refills
+        the tbody for that key, so a card carrying a table and a date filter
+        swaps its rows too:
+
+          periods: { "3m": { title, rows: [...], total: [...] } } */
+
+  function periodSpec(name, key) {
+    /* a chart may carry its own periods - a doughnut on the same page as a
+       bar chart must not read the bar chart's entries. Falls back to the
+       page wide data.periods, and then to the first entry of whichever set
+       is in play, so an unknown choice still draws something. */
+    var own = DATA[name] && DATA[name].periods;
+    var periods = own || DATA.periods || {};
+
+    if (periods[key]) return periods[key];
+    var keys = Object.keys(periods);
+    return keys.length ? periods[keys[0]] : null;
+  }
+
+  /* the picker that drives this chart, if the page has one. A picker says
+     which chart it drives with data-period="status"; a bare <select
+     data-period> drives the chart the page passed as `period`. */
+  function pickerFor(name) {
+    var list = [].slice.call(d.querySelectorAll("[data-period]"));
+
+    for (var i = 0; i < list.length; i++) {
+      if ((list[i].getAttribute("data-period") || PERIOD) === name) return list[i];
+    }
+    return null;
   }
 
   /* the numbers for one period, in the shape drawChart wants */
@@ -577,7 +610,8 @@ window.SKPage = (function (w, d) {
     var spec = {};
 
     Object.keys(base).forEach(function (k) {
-      if (k !== "series" && k !== "legend" && k !== "bg" && k !== "labels") {
+      if (k !== "series" && k !== "legend" && k !== "bg" && k !== "labels" &&
+        k !== "periods" && k !== "datasets") {
         spec[k] = base[k];
       }
     });
@@ -603,16 +637,28 @@ window.SKPage = (function (w, d) {
         return out;
       });
     } else {
-      /* a doughnut: the base spec gives the segment names and colours */
-      var bg = base.bg || [];
+      /* a doughnut: the base spec gives the segment names and colours.
+         The colours may sit on `bg` or inside the datasets, and the key may
+         be written out already - either way the period only swaps the
+         amounts, and the centre figure when the card carries one. */
+      var bg = base.bg ||
+        (base.datasets && base.datasets[0] && base.datasets[0].bg) || [];
+      var names = (base.legend && base.legend.length
+        ? base.legend.map(function (l) { return l.label; })
+        : base.labels) || [];
 
-      spec.labels = base.labels || [];
+      if (period.title != null && period.title !== "") spec.title = period.title;
+      if (period.centerValue != null) spec.centerValue = period.centerValue;
+
+      spec.labels = names;
       spec.datasets = [{ data: period.values || [], bg: bg }];
-      spec.legend = (base.labels || []).map(function (label, i) {
+      spec.legend = names.map(function (label, i) {
+        var was = (base.legend || [])[i] || {};
         return {
           label: label,
-          value: (period.amounts || [])[i] || "",
-          color: bg[i]
+          value: (period.amounts || [])[i] != null ? period.amounts[i]
+            : (was.value != null ? was.value : ""),
+          color: was.color || bg[i]
         };
       });
     }
@@ -620,13 +666,29 @@ window.SKPage = (function (w, d) {
     return spec;
   }
 
-  function showPeriod(name, key) {
+  function showPeriod(name, key, picker) {
     var base = DATA[name];
-    var period = periodSpec(key);
+    var period = periodSpec(name, key);
     if (!base || !period) return;
 
-    var heading = d.querySelector("[data-period-title]");
+    /* the heading is looked up inside the picker's own card, so two pickers
+       on one page cannot rewrite each other's titles */
+    var heading = null;
+    if (picker && picker.closest) {
+      var card = picker.closest(".skd-card");
+      heading = card ? card.querySelector("[data-period-title]") : null;
+    } else {
+      heading = d.querySelector("[data-period-title]");
+    }
     if (heading) heading.textContent = period.title || "";
+
+    /* a period may carry its own table rows - a date filter over a table
+       swaps the numbers the tbody shows, not just a heading */
+    if (period.rows && DATA[name] && DATA[name].rows) {
+      DATA[name].rows = period.rows;
+      if (period.total) DATA[name].total = period.total;
+      fillRows();
+    }
 
     var canvas = d.querySelector('[data-chart="' + name + '"]');
     if (canvas && w.SKDash) paint(canvas, buildPeriodSpec(base, period));
@@ -635,17 +697,17 @@ window.SKPage = (function (w, d) {
     if (legend) paintLegend(legend, legendFor(buildPeriodSpec(base, period)));
   }
 
-  function wirePeriod(name) {
-    var picker = d.querySelector("[data-period]");
+  function wirePeriod(name, picker) {
+    picker = picker || pickerFor(name);
     if (!picker) return;
 
     picker.addEventListener("change", function () {
-      showPeriod(name, picker.value);
+      showPeriod(name, picker.value, picker);
     });
 
     /* the heading in the HTML is only the starting point, the data file
        decides the wording so the two can never drift apart */
-    showPeriod(name, picker.value);
+    showPeriod(name, picker.value, picker);
   }
 
   /* =============================================================== head ==
@@ -686,7 +748,19 @@ window.SKPage = (function (w, d) {
     fillBars();
     fillMetrics();
     fillCharts();
-    if (opts.period) wirePeriod(opts.period);
+
+    /* every period picker on the page: a bare <select data-period> drives
+       the chart named in `opts.period`, one written as data-period="status"
+       drives that chart on its own */
+    var pickers = [].slice.call(d.querySelectorAll("[data-period]"));
+    if (pickers.length) {
+      pickers.forEach(function (p) {
+        var name = p.getAttribute("data-period") || opts.period;
+        if (name) wirePeriod(name, p);
+      });
+    } else if (opts.period) {
+      wirePeriod(opts.period, null);
+    }
 
     if (w.SKDash) w.SKDash.boot();
   }

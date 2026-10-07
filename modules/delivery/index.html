@@ -57,6 +57,7 @@
          Three stage cards, one per step the quantity moves through. No
          title, no sub title, no progress bars: a dot for the stage, its name
          and the figure underneath, which the data file fills in. -->
+    <!-- stat cards commented out for now
     <div class="grid grid-cols-2 gap-[18px] mt-[18px] min-[761px]:grid-cols-3">
       <div class="skd-in">
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#0284c7">
@@ -88,6 +89,7 @@
         </section>
       </div>
     </div>
+    end stat cards -->
 
     <!-- ================== ROW 1 : delivery trend + where the quantity is -->
     <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
@@ -103,8 +105,12 @@
             <!-- choosing a period swaps the numbers and the heading -->
             <select class="skd-select" data-period>
               <option value="7d" selected>Last 7 days</option>
-              <option value="30d">Last 30 days</option>
-              <option value="ytd">This year</option>
+              <option value="30d">Last Month</option>
+              <option value="thism">This Month</option>
+              <option value="3m">Last 3 Months</option>
+              <option value="6m">Last 6 Months</option>
+              <option value="lasty">Last Year</option>
+              <option value="ytd">This Year</option>
             </select>
           </div>
           <div class="relative w-full" style="height:300px">
@@ -120,6 +126,15 @@
             <div>
               <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Delivery Status</h2>
             </div>
+            <select class="skd-select" data-period="status" aria-label="Date filter">
+              <option value="7d" selected>Last 7 days</option>
+              <option value="30d">Last Month</option>
+              <option value="thism">This Month</option>
+              <option value="3m">Last 3 Months</option>
+              <option value="6m">Last 6 Months</option>
+              <option value="lasty">Last Year</option>
+              <option value="ytd">This Year</option>
+            </select>
           </div>
           <div class="relative w-full" style="height:230px">
             <canvas data-chart="status"></canvas>

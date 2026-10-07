@@ -64,17 +64,9 @@ window.PRODUCTION_DATA = {
     height: 300,
     yfmt: "qty",
     series: {
-      Order: {
-        bg: "rgba(114, 199, 255, 0.28)",
-        border: "rgba(114, 199, 255, 1)"
-      },
       Production: {
         bg: "rgba(20, 184, 166, 0.28)",
         border: "rgba(20, 184, 166, 1)"
-      },
-      Delivery: {
-        bg: "rgba(255, 159, 64, 0.28)",
-        border: "rgba(255, 159, 64, 1)"
       }
     }
   },
@@ -82,40 +74,53 @@ window.PRODUCTION_DATA = {
   /* one entry per option in the picker. `title` becomes the card heading,
      `labels` is the x axis and `series` is one entry per bar group. */
   periods: {
+    "7d": {
+      title: "Last 7 days production",
+      labels: ["23 Sep", "24 Sep", "26 Sep", "27 Sep", "28 Sep", "29 Sep", "30 Sep"],
+      series: [
+        { label: "Production", data: [9471, 9002, 9583, 9658, 9190, 10408, 9800] }
+      ]
+    },
+    "30d": {
+      title: "Last Month",
+      labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
+      series: [
+        { label: "Production", data: [48200, 51400, 49800, 52600, 50300] }
+      ]
+    },
+    thism: {
+      title: "This Month",
+      labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+      series: [
+        { label: "Production", data: [51400, 49800, 52600, 50300] }
+      ]
+    },
     "3m": {
-      title: "Last 3 months",
+      title: "Last 3 Months",
       labels: ["Jul", "Aug", "Sep"],
       series: [
-        { label: "Order", data: [252000, 244000, 268400] },
-        { label: "Production", data: [217000, 207000, 232600] },
-        { label: "Delivery", data: [196400, 188200, 214300] }
+        { label: "Production", data: [217000, 207000, 232600] }
       ]
     },
     "6m": {
-      title: "Last 6 months",
+      title: "Last 6 Months",
       labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep"],
       series: [
-        { label: "Order", data: [232000, 239000, 245000, 252000, 244000, 268400] },
-        { label: "Production", data: [199000, 205000, 211000, 217000, 207000, 232600] },
-        { label: "Delivery", data: [182600, 188400, 194200, 196400, 188200, 214300] }
+        { label: "Production", data: [199000, 205000, 211000, 217000, 207000, 232600] }
       ]
     },
     ytd: {
-      title: "This year",
+      title: "This Year",
       labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
       series: [
-        { label: "Order", data: [228400, 236100, 241800, 232000, 239000, 245000, 252000, 244000, 268400] },
-        { label: "Production", data: [195200, 202600, 208400, 199000, 205000, 211000, 217000, 207000, 232600] },
-        { label: "Delivery", data: [179800, 186200, 190600, 182600, 188400, 194200, 196400, 188200, 214300] }
+        { label: "Production", data: [195200, 202600, 208400, 199000, 205000, 211000, 217000, 207000, 232600] }
       ]
     },
     lasty: {
-      title: "Last year",
+      title: "Last Year",
       labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
       series: [
-        { label: "Order", data: [198200, 205600, 211400, 208900, 214300, 221700, 226400, 219800, 232400, 240600, 238100, 246800] },
-        { label: "Production", data: [168400, 174900, 180200, 178600, 183900, 190400, 194700, 188300, 199600, 207200, 204800, 213500] },
-        { label: "Delivery", data: [154200, 160600, 165800, 163100, 168400, 174900, 178600, 172400, 183100, 190600, 188200, 196700] }
+        { label: "Production", data: [168400, 174900, 180200, 178600, 183900, 190400, 194700, 188300, 199600, 207200, 204800, 213500] }
       ]
     }
   },
@@ -127,39 +132,69 @@ window.PRODUCTION_DATA = {
   status: {
     type: "doughnut",
     height: 230,
-    labels: ["Pending", "Planning", "Process", "Finishing", "Finish Goods"],
+    labels: ["Pending Delivery", "Process", "Planning"],
     datasets: [{
-      data: [3, 2, 4, 3, 4],
+      data: [98533, 232600, 214300],
       bg: [
         "rgba(245, 158, 11, 0.55)",
         "rgba(14, 165, 233, 0.55)",
-        "rgba(2, 132, 199, 0.55)",
-        "rgba(3, 105, 161, 0.55)",
-        "rgba(7, 89, 133, 0.55)"
+        "rgba(20, 184, 166, 0.55)"
       ]
     }],
     legend: [
-      { label: "Pending", value: "3", color: "#f59e0b" },
-      { label: "Planning", value: "2", color: "#0ea5e9" },
-      { label: "Process", value: "4", color: "#0284c7" },
-      { label: "Finishing", value: "3", color: "#0369a1" },
-      { label: "Finish Goods", value: "4", color: "#075985" }
-    ]
+      { label: "Pending Delivery", value: "98,533", color: "#f59e0b" },
+      { label: "Process", value: "232,600", color: "#0ea5e9" },
+      { label: "Planning", value: "214,300", color: "#14b8a6" }
+    ],
+
+    /* one entry per option of the date filter on the card, in the order the
+       options are written in modules/production/index.html. The segment
+       names and colours stay as they are above; only the amounts move. */
+    periods: {
+      "7d": {
+        values: [98533, 232600, 214300],
+        amounts: ["98,533", "232,600", "214,300"]
+      },
+      "30d": {
+        values: [112400, 248900, 236500],
+        amounts: ["112,400", "248,900", "236,500"]
+      },
+      thism: {
+        values: [105600, 241200, 228700],
+        amounts: ["105,600", "241,200", "228,700"]
+      },
+      "3m": {
+        values: [134800, 276400, 261300],
+        amounts: ["134,800", "276,400", "261,300"]
+      },
+      "6m": {
+        values: [156200, 302800, 288400],
+        amounts: ["156,200", "302,800", "288,400"]
+      },
+      lasty: {
+        values: [187500, 348600, 331900],
+        amounts: ["187,500", "348,600", "331,900"]
+      },
+      ytd: {
+        values: [164300, 325700, 309200],
+        amounts: ["164,300", "325,700", "309,200"]
+      }
+    }
   },
 
   /* --------------------------------------------- table: production performance */
   performance: {
     rows: [
-      ["30 Sep 2026", "Wednesday", 14, 12400, 11600, 10900, 9800, 7600, 2600, 79.03],
-      ["29 Sep 2026", "Tuesday", 14, 12471, 11786, 11143, 10408, 9677, 2063, 83.46],
-      ["28 Sep 2026", "Monday", 13, 11128, 10454, 9821, 9190, 8550, 1938, 82.58],
-      ["27 Sep 2026", "Sunday", 15, 11704, 11025, 10388, 9658, 9020, 2046, 82.52],
-      ["26 Sep 2026", "Saturday", 14, 12279, 11595, 10955, 10221, 9583, 2058, 83.24],
-      ["24 Sep 2026", "Thursday", 16, 10936, 10264, 9632, 9002, 8362, 1934, 82.32],
-      ["23 Sep 2026", "Wednesday", 15, 11512, 10835, 10199, 9471, 8832, 2041, 82.27],
-      ["22 Sep 2026", "Tuesday", 13, 12088, 11405, 10766, 10034, 9395, 2054, 83.01]
+      ["30 Sep 2026", "Wednesday", 12400, 11600, 10900, 9800, 7600, 2600, 79.03],
+      ["29 Sep 2026", "Tuesday", 12471, 11786, 11143, 10408, 9677, 2063, 83.46],
+      ["28 Sep 2026", "Monday", 11128, 10454, 9821, 9190, 8550, 1938, 82.58],
+      ["27 Sep 2026", "Sunday", 11704, 11025, 10388, 9658, 9020, 2046, 82.52],
+      ["26 Sep 2026", "Saturday", 12279, 11595, 10955, 10221, 9583, 2058, 83.24],
+      ["24 Sep 2026", "Thursday", 10936, 10264, 9632, 9002, 8362, 1934, 82.32],
+      ["23 Sep 2026", "Wednesday", 11512, 10835, 10199, 9471, 8832, 2041, 82.27],
+      ["22 Sep 2026", "Tuesday", 12088, 11405, 10766, 10034, 9395, 2054, 83.01]
     ],
-    total: ["Total", "8 days", 114, 94518, 88964, 83804, 77784, 71019, 16734, 82.28]
+    total: ["Total", "8 days", 94518, 88964, 83804, 77784, 71019, 16734, 82.28]
   },
 
   /* ------------------------------------------------------ job pool tabs --
@@ -168,37 +203,37 @@ window.PRODUCTION_DATA = {
      modules/production/index.html. */
   party: {
     rows: [
-      ["Prime Denim Ltd", 3, 96974, 96974, 93432],
-      ["Hanuman Textile", 3, 61134, 36400, 21706],
-      ["DBL Group", 2, 51298, 47855, 34763],
-      ["Noman Group", 3, 42162, 32296, 24630],
-      ["Envy Pacific", 3, 25297, 13889, 7919],
-      ["Beximco Limited", 2, 9135, 6816, 5017]
+      ["Prime Denim Ltd", 96974, 96974, 93432],
+      ["Hanuman Textile", 61134, 36400, 21706],
+      ["DBL Group", 51298, 47855, 34763],
+      ["Noman Group", 42162, 32296, 24630],
+      ["Envy Pacific", 25297, 13889, 7919],
+      ["Beximco Limited", 9135, 6816, 5017]
     ],
-    total: ["Total :", 16, 286000, 234230, 187467]
+    total: ["Total :", 286000, 234230, 187467]
   },
 
   item: {
     rows: [
-      ["3 Ply Carton", 4, 81163, 76427, 65450],
-      ["5 Ply Carton", 4, 70621, 49948, 41052],
-      ["Corrugated Sheet", 2, 41460, 41460, 37082],
-      ["Die Cut Box", 2, 36892, 31594, 22205],
-      ["Top Bottom Box", 2, 29162, 23305, 16239],
-      ["Divider Insert", 2, 26702, 11496, 5439]
+      ["3 Ply Carton", 81163, 76427, 65450],
+      ["5 Ply Carton", 70621, 49948, 41052],
+      ["Corrugated Sheet", 41460, 41460, 37082],
+      ["Die Cut Box", 36892, 31594, 22205],
+      ["Top Bottom Box", 29162, 23305, 16239],
+      ["Divider Insert", 26702, 11496, 5439]
     ],
-    total: ["Total :", 16, 286000, 234230, 187467]
+    total: ["Total :", 286000, 234230, 187467]
   },
 
   team: {
     rows: [
-      ["Karim Mia", 3, 80812, 77369, 60735],
-      ["Rahim Uddin", 2, 67460, 67460, 67460],
-      ["Salman Rahman", 3, 61134, 36400, 21706],
-      ["Tanvir Hossain", 3, 42162, 32296, 24630],
-      ["Ashikul Islam", 3, 25297, 13889, 7919],
-      ["Shanto Das", 2, 9135, 6816, 5017]
+      ["Karim Mia", 80812, 77369, 60735],
+      ["Rahim Uddin", 67460, 67460, 67460],
+      ["Salman Rahman", 61134, 36400, 21706],
+      ["Tanvir Hossain", 42162, 32296, 24630],
+      ["Ashikul Islam", 25297, 13889, 7919],
+      ["Shanto Das", 9135, 6816, 5017]
     ],
-    total: ["Total :", 16, 286000, 234230, 187467]
+    total: ["Total :", 286000, 234230, 187467]
   }
 };

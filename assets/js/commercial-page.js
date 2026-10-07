@@ -10,12 +10,12 @@
 
    Everything the page needs from the data file:
 
-     overview        the figure behind each of the three overview cards
-     lcTrend         the bar chart behind the period picker
-     exportLc        the Export LC Funnel
-     pi              Recent PI
-     lc              LC & Maturity Timeline
-     periods         the numbers behind the period picker
+      overview        the figure behind each of the three overview cards
+      lcTrend         the bar chart behind the period picker (New LC value)
+      status          the Commercial Status doughnut, with its own date filter
+      pi              Recent PI
+      lc              LC & Maturity Timeline
+      periods         the numbers behind the period picker
    ========================================================================== */
 
 window.CommercialPage = (function (w) {

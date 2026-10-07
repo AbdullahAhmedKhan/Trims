@@ -63,74 +63,75 @@ window.STOCK_DATA = {
   },
 
   /* ----------------------------------------------------- chart: movement --
-     What came into the ware house, what went out and what was left at the
-     end of the month. All three are bars on one quantity axis: a money
-     figure on a second axis needs a line of its own, and one mixed kind on
-     a card reads as clutter.
+      One bar per period: the consumed value (what went out of the ware
+      house). A single series per card, so the key under the chart stays
+      clear; `series` gives the bar its colour by name.
 
-     The picker swaps the numbers, the key and the card heading, so only the
-     shell of the chart is written here and `periods` below holds one entry
-     per choice.
-
-     `series` gives each bar its colour by name, so a period only has to say
-     the label and the numbers. */
+      The picker swaps the numbers and the card heading, so only the
+      shell of the chart is written here and `periods` below holds one entry
+      per choice. */
   movement: {
     type: "bar",
     height: 300,
     yfmt: "qty",
     series: {
-      Received: {
-        bg: "rgba(114, 199, 255, 0.28)",
-        border: "rgba(114, 199, 255, 1)"
-      },
-      Issued: {
+      Consumed: {
         bg: "rgba(247, 107, 138, 0.28)",
         border: "rgba(247, 107, 138, 1)"
-      },
-      Balance: {
-        bg: "rgba(20, 184, 166, 0.28)",
-        border: "rgba(20, 184, 166, 1)"
       }
     }
   },
 
   /* one entry per option in the picker. `title` becomes the card heading,
-     `labels` is the x axis and `series` is one entry per bar group. */
+      `labels` is the x axis and `series` holds the single Consumed series. */
   periods: {
+    "7d": {
+      title: "Last 7 days",
+      labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      series: [
+        { label: "Consumed", data: [1420, 1680, 1250, 1890, 1540, 980, 1760] }
+      ]
+    },
+    "30d": {
+      title: "Last Month",
+      labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
+      series: [
+        { label: "Consumed", data: [6800, 7200, 6400, 5100, 2900] }
+      ]
+    },
+    thism: {
+      title: "This Month",
+      labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+      series: [
+        { label: "Consumed", data: [12400, 13600, 11800, 11100] }
+      ]
+    },
     "3m": {
-      title: "Last 3 months",
+      title: "Last 3 Months",
       labels: ["Jul", "Aug", "Sep"],
       series: [
-        { label: "Received", data: [24800, 29600, 53100] },
-        { label: "Issued", data: [27100, 28400, 48900] },
-        { label: "Balance", data: [55900, 57100, 52910] }
+        { label: "Consumed", data: [27100, 28400, 48900] }
       ]
     },
     "6m": {
-      title: "Last 6 months",
+      title: "Last 6 Months",
       labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep"],
       series: [
-        { label: "Received", data: [24800, 27600, 31200, 24800, 29600, 53100] },
-        { label: "Issued", data: [21400, 23800, 26900, 27100, 28400, 48900] },
-        { label: "Balance", data: [50100, 53900, 58200, 55900, 57100, 52910] }
-      ]
-    },
-    ytd: {
-      title: "This year",
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
-      series: [
-        { label: "Received", data: [19800, 21500, 23200, 24800, 27600, 31200, 24800, 29600, 53100] },
-        { label: "Issued", data: [17200, 18800, 20400, 21400, 23800, 26900, 27100, 28400, 48900] },
-        { label: "Balance", data: [41200, 43900, 46700, 50100, 53900, 58200, 55900, 57100, 52910] }
+        { label: "Consumed", data: [21400, 23800, 26900, 27100, 28400, 48900] }
       ]
     },
     lasty: {
-      title: "Last year",
+      title: "Last Year",
       labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"],
       series: [
-        { label: "Received", data: [21400, 22600, 24100, 25900, 23800, 27400, 22100, 23900, 26800, 19800, 21500, 23200] },
-        { label: "Issued", data: [18800, 19600, 21300, 22800, 22100, 24600, 20600, 21800, 23400, 17200, 18800, 20400] },
-        { label: "Balance", data: [39800, 42800, 45600, 48700, 50400, 53200, 54700, 56800, 60200, 62800, 65500, 68300] }
+        { label: "Consumed", data: [18800, 19600, 21300, 22800, 22100, 24600, 20600, 21800, 23400, 17200, 18800, 20400] }
+      ]
+    },
+    ytd: {
+      title: "This Year",
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+      series: [
+        { label: "Consumed", data: [17200, 18800, 20400, 21400, 23800, 26900, 27100, 28400, 48900] }
       ]
     }
   },

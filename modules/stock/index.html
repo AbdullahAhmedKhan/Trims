@@ -57,6 +57,7 @@
          Four stage cards, one per step the material moves through. No
          title, no sub title, no progress bars: a dot for the stage, its
          name and the figure underneath, which the data file fills in. -->
+    <!-- stat cards commented out for now
     <div class="grid grid-cols-2 gap-[18px] mt-[18px] min-[761px]:grid-cols-4">
       <div class="skd-in">
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#0284c7">
@@ -98,6 +99,7 @@
         </section>
       </div>
     </div>
+    end stat cards -->
 
     <!-- ==================== ROW 1 : stock movement + value by group ====== -->
     <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
@@ -109,14 +111,17 @@
             <div>
               <!-- the heading follows the picker, see data-period-title -->
               <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]" data-period-title>Last 3 months</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">Received, issued and the balance left at the end of the month</p>
+              <p class="mt-1 text-[12.5px] text-slate-500">Consumed value, period by period</p>
             </div>
             <!-- choosing a period swaps the numbers, the key and the heading -->
             <select class="skd-select" data-period>
-              <option value="3m" selected>Last 3 months</option>
-              <option value="6m">Last 6 months</option>
-              <option value="ytd">This year</option>
-              <option value="lasty">Last year</option>
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last Month</option>
+              <option value="thism">This Month</option>
+              <option value="3m" selected>Last 3 Months</option>
+              <option value="6m">Last 6 Months</option>
+              <option value="lasty">Last Year</option>
+              <option value="ytd">This Year</option>
             </select>
           </div>
           <div class="relative w-full" style="height:300px">
