@@ -96,7 +96,7 @@ window.SkHome = (function (w, d) {
       if (ico) {
         ico.innerHTML = w.SK
           .iconImg(mod.icon)
-          .replace("<img ", '<img style="width:30px;height:30px" ');
+          .replace("<img ", '<img style="width:42px;height:42px;object-fit:contain" ');
       }
     });
   }

@@ -1155,8 +1155,9 @@ button {
 
 /* Soft blue blurred bubbles form a light backdrop for the homepage. */
 body.sk-home-page {
-  background-color: #eff7ff;
-  background-image:url("../images/background-light.svg");
+  /* background-color: #eff7ff; */
+  background-color: #fcfffa;
+  /* background-image:url("../images/background-light.svg"); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
