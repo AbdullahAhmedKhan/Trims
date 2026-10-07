@@ -126,25 +126,26 @@ window.PRODUCTION_DATA = {
   },
 
   /* -------------------------------------------------- chart: job status --
-     Where the live jobs are sitting right now. The names and the colours are
-     fixed, so the key under the chart is worked out from them; `legend`
-     repeats them with the job count of each, in the same order. */
+     Where the live jobs are sitting right now, in the order the work moves
+     through: Planning, Process, then Pending Delivery. The names and the
+     colours are fixed, so the key under the chart is worked out from them;
+     `legend` repeats them with the job count of each, in the same order. */
   status: {
     type: "doughnut",
     height: 230,
-    labels: ["Pending Delivery", "Process", "Planning"],
+    labels: ["Planning", "Process", "Pending Delivery"],
     datasets: [{
-      data: [98533, 232600, 214300],
+      data: [214300, 232600, 98533],
       bg: [
-        "rgba(245, 158, 11, 0.55)",
+        "rgba(20, 184, 166, 0.55)",
         "rgba(14, 165, 233, 0.55)",
-        "rgba(20, 184, 166, 0.55)"
+        "rgba(245, 158, 11, 0.55)"
       ]
     }],
     legend: [
-      { label: "Pending Delivery", value: "98,533", color: "#f59e0b" },
+      { label: "Planning", value: "214,300", color: "#14b8a6" },
       { label: "Process", value: "232,600", color: "#0ea5e9" },
-      { label: "Planning", value: "214,300", color: "#14b8a6" }
+      { label: "Pending Delivery", value: "98,533", color: "#f59e0b" }
     ],
 
     /* one entry per option of the date filter on the card, in the order the
@@ -152,32 +153,32 @@ window.PRODUCTION_DATA = {
        names and colours stay as they are above; only the amounts move. */
     periods: {
       "7d": {
-        values: [98533, 232600, 214300],
-        amounts: ["98,533", "232,600", "214,300"]
+        values: [214300, 232600, 98533],
+        amounts: ["214,300", "232,600", "98,533"]
       },
       "30d": {
-        values: [112400, 248900, 236500],
-        amounts: ["112,400", "248,900", "236,500"]
+        values: [236500, 248900, 112400],
+        amounts: ["236,500", "248,900", "112,400"]
       },
       thism: {
-        values: [105600, 241200, 228700],
-        amounts: ["105,600", "241,200", "228,700"]
+        values: [228700, 241200, 105600],
+        amounts: ["228,700", "241,200", "105,600"]
       },
       "3m": {
-        values: [134800, 276400, 261300],
-        amounts: ["134,800", "276,400", "261,300"]
+        values: [261300, 276400, 134800],
+        amounts: ["261,300", "276,400", "134,800"]
       },
       "6m": {
-        values: [156200, 302800, 288400],
-        amounts: ["156,200", "302,800", "288,400"]
+        values: [288400, 302800, 156200],
+        amounts: ["288,400", "302,800", "156,200"]
       },
       lasty: {
-        values: [187500, 348600, 331900],
-        amounts: ["187,500", "348,600", "331,900"]
+        values: [331900, 348600, 187500],
+        amounts: ["331,900", "348,600", "187,500"]
       },
       ytd: {
-        values: [164300, 325700, 309200],
-        amounts: ["164,300", "325,700", "309,200"]
+        values: [309200, 325700, 164300],
+        amounts: ["309,200", "325,700", "164,300"]
       }
     }
   },

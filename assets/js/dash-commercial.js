@@ -24,7 +24,7 @@
                      bank acceptance and payment, with its own date filter
                      reading status.periods
    periods          one entry per option in the bar chart picker
-   pi, lc           Recent PI and LC & Maturity Timeline
+   pi, lcParty, lcBank  Recent PI and the two tabs of LC & Maturity Timeline
 
    When the real application is wired up, replace the literals below with a
    fetch. Nothing else in the page has to change.
@@ -199,17 +199,31 @@ window.COMMERCIAL_DATA = {
     total: ["Total", "7 PIs", 2486560, ""]
   },
 
-  /* ------------------------------------------------------------ table: lc --
-     Every running LC with when it was opened and when it matures. */
-  lc: {
+  /* ------------------------------------------- tables: lcParty / lcBank --
+     LC & Maturity Timeline, now behind two tabs. Both show the same four
+     columns - LC No, Party, Value, LC Open - and each tab carries its own
+     rows, split by where the LC sits today:
+
+       lcParty   still with us or already sent to the party
+                 (LC Open, In Hand, Forwarded to Party)
+       lcBank    already with the bank
+                 (Forwarded to Bank, Bank Acceptance)
+
+     Four cells per row, in the order of the four columns above. */
+  lcParty: {
     rows: [
-      ["LC-2026-0355", "Noman Group", 448000, { t: "28 May 2026" }, { t: "12 Oct 2026" }, { b: "In Hand" }, 12],
-      ["LC-2026-0371", "Hanuman Textile", 512000, { t: "18 Jun 2026" }, { t: "5 Oct 2026" }, { b: "Bank Acceptance" }, 5],
-      ["LC-2026-0396", "Beximco Limited", 930000, { t: "24 Jul 2026" }, { t: "28 Oct 2026" }, { b: "Forwarded to Bank" }, 28],
-      ["LC-2026-0412", "Prime Denim", 1240000, { t: "12 Aug 2026" }, { t: "15 Nov 2026" }, { b: "Bank Acceptance" }, 46],
-      ["LC-2026-0438", "Rupali Knitwear", 865000, { t: "2 Sep 2026" }, { t: "30 Nov 2026" }, { b: "In Hand" }, 61],
-      ["LC-2026-0447", "MJ Group", 563000, { t: "11 Sep 2026" }, { t: "15 Jan 2027" }, { b: "Forwarded to Party" }, 108],
-      ["LC-2026-0451", "Shanta Holdings", 620000, { t: "18 Sep 2026" }, { t: "20 Dec 2026" }, { b: "LC Open" }, 81]
+      ["LC-2026-0355", "Noman Group", 448000, { t: "28 May 2026" }],
+      ["LC-2026-0438", "Rupali Knitwear", 865000, { t: "2 Sep 2026" }],
+      ["LC-2026-0447", "MJ Group", 563000, { t: "11 Sep 2026" }],
+      ["LC-2026-0451", "Shanta Holdings", 620000, { t: "18 Sep 2026" }]
+    ]
+  },
+
+  lcBank: {
+    rows: [
+      ["LC-2026-0371", "Hanuman Textile", 512000, { t: "18 Jun 2026" }],
+      ["LC-2026-0396", "Beximco Limited", 930000, { t: "24 Jul 2026" }],
+      ["LC-2026-0412", "Prime Denim", 1240000, { t: "12 Aug 2026" }]
     ]
   }
 };

@@ -13,9 +13,11 @@
       overview        the figure behind each of the three overview cards
       lcTrend         the bar chart behind the period picker (New LC value)
       status          the Commercial Status doughnut, with its own date filter
-      pi              Recent PI
-      lc              LC & Maturity Timeline
-      periods         the numbers behind the period picker
+       pi              Recent PI
+       lcParty         LC & Maturity Timeline, the "To party" tab
+       lcBank          LC & Maturity Timeline, the "To Bank" tab
+       periods         the numbers behind the period picker
+    The two tabs need no wiring here: dashboard.js switches the panels.
    ========================================================================== */
 
 window.CommercialPage = (function (w) {
