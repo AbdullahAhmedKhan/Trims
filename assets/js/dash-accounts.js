@@ -51,6 +51,15 @@ window.ACCOUNTS_DATA = {
      after it - `labels` is the x axis and `series` one entry per bar group.
      Every month keeps the same rule: revenue less cost is the profit. */
   periods: {
+    "7d": {
+      title: "Profit and Loss Overview · Last 7 days",
+      labels: ["24 Sep", "25 Sep", "26 Sep", "27 Sep", "28 Sep", "29 Sep", "30 Sep"],
+      series: [
+        { label: "Revenue", data: [268000, 194000, 312000, 158000, 246000, 289000, 231000] },
+        { label: "Cost", data: [231000, 172000, 268000, 141000, 214000, 249000, 203000] },
+        { label: "Profit", data: [37000, 22000, 44000, 17000, 32000, 40000, 28000] }
+      ]
+    },
     "3m": {
       title: "Profit and Loss Overview · Last 3 months",
       labels: ["Jul", "Aug", "Sep"],
