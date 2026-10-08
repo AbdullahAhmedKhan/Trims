@@ -10,16 +10,18 @@
 
    Everything the page needs from the data file:
 
-     overview        the figure behind each of the five overview cards
-     pl              the bar chart behind the period picker
-     periods         the numbers behind the period picker
-     balanceSheet    Balance Sheet Position
-     ledger          Ledger Balances
-     voucherMix      Voucher Mix
-      recentVouchers  Recent Vouchers
-      liquidity       Liquidity & Returns
-      receivable      Receivable - highest receivable parties
-      payable         Payable - highest payable suppliers
+      overview        the figure behind each of the four overview cards
+      pl              the Profit and Loss Overview chart (revenue, cost,
+                      profit) behind the period picker
+      periods         the numbers behind the period picker
+      balanceSheet    Balance Sheet Position
+      ledger          Ledger Balances
+      voucherMix      Voucher Mix
+      receivable      Receivable tab of the merged Receivable & Payable box
+      payable         Payable tab of that same box
+      expenseBreakdown  Expense Breakdown doughnut, total in the middle
+      recentVouchers  Recent Transaction
+      topCustomers    Top Customers
    ========================================================================== */
 
 window.AccountsPage = (function (w) {

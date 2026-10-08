@@ -56,10 +56,9 @@
   <div class="mx-auto w-full px-5 pb-2 max-[760px]:px-[14px] max-[760px]:pt-4">
 
     <!-- ============================================== overview cards =====
-         Five figures from the posted trial balance: what the business
-         holds, what it took in, what it kept, what it owes and what is
-         sitting in the bank. -->
-    <div class="grid grid-cols-2 gap-[18px] mt-[18px] min-[761px]:grid-cols-3 min-[1181px]:grid-cols-5">
+         Four figures from the posted trial balance: what the business
+         holds, what it owes, what is owed to it and what it owes out. -->
+    <div class="grid grid-cols-2 gap-[18px] mt-[18px] min-[761px]:grid-cols-4">
       <div class="skd-in">
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#0284c7">
           <div class="flex items-center gap-[9px]">
@@ -67,26 +66,6 @@
             <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Total Assets</span>
           </div>
           <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Total Assets"></div>
-        </section>
-      </div>
-
-      <div class="skd-in">
-        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#14b8a6">
-          <div class="flex items-center gap-[9px]">
-            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
-            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Revenue</span>
-          </div>
-          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Revenue"></div>
-        </section>
-      </div>
-
-      <div class="skd-in">
-        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#16a34a">
-          <div class="flex items-center gap-[9px]">
-            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
-            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Net Profit</span>
-          </div>
-          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Net Profit"></div>
         </section>
       </div>
 
@@ -101,17 +80,27 @@
       </div>
 
       <div class="skd-in">
-        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#8b5cf6">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#16a34a">
           <div class="flex items-center gap-[9px]">
             <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
-            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Cash &amp; Bank</span>
+            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Total Receivable</span>
           </div>
-          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Cash &amp; Bank"></div>
+          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Total Receivable"></div>
+        </section>
+      </div>
+
+      <div class="skd-in">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-[15px_17px] shadow-sm" style="--c:#f43f5e">
+          <div class="flex items-center gap-[9px]">
+            <i class="h-2 w-2 flex-none rounded-full" style="background:var(--c,#0ea5e9);box-shadow:0 0 0 3px color-mix(in srgb, var(--c,#0ea5e9) 20%, transparent)" aria-hidden="true"></i>
+            <span class="truncate whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.07em] text-slate-500">Total Payable</span>
+          </div>
+          <div class="mt-[11px] truncate whitespace-nowrap text-[clamp(20px,1.7vw,25px)] font-bold leading-none tracking-[-0.03em]" style="color:color-mix(in srgb, var(--c,#0ea5e9) 72%, #0f172a)" data-hero="Total Payable"></div>
         </section>
       </div>
     </div>
 
-    <!-- ==================== ROW 1 : P&amp;L + BALANCE SHEET ============== -->
+    <!-- ========== ROW 1 : PROFIT AND LOSS OVERVIEW + BALANCE SHEET ===== -->
     <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
 
       <!-- -------------------------------------------- period driven chart -->
@@ -120,8 +109,8 @@
           <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
               <!-- the heading follows the picker, see data-period-title -->
-              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]" data-period-title>Last 3 months</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">Revenue against expense for the period, with the profit carried on the right axis</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]" data-period-title>Profit and Loss Overview &middot; Last 3 months</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">Revenue, cost and profit for the period, side by side as bars</p>
             </div>
             <!-- choosing a period swaps the numbers, the key and the heading -->
             <select class="skd-select" data-period>
@@ -153,57 +142,123 @@
       </div>
     </div>
 
-    <!-- ============== ROW 1B : RECEIVABLE + PAYABLE ==================== -->
+    <!-- ============== ROW 2 : RECENT TRANSACTION + VOUCHER MIX ========== -->
     <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
 
-      <!-- ------------------------------------- highest receivable party -->
-      <div class="skd-in col-span-12 min-[761px]:col-span-6">
+      <div class="skd-in col-span-12 min-[1181px]:col-span-8">
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
           <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
-              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Receivable</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">Highest receivable parties &middot; 6 of 18 debtors &middot; ৳ 94.00 L of ৳ 1.22 Cr</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Recent Transaction</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">8 most recent &middot; 2 still in draft</p>
             </div>
           </div>
           <div class="skd-scroll">
             <table class="w-full border-collapse text-[13.5px]">
               <thead>
                 <tr>
-                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party</th>
-                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Balance</th>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Voucher</th>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Type</th>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Date</th>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party / ledger</th>
+                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Debit</th>
+                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Credit</th>
+                  <th class="px-2.5 pb-2.5 text-center whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Status</th>
                 </tr>
               </thead>
-              <tbody data-rows="receivable"></tbody>
+              <tbody data-rows="recentVouchers"></tbody>
             </table>
           </div>
         </section>
       </div>
 
-      <!-- -------------------------------------- highest payable supplier -->
-      <div class="skd-in col-span-12 min-[761px]:col-span-6">
+      <div class="skd-in col-span-12 min-[1181px]:col-span-4">
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
           <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
-              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Payable</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">Highest payable suppliers &middot; 6 of 14 creditors &middot; ৳ 87.90 L of ৳ 98.20 L</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Voucher Mix</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">342 posted vouchers worth ৳ 16.37 Cr, bar length by voucher count</p>
             </div>
           </div>
-          <div class="skd-scroll">
-            <table class="w-full border-collapse text-[13.5px]">
-              <thead>
-                <tr>
-                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Supplier</th>
-                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Balance</th>
-                </tr>
-              </thead>
-              <tbody data-rows="payable"></tbody>
-            </table>
+          <div class="grid max-h-[420px] gap-[15px] overflow-y-auto overscroll-contain pr-[3px]" data-bars="voucherMix"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============ ROW 3 : RECEIVABLE + PAYABLE | EXPENSE BREAKDOWN ====
+         The two lists share one card with a tab bar, and the doughnut
+         stands beside it - wider table, narrower ring. The tabs carry
+         their own rows, so the reader moves between the parties that owe
+         and the suppliers that are owed without leaving the row. -->
+    <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
+      <div class="skd-in col-span-12 min-[1181px]:col-span-7">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
+            <div>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Receivable &amp; Payable</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">Highest receivable parties against the highest payable suppliers, by closing balance</p>
+            </div>
+          </div>
+
+          <div class="skd-tabs" role="tablist">
+            <button type="button" class="skd-tab is-on !bg-sky-600 !text-white" role="tab" aria-selected="true"
+              data-skd-tab="a-rp-0">Receivable</button>
+            <button type="button" class="skd-tab text-slate-600 hover:bg-slate-100" role="tab" aria-selected="false"
+              data-skd-tab="a-rp-1">Payable</button>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="a-rp-0">
+            <div class="skd-scroll">
+              <table class="w-full border-collapse text-[13.5px]">
+                <thead>
+                  <tr>
+                    <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party</th>
+                    <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Balance</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="receivable"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="skd-tabpanel" data-skd-panel="a-rp-1" hidden>
+            <div class="skd-scroll">
+              <table class="w-full border-collapse text-[13.5px]">
+                <thead>
+                  <tr>
+                    <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Supplier</th>
+                    <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Balance</th>
+                  </tr>
+                </thead>
+                <tbody data-rows="payable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- the doughnut, narrower than the table beside it -->
+      <div class="skd-in col-span-12 min-[1181px]:col-span-5">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
+            <div>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Expense Breakdown</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">Total expense for the year, split by head &middot; the figure sits in the middle of the ring</p>
+            </div>
+          </div>
+          <div class="grid gap-5">
+            <div class="relative mx-auto w-full max-w-[320px]" style="height:270px">
+              <canvas data-chart="expenseBreakdown"></canvas>
+            </div>
+            <!-- the coloured key, each slice with its share of the total;
+                 two columns from tablet up -->
+            <div class="grid gap-y-2.5 gap-x-4 min-[761px]:grid-cols-2" data-legend="expenseBreakdown"></div>
           </div>
         </section>
       </div>
     </div>
 
-    <!-- ============== ROW 2 : LEDGER BALANCES + VOUCHER MIX ============= -->
+    <!-- ============ ROW 4 : LEDGER BALANCES + TOP CUSTOMERS ============= -->
     <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
 
       <div class="skd-in col-span-12 min-[1181px]:col-span-8">
@@ -237,54 +292,21 @@
         <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
           <div class="flex items-start justify-between gap-[14px] mb-4">
             <div>
-              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Voucher Mix</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">342 posted vouchers worth ৳ 16.37 Cr, bar length by voucher count</p>
-            </div>
-          </div>
-          <div class="grid max-h-[420px] gap-[15px] overflow-y-auto overscroll-contain pr-[3px]" data-bars="voucherMix"></div>
-        </section>
-      </div>
-    </div>
-
-    <!-- ============== ROW 3 : RECENT VOUCHERS + LIQUIDITY ============== -->
-    <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
-
-      <div class="skd-in col-span-12 min-[1181px]:col-span-8">
-        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
-          <div class="flex items-start justify-between gap-[14px] mb-4">
-            <div>
-              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Recent Vouchers</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">8 most recent &middot; 2 still in draft</p>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Top Customers</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">6 of 61 customers &middot; ৳ 2.91 Cr of ৳ 5.33 Cr revenue</p>
             </div>
           </div>
           <div class="skd-scroll">
             <table class="w-full border-collapse text-[13.5px]">
               <thead>
                 <tr>
-                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Voucher</th>
-                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Type</th>
-                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Date</th>
-                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party / ledger</th>
-                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Debit</th>
-                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Credit</th>
-                  <th class="px-2.5 pb-2.5 text-center whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Status</th>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Customer</th>
+                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Revenue</th>
                 </tr>
               </thead>
-              <tbody data-rows="recentVouchers"></tbody>
+              <tbody data-rows="topCustomers"></tbody>
             </table>
           </div>
-        </section>
-      </div>
-
-      <div class="skd-in col-span-12 min-[1181px]:col-span-4">
-        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
-          <div class="flex items-start justify-between gap-[14px] mb-4">
-            <div>
-              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Liquidity &amp; Returns</h2>
-              <p class="mt-1 text-[12.5px] text-slate-500">Ratios read straight off the trial balance</p>
-            </div>
-          </div>
-          <div data-tracks="liquidity"></div>
         </section>
       </div>
     </div>

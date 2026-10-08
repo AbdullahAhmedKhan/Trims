@@ -11,80 +11,79 @@
 
 window.ACCOUNTS_DATA = {
 
-  /* ---------------------------------------------- overview: the five cards */
+  /* ---------------------------------------------- overview: the four cards */
   overview: {
     cells: [
       { label: "Total Assets", value: "৳ 4.77 Cr" },
-      { label: "Revenue", value: "৳ 5.33 Cr" },
-      { label: "Net Profit", value: "৳ 71.00 L" },
       { label: "Total Liabilities", value: "৳ 1.66 Cr" },
-      { label: "Cash & Bank", value: "৳ 1.89 Cr" }
+      { label: "Total Receivable", value: "৳ 1.22 Cr" },
+      { label: "Total Payable", value: "৳ 98.20 L" }
     ]
   },
 
-  /* ------------------------------------------------- pl: the period chart --
-     The bars and the line are described once here. `series` names each one
-     and says how it is drawn: Revenue and Expense are bars, Profit is a
-     line carried on the right hand axis. The numbers live in `periods`
-     below, one entry per option in the picker. */
+  /* -------------------------------------------- pl: the P&L period chart --
+     The three bars are described once here. `series` names each one and
+     says how it is drawn: Revenue, Cost and Profit stand together as bars
+     on the one axis. The numbers live in `periods` below, one entry per
+     option in the picker. */
   pl: {
     type: "bar",
     height: 270,
     yfmt: "money",
-    y2: { yfmt: "money" },
     series: {
       "Revenue": {
         bg: "rgba(20, 184, 166, 0.85)", border: "rgba(20, 184, 166, 1)",
         w: 1, borderRadius: 6, order: 2
       },
-      "Expense": {
+      "Cost": {
         bg: "rgba(255, 159, 64, 0.85)", border: "rgba(255, 159, 64, 1)",
         w: 1, borderRadius: 6, order: 3
       },
       "Profit": {
-        bg: "rgba(114, 199, 255, 1)", border: "rgba(114, 199, 255, 1)",
-        w: 2, type: "line", axis: "y2", order: 1
+        bg: "rgba(114, 199, 255, 0.85)", border: "rgba(114, 199, 255, 1)",
+        w: 1, borderRadius: 6, order: 1
       }
     }
   },
 
-  /* one entry per option in the picker. `title` becomes the card heading,
-     `labels` is the x axis and `series` is one entry per bar group. Every
-     month keeps the same rule: revenue less expense is the profit. */
+  /* one entry per option in the picker. `title` becomes the card heading -
+     the Profit and Loss Overview keeps its name and the period is carried
+     after it - `labels` is the x axis and `series` one entry per bar group.
+     Every month keeps the same rule: revenue less cost is the profit. */
   periods: {
     "3m": {
-      title: "Last 3 months",
+      title: "Profit and Loss Overview · Last 3 months",
       labels: ["Jul", "Aug", "Sep"],
       series: [
         { label: "Revenue", data: [8960000, 6240000, 6790000] },
-        { label: "Expense", data: [7980000, 5610000, 5850000] },
+        { label: "Cost", data: [7980000, 5610000, 5850000] },
         { label: "Profit", data: [980000, 630000, 940000] }
       ]
     },
     "6m": {
-      title: "Last 6 months",
+      title: "Profit and Loss Overview · Last 6 months",
       labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep"],
       series: [
         { label: "Revenue", data: [9850000, 10240000, 11180000, 8960000, 6240000, 6790000] },
-        { label: "Expense", data: [8420000, 8760000, 9540000, 7980000, 5610000, 5850000] },
+        { label: "Cost", data: [8420000, 8760000, 9540000, 7980000, 5610000, 5850000] },
         { label: "Profit", data: [1430000, 1480000, 1640000, 980000, 630000, 940000] }
       ]
     },
     ytd: {
-      title: "This year",
+      title: "Profit and Loss Overview · This year",
       labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
       series: [
         { label: "Revenue", data: [8420000, 9130000, 10520000, 9850000, 10240000, 11180000, 8960000, 6240000, 6790000] },
-        { label: "Expense", data: [7180000, 7860000, 9010000, 8420000, 8760000, 9540000, 7980000, 5610000, 5850000] },
+        { label: "Cost", data: [7180000, 7860000, 9010000, 8420000, 8760000, 9540000, 7980000, 5610000, 5850000] },
         { label: "Profit", data: [1240000, 1270000, 1510000, 1430000, 1480000, 1640000, 980000, 630000, 940000] }
       ]
     },
     lasty: {
-      title: "Last year",
+      title: "Profit and Loss Overview · Last year",
       labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"],
       series: [
         { label: "Revenue", data: [7840000, 8120000, 8760000, 9340000, 8970000, 9520000, 9080000, 8640000, 8210000, 8420000, 9130000, 10520000] },
-        { label: "Expense", data: [6720000, 6960000, 7530000, 8020000, 7740000, 8180000, 7860000, 7410000, 7080000, 7180000, 7860000, 9010000] },
+        { label: "Cost", data: [6720000, 6960000, 7530000, 8020000, 7740000, 8180000, 7860000, 7410000, 7080000, 7180000, 7860000, 9010000] },
         { label: "Profit", data: [1120000, 1160000, 1230000, 1320000, 1230000, 1340000, 1220000, 1230000, 1130000, 1240000, 1270000, 1510000] }
       ]
     }
@@ -190,24 +189,6 @@ window.ACCOUNTS_DATA = {
     ]
   },
 
-  /* -------------------------------------------------- liquidity: tracks --
-     Each bar is that balance against total assets, so the four of them are
-     read off one scale. */
-  liquidity: {
-    rows: [
-      { label: "Cash & Bank", value: "৳ 1.89 Cr", pct: 39.6, color: "rgba(20, 184, 166, 1)" },
-      { label: "Receivables", value: "৳ 1.22 Cr", pct: 25.6, color: "rgba(56, 189, 248, 1)" },
-      { label: "Inventory", value: "৳ 1.67 Cr", pct: 35, color: "rgba(139, 92, 246, 1)" },
-      { label: "Payables", value: "৳ 98.20 L", pct: 20.6, color: "rgba(245, 158, 11, 1)" }
-    ],
-    total: [
-      { label: "Working capital", value: "৳ 3.56 Cr" },
-      { label: "Current ratio", value: "3.94:1" },
-      { label: "Debt / Equity", value: "0.53:1" },
-      { label: "Net margin", value: "13.3%" }
-    ]
-  },
-
   /* ------------------------------------------------ receivable: 6 rows --
      The parties that owe the most, ranked by closing balance. The six of
      them carry ৳ 94.00 L of the ৳ 1.22 Cr sitting in Sundry Debtors. */
@@ -236,5 +217,62 @@ window.ACCOUNTS_DATA = {
       ["Amin Label Works", 780000]
     ],
     total: [{ t: "Top 6 of 14" }, 8790000]
+  },
+
+  /* ------------------------------------------------ topCustomers: rows --
+     The customers that bought the most, ranked by revenue. The six of them
+     carry ৳ 2.91 Cr of the ৳ 5.33 Cr taken in. */
+  topCustomers: {
+    rows: [
+      ["Bashundhara Group", 6840000],
+      ["Meghna Group", 5920000],
+      ["Noman Group", 5180000],
+      ["Urmi Group", 4460000],
+      ["Padma Printers", 3720000],
+      ["Delta Knitwear", 2980000]
+    ],
+    total: [{ t: "Top 6 of 61" }, 29100000]
+  },
+
+  /* --------------------------------------- expenseBreakdown: doughnut --
+     Total expense for the year, split by head, with the total drawn in the
+     middle of the ring. The six heads add up to the expense rows of the
+     ledger above - ৳ 4.61 Cr - and the middle figure is worked out from
+     `datasets` as the chart is drawn, so it follows the numbers.
+
+     The slices are written twice: as `datasets` for the ring, and as
+     `legend` for the key beside it, which carries each head's amount. */
+  expenseBreakdown: {
+    type: "doughnut",
+    height: 280,
+    center: "Total Expense",
+    labels: ["Raw material", "Salary", "Utilities", "Transport", "Office & Admin", "Others"],
+    bg: [
+      "rgba(2, 132, 199, 0.85)",
+      "rgba(20, 184, 166, 0.85)",
+      "rgba(245, 158, 11, 0.85)",
+      "rgba(139, 92, 246, 0.85)",
+      "rgba(56, 189, 248, 0.85)",
+      "rgba(148, 163, 184, 0.85)"
+    ],
+    datasets: [{
+      data: [24300000, 12600000, 590000, 2780000, 1720000, 4120000],
+      bg: [
+        "rgba(2, 132, 199, 0.85)",
+        "rgba(20, 184, 166, 0.85)",
+        "rgba(245, 158, 11, 0.85)",
+        "rgba(139, 92, 246, 0.85)",
+        "rgba(56, 189, 248, 0.85)",
+        "rgba(148, 163, 184, 0.85)"
+      ]
+    }],
+    legend: [
+      { label: "Raw material", value: "৳ 2.43 Cr", color: "rgba(2, 132, 199, 1)" },
+      { label: "Salary", value: "৳ 1.26 Cr", color: "rgba(20, 184, 166, 1)" },
+      { label: "Utilities", value: "৳ 5.90 L", color: "rgba(245, 158, 11, 1)" },
+      { label: "Transport", value: "৳ 27.80 L", color: "rgba(139, 92, 246, 1)" },
+      { label: "Office & Admin", value: "৳ 17.20 L", color: "rgba(56, 189, 248, 1)" },
+      { label: "Others", value: "৳ 41.20 L", color: "rgba(148, 163, 184, 1)" }
+    ]
   }
 };
