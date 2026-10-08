@@ -11,10 +11,16 @@
    Everything the page needs from the data file:
 
      overview                       unused on this page
-     last7, months, team, item      the charts
-     topParty, party, product, recent tables
-     metrics                        the financial metrics grid
-     periods                        the numbers behind the period picker
+      last7, months, team, item      the charts
+      topParty, party, product, recent tables
+      metrics                        the financial metrics grid
+      periods                        the numbers behind the period picker
+
+    Four date filters run off that same mechanism, each naming the keys it
+    drives: last7 (its own chart), the bare picker (months), team and item
+    (one chart each) and "party,product" - one choice swapping both tables
+    of the Party & Product Breakdown card. topParty keeps its own periods
+    under its own key.
    ========================================================================== */
 
 window.OrderPage = (function (w) {

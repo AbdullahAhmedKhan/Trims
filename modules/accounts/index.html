@@ -153,6 +153,56 @@
       </div>
     </div>
 
+    <!-- ============== ROW 1B : RECEIVABLE + PAYABLE ==================== -->
+    <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
+
+      <!-- ------------------------------------- highest receivable party -->
+      <div class="skd-in col-span-12 min-[761px]:col-span-6">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
+            <div>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Receivable</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">Highest receivable parties &middot; 6 of 18 debtors &middot; ৳ 94.00 L of ৳ 1.22 Cr</p>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="w-full border-collapse text-[13.5px]">
+              <thead>
+                <tr>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Party</th>
+                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Balance</th>
+                </tr>
+              </thead>
+              <tbody data-rows="receivable"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- -------------------------------------- highest payable supplier -->
+      <div class="skd-in col-span-12 min-[761px]:col-span-6">
+        <section class="skd-card flex flex-col min-h-full rounded-[18px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-[14px] mb-4">
+            <div>
+              <h2 class="text-[16.5px] font-bold leading-[1.25] tracking-[-0.01em]">Payable</h2>
+              <p class="mt-1 text-[12.5px] text-slate-500">Highest payable suppliers &middot; 6 of 14 creditors &middot; ৳ 87.90 L of ৳ 98.20 L</p>
+            </div>
+          </div>
+          <div class="skd-scroll">
+            <table class="w-full border-collapse text-[13.5px]">
+              <thead>
+                <tr>
+                  <th class="px-2.5 pb-2.5 text-left whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]">Supplier</th>
+                  <th class="px-2.5 pb-2.5 text-right whitespace-nowrap text-[11.5px] font-bold uppercase tracking-[0.06em] text-[var(--sk-accent-ink)]" data-f="money">Balance</th>
+                </tr>
+              </thead>
+              <tbody data-rows="payable"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
     <!-- ============== ROW 2 : LEDGER BALANCES + VOUCHER MIX ============= -->
     <div class="grid grid-cols-12 gap-[18px] mt-[18px]">
 

@@ -206,5 +206,35 @@ window.ACCOUNTS_DATA = {
       { label: "Debt / Equity", value: "0.53:1" },
       { label: "Net margin", value: "13.3%" }
     ]
+  },
+
+  /* ------------------------------------------------ receivable: 6 rows --
+     The parties that owe the most, ranked by closing balance. The six of
+     them carry ৳ 94.00 L of the ৳ 1.22 Cr sitting in Sundry Debtors. */
+  receivable: {
+    rows: [
+      ["Bashundhara Group", 2450000],
+      ["Meghna Group", 1980000],
+      ["Noman Group", 1640000],
+      ["Urmi Group", 1320000],
+      ["Padma Printers", 1150000],
+      ["Delta Knitwear", 860000]
+    ],
+    total: [{ t: "Top 6 of 18" }, 9400000]
+  },
+
+  /* ------------------------------------------------- payable: 6 rows --
+     The suppliers the business owes the most, ranked by closing balance.
+     The six of them carry ৳ 87.90 L of the ৳ 98.20 L in Sundry Creditors. */
+  payable: {
+    rows: [
+      ["Janata Jute Mills", 2180000],
+      ["Nur Jute Mills Ltd", 1760000],
+      ["YKK Bangladesh", 1640000],
+      ["Coats Bangla Ltd", 1380000],
+      ["Padma Zip Industries", 1050000],
+      ["Amin Label Works", 780000]
+    ],
+    total: [{ t: "Top 6 of 14" }, 8790000]
   }
 };

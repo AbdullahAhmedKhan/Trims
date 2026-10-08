@@ -16,8 +16,10 @@
      balanceSheet    Balance Sheet Position
      ledger          Ledger Balances
      voucherMix      Voucher Mix
-     recentVouchers  Recent Vouchers
-     liquidity       Liquidity & Returns
+      recentVouchers  Recent Vouchers
+      liquidity       Liquidity & Returns
+      receivable      Receivable - highest receivable parties
+      payable         Payable - highest payable suppliers
    ========================================================================== */
 
 window.AccountsPage = (function (w) {

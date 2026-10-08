@@ -578,7 +578,13 @@ window.SKPage = (function (w, d) {
         the tbody for that key, so a card carrying a table and a date filter
         swaps its rows too:
 
-          periods: { "3m": { title, rows: [...], total: [...] } } */
+          periods: { "3m": { title, rows: [...], total: [...] } }
+
+      One picker may drive more than one key at once, for a card carrying
+      two tables under a single date filter. The keys are written as a
+      comma list - <select data-period="party,product"> - and each of them
+      then swaps its own rows from its own periods. The first key writes
+      the card heading. */
 
   function periodSpec(name, key) {
     /* a chart may carry its own periods - a doughnut on the same page as a
@@ -593,6 +599,14 @@ window.SKPage = (function (w, d) {
     return keys.length ? periods[keys[0]] : null;
   }
 
+  /* the keys a picker drives: one name, or several written as a comma
+     list - data-period="party,product" */
+  function keysOf(v) {
+    return String(v == null ? "" : v).split(",").map(function (s) {
+      return s.trim();
+    }).filter(function (s) { return s; });
+  }
+
   /* the picker that drives this chart, if the page has one. A picker says
      which chart it drives with data-period="status"; a bare <select
      data-period> drives the chart the page passed as `period`. */
@@ -600,7 +614,8 @@ window.SKPage = (function (w, d) {
     var list = [].slice.call(d.querySelectorAll("[data-period]"));
 
     for (var i = 0; i < list.length; i++) {
-      if ((list[i].getAttribute("data-period") || PERIOD) === name) return list[i];
+      var drive = list[i].getAttribute("data-period") || PERIOD;
+      if (drive === name || keysOf(drive).indexOf(name) >= 0) return list[i];
     }
     return null;
   }
@@ -666,21 +681,32 @@ window.SKPage = (function (w, d) {
     return spec;
   }
 
-  function showPeriod(name, key, picker) {
+  /* one picker, one choice, one or more keys - see keysOf() above */
+  function showPeriod(names, key, picker) {
+    keysOf(names).forEach(function (name, i) {
+      showKey(name, key, picker, i === 0);
+    });
+  }
+
+  /* the numbers of one period into one key. `lead` says this key writes
+     the card heading, so a picker driving two tables still keeps one. */
+  function showKey(name, key, picker, lead) {
     var base = DATA[name];
     var period = periodSpec(name, key);
     if (!base || !period) return;
 
     /* the heading is looked up inside the picker's own card, so two pickers
        on one page cannot rewrite each other's titles */
-    var heading = null;
-    if (picker && picker.closest) {
-      var card = picker.closest(".skd-card");
-      heading = card ? card.querySelector("[data-period-title]") : null;
-    } else {
-      heading = d.querySelector("[data-period-title]");
+    if (lead) {
+      var heading = null;
+      if (picker && picker.closest) {
+        var card = picker.closest(".skd-card");
+        heading = card ? card.querySelector("[data-period-title]") : null;
+      } else {
+        heading = d.querySelector("[data-period-title]");
+      }
+      if (heading) heading.textContent = period.title || "";
     }
-    if (heading) heading.textContent = period.title || "";
 
     /* a period may carry its own table rows - a date filter over a table
        swaps the numbers the tbody shows, not just a heading */
